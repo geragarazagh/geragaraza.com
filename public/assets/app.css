@@ -1,0 +1,4 @@
+/* App pages without a live window: the description under the title and the small system line, as on the Grids page. */
+.top{display:flow-root}
+.top h1+p{margin:calc(var(--l)/4) 0 0}
+.small{margin:var(--l) 0 0;font-size:calc(var(--l)*.32);line-height:1.35}
