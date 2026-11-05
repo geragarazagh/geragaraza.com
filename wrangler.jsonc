@@ -1,7 +1,7 @@
 {
   "name": "geragaraza",
   "compatibility_date": "2026-11-01",
-  "assets": { "directory": "./public" },
+  "assets": { "directory": "./public", "not_found_handling": "404-page" },
   "routes": [
     { "pattern": "geragaraza.com", "custom_domain": true },
     { "pattern": "www.geragaraza.com", "custom_domain": true }

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" sizes="1234x1234" href="/favicon.png">
+<link rel="apple-touch-icon" href="/favicon.png">
+<title>404</title>
+<meta name="robots" content="noindex">
+<style>
+@font-face{font-family:Inter;font-weight:500;font-display:swap;src:url(/fonts/inter-latin-500.woff2) format('woff2')}
+@font-face{font-family:Inter;font-weight:600;font-display:swap;src:url(/fonts/inter-latin-600.woff2) format('woff2')}
+/* One size drives everything: --l is the height of a logo.
+   13.6vw makes the 0.8 --l title fill a phone's width without wrapping; 44px is the smallest comfortable tap; 4.6vw scales it up on computers. */
+:root{color-scheme:light dark;--bg:#fff;--fg:#000;--l:min(72px,max(44px,min(13.6vw,52px),4.6vw))}
+@media (prefers-color-scheme:dark){:root{--bg:#000;--fg:#fff}}
+*{box-sizing:border-box}
+body{margin:0;min-height:100svh;display:flex;align-items:center;justify-content:center;padding:var(--l) clamp(16px,5vw,72px);background:var(--bg);color:var(--fg);font:500 calc(var(--l)*.46)/1.2 Inter,sans-serif;-webkit-text-size-adjust:100%}
+h1{margin:0;font-weight:600;font-size:calc(var(--l)*.8);line-height:1.15;letter-spacing:-.01em}
+ul{list-style:none;margin:var(--l) 0 0;padding:0;display:flex;flex-direction:column;align-items:flex-start;gap:calc(var(--l)/4)}
+a{display:inline-flex;align-items:center;gap:calc(var(--l)/3);color:inherit;text-decoration:none}
+a:focus-visible{outline:3px solid currentColor;outline-offset:4px;border-radius:6px}
+.i{flex:none;width:var(--l);height:var(--l)}
+.i>*{display:block;width:100%;height:100%;object-fit:contain}
+</style>
+</head>
+<body>
+<main>
+<h1>404</h1>
+<ul><li><a href="/">Herman Harazha</a></li></ul>
+</main>
+</body>
+</html>
