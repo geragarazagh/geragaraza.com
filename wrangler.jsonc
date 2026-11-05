@@ -1,0 +1,6 @@
+{
+  "name": "geragaraza",
+  "compatibility_date": "2026-11-01",
+  "assets": { "directory": "./public" },
+  "routes": [{ "pattern": "geragaraza.com", "custom_domain": true }]
+}
