@@ -1,0 +1,31 @@
+@font-face{font-family:Inter;font-weight:500;font-display:swap;src:url(/fonts/inter-latin-500.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2190-2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:Inter;font-weight:600;font-display:swap;src:url(/fonts/inter-latin-600.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2190-2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:Inter;font-weight:500;font-display:swap;src:url(/fonts/inter-cyrillic-500.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:Inter;font-weight:600;font-display:swap;src:url(/fonts/inter-cyrillic-600.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+/* One size drives everything: --l is the height of a logo.
+   13.6vw makes the 0.8 --l title fill a phone's width without wrapping; 44px is the smallest comfortable tap; 4.6vw scales it up on computers;
+   7.2svh keeps a short computer screen from overgrowing, so an app's title fits over its window and Download under it.
+   Every page shares this size, so nothing changes scale between pages. */
+:root{color-scheme:light dark;--bg:#fff;--fg:#000;--l:min(72px,max(44px,min(13.6vw,52px),min(4.6vw,7.2svh)));--px:1px}
+/* --px is one device pixel: the weight the app and its icon give every line. */
+@media (min-resolution:1.5dppx){:root{--px:.5px}}
+@media (min-resolution:2.5dppx){:root{--px:.3334px}}
+@media (prefers-color-scheme:dark){:root{--bg:#000;--fg:#fff}}
+*{box-sizing:border-box}
+body{margin:0;min-height:100svh;background:var(--bg);color:var(--fg);font:500 calc(var(--l)*.46)/1.2 Inter,sans-serif;-webkit-text-size-adjust:100%}
+/* One column for every page, so the eye never has to look for anything: the title is always L from the top.
+   On a computer the column starts on the quarter line and ends on the other one, the same lines Grids draws.
+   On a phone it runs from the 16 pt line to the last 8 pt line that fits. */
+main{margin-left:16px;width:round(down,calc(100% - 32px),8px);padding:var(--l) 0}
+@media (min-width:900px){main{margin-left:25%;width:50%}}
+h1{margin:0;display:flex;align-items:center;gap:calc(var(--l)/3);min-height:var(--l);font-weight:600;font-size:calc(var(--l)*.8);line-height:1.15;letter-spacing:-.01em}
+ul{list-style:none;margin:var(--l) 0 0;padding:0;display:flex;flex-direction:column;align-items:flex-start;gap:calc(var(--l)/4)}
+a,button{display:inline-flex;align-items:center;gap:calc(var(--l)/3);color:inherit;text-decoration:none}
+a:focus-visible,button:focus-visible{outline:3px solid currentColor;outline-offset:4px;border-radius:6px}
+.i{flex:none;width:var(--l);height:var(--l)}
+.i>*{display:block;width:100%;height:100%;object-fit:contain}
+.px{fill:none;stroke-width:var(--px);vector-effect:non-scaling-stroke}
+/* The way back: the pages above this one, small so it stays on one line on a phone. It sits in the top
+   space, L/4 over the title (.634 = its line, .32 x 1.2, plus L/4), so the title doesn't move between pages. */
+.up{margin:calc(var(--l)*-.634) 0 calc(var(--l)/4);font-size:calc(var(--l)*.32)}
+.up a{display:inline}

@@ -1,0 +1,22 @@
+/* Colours are what macOS gives NSColor.system* in each appearance, as the app does. */
+:root{--red:#FF383C;--orange:#FF8D28;--yellow:#FFCC00;--green:#34C759;--blue:#0088FF;--window:url(window-light.png)}
+@media (prefers-color-scheme:dark){:root{--red:#FF4245;--orange:#FF9230;--yellow:#FFD600;--green:#30D158;--blue:#0091FF;--window:url(window-dark.png)}}
+/* The window always spans the quarter lines from top to bottom, and the page's column across. */
+.g{overflow-x:clip}
+.top{display:flow-root;min-height:calc(25svh - var(--l));padding-bottom:calc(var(--l)/2)}
+.top h1+p{margin:calc(var(--l)/4) 0 0}
+/* A real window from macOS, captured with its shadow at 2x. Its size is free: only the empty middle
+   stretches, so the corners, the traffic lights and the shadow stay at their real size. The numbers
+   are the capture's device pixels; half of each is CSS pixels. */
+.win{height:50svh;min-height:calc(var(--l)*4);border-style:solid;border-width:0;border-image:var(--window) 150 160 200 270 fill / 75px 80px 100px 135px / 38px 56px 74px 56px stretch}
+.near{margin-top:calc(var(--l)/2)}
+/* Sticks to the top right corner, under the grid, as the app's icon sits under its grid in the menu bar.
+   16 pt from both edges, 32 x 24 like Apple's proportions; the whole corner taps. The select is
+   invisible and covers the corner, so the list that opens is the system's own. 16 px stops iOS zooming on focus. */
+.menu{position:fixed;top:0;right:0;width:64px;height:56px;display:flex;align-items:center;justify-content:center}
+.menu svg{display:block;width:32px;height:24px}
+.menu select{position:absolute;inset:0;width:100%;height:100%;margin:0;border:0;opacity:0;font-size:16px;cursor:pointer}
+.menu:has(select:focus-visible) svg{outline:3px solid currentColor;outline-offset:4px;border-radius:6px}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+.small{margin:var(--l) 0 0;font-size:calc(var(--l)*.32);line-height:1.35}
+#grid{position:fixed;top:0;left:0;z-index:1;pointer-events:none}

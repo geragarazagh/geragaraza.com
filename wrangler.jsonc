@@ -1,7 +1,14 @@
 {
   "name": "geragaraza",
+  "main": "src/worker.js",
   "compatibility_date": "2026-11-01",
-  "assets": { "directory": "./public", "not_found_handling": "404-page" },
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    // Only pages go through the Worker. Files don't: they stay free and unlimited on Workers Free.
+    "run_worker_first": ["/*", "!/assets/*", "!/fonts/*", "!/icons/*", "!/favicon.png", "!/og.png"]
+  },
   "routes": [
     { "pattern": "geragaraza.com", "custom_domain": true },
     { "pattern": "www.geragaraza.com", "custom_domain": true }
