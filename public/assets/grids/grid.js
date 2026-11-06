@@ -9,10 +9,21 @@ const SETS = {
 const MODES = {
   all: ['red', 'orange', 'yellow', 'green'], halves: ['red', 'orange'], golden: ['red', 'yellow'], thirds: ['red', 'green'], fine: ['red'],
 };
-let mode = 'all', on = true;
+let mode = 'halves', on = true;
+
+// The grid is laid out once for the screen and stays: a phone's zoom and its collapsing toolbar change
+// nothing here. Height is the small viewport (100svh), the one the page's window is sized from, so the
+// quarter lines keep to the window. Only a real change of layout, such as turning the phone, redraws.
+const probe = document.createElement('div');
+probe.style.cssText = 'position:absolute;visibility:hidden;height:100svh;width:0';
+document.body.append(probe);
+const size = () => [root.clientWidth, probe.getBoundingClientRect().height];
+let drawn = '';
+function resized() { if (size().join() !== drawn) draw(); }
 
 function draw() {
-  const W = root.clientWidth, H = window.innerHeight, s = window.devicePixelRatio || 1;
+  const [W, H] = size(), s = window.devicePixelRatio || 1;
+  drawn = [W, H].join();
   canvas.width = Math.round(W * s); canvas.height = Math.round(H * s);
   canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
   ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -74,7 +85,7 @@ menu.addEventListener('change', sync);
 // Safari can run this before the stylesheet's colours are readable, so draw again once the page has loaded.
 addEventListener('load', draw);
 addEventListener('pageshow', sync);
-addEventListener('resize', draw);
+addEventListener('resize', resized);
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change', draw);
 document.fonts.load('600 10px Inter').then(draw);
 draw();
