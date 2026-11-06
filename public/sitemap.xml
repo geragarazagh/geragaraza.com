@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url><loc>https://geragaraza.com/</loc></url>
-<url><loc>https://geragaraza.com/apps/</loc></url>
-<url><loc>https://geragaraza.com/apps/grids/</loc></url>
-<url><loc>https://geragaraza.com/apps/hex/</loc></url>
-<url><loc>https://geragaraza.com/apps/ocr/</loc></url>
-<url><loc>https://geragaraza.com/apps/stt/</loc></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<url><loc>https://geragaraza.com/</loc><xhtml:link rel="alternate" hreflang="en" href="https://geragaraza.com/"/><xhtml:link rel="alternate" hreflang="ru" href="https://geragaraza.com/?lang=ru"/><xhtml:link rel="alternate" hreflang="uk" href="https://geragaraza.com/?lang=uk"/><xhtml:link rel="alternate" hreflang="x-default" href="https://geragaraza.com/"/></url>
+<url><loc>https://geragaraza.com/apps/</loc><xhtml:link rel="alternate" hreflang="en" href="https://geragaraza.com/apps/"/><xhtml:link rel="alternate" hreflang="ru" href="https://geragaraza.com/apps/?lang=ru"/><xhtml:link rel="alternate" hreflang="uk" href="https://geragaraza.com/apps/?lang=uk"/><xhtml:link rel="alternate" hreflang="x-default" href="https://geragaraza.com/apps/"/></url>
+<url><loc>https://geragaraza.com/apps/grids/</loc><xhtml:link rel="alternate" hreflang="en" href="https://geragaraza.com/apps/grids/"/><xhtml:link rel="alternate" hreflang="ru" href="https://geragaraza.com/apps/grids/?lang=ru"/><xhtml:link rel="alternate" hreflang="uk" href="https://geragaraza.com/apps/grids/?lang=uk"/><xhtml:link rel="alternate" hreflang="x-default" href="https://geragaraza.com/apps/grids/"/></url>
+<url><loc>https://geragaraza.com/apps/hex/</loc><xhtml:link rel="alternate" hreflang="en" href="https://geragaraza.com/apps/hex/"/><xhtml:link rel="alternate" hreflang="ru" href="https://geragaraza.com/apps/hex/?lang=ru"/><xhtml:link rel="alternate" hreflang="uk" href="https://geragaraza.com/apps/hex/?lang=uk"/><xhtml:link rel="alternate" hreflang="x-default" href="https://geragaraza.com/apps/hex/"/></url>
+<url><loc>https://geragaraza.com/apps/ocr/</loc><xhtml:link rel="alternate" hreflang="en" href="https://geragaraza.com/apps/ocr/"/><xhtml:link rel="alternate" hreflang="ru" href="https://geragaraza.com/apps/ocr/?lang=ru"/><xhtml:link rel="alternate" hreflang="uk" href="https://geragaraza.com/apps/ocr/?lang=uk"/><xhtml:link rel="alternate" hreflang="x-default" href="https://geragaraza.com/apps/ocr/"/></url>
+<url><loc>https://geragaraza.com/apps/stt/</loc><xhtml:link rel="alternate" hreflang="en" href="https://geragaraza.com/apps/stt/"/><xhtml:link rel="alternate" hreflang="ru" href="https://geragaraza.com/apps/stt/?lang=ru"/><xhtml:link rel="alternate" hreflang="uk" href="https://geragaraza.com/apps/stt/?lang=uk"/><xhtml:link rel="alternate" hreflang="x-default" href="https://geragaraza.com/apps/stt/"/></url>
 </urlset>

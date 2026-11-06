@@ -2,3 +2,17 @@
 .top{display:flow-root}
 .top h1+p{margin:calc(var(--l)/4) 0 0}
 .small{margin:var(--l) 0 0;font-size:calc(var(--l)*.32);line-height:1.35}
+/* The real window, with the shadow macOS gives it. The picture is 452 wide for a 340 window: the shadow takes 56 at the sides, 38 on top, 74 below (measured from alpha), so the window itself sits on the column's line and L from its neighbours. --w lets it narrow on a phone under 372 wide. */
+body{overflow-x:clip}
+.shot{--w:min(340px,100vw - 32px);display:block;margin:calc(var(--l) - var(--w)*38/340) 0 0 calc(var(--w)*-56/340);width:max-content}
+.shot img{display:block;width:calc(var(--w)*452/340);height:auto}
+.shot+ul{margin-top:calc(var(--l) - var(--w)*74/340)}
+/* The long text, for people and search engines alike: one step smaller than the rows, same column. */
+.about{margin-top:calc(var(--l)/2);font-size:calc(var(--l)*.32);line-height:1.4}
+.about h2{margin:var(--l) 0 calc(var(--l)/4);font-size:calc(var(--l)*.46);font-weight:600;line-height:1.2}
+.about h3{margin:calc(var(--l)/2) 0 calc(var(--l)/8);font:inherit;font-weight:600}
+.about p{margin:calc(var(--l)/4) 0 0}
+.about h3+p{margin-top:0}
+.about ul{display:block;margin:calc(var(--l)/4) 0 0;padding-left:1.1em;list-style:disc}
+.about li+li{margin-top:calc(var(--l)/8)}
+code{font:inherit}
