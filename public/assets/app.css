@@ -11,4 +11,5 @@ h1+.lead{margin:calc(var(--l)/4) 0 0}
 .about h3+p{margin-top:0}
 .about ul{display:block;margin:calc(var(--l)/4) 0 0;padding-left:1.1em;list-style:disc}
 .about li+li{margin-top:calc(var(--l)/8)}
-code{font:inherit}
+/* Paths and commands have no spaces to wrap at: they may break anywhere rather than run past the screen's edge. */
+code{font:inherit;overflow-wrap:anywhere}

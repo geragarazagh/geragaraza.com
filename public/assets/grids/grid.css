@@ -1,12 +1,14 @@
 /* Colours are what macOS gives NSColor.system* in each appearance, as the app does. */
 :root{--red:#FF383C;--orange:#FF8D28;--yellow:#FFCC00;--green:#34C759;--blue:#0088FF}
 @media (prefers-color-scheme:dark){:root{--red:#FF4245;--orange:#FF9230;--yellow:#FFD600;--green:#30D158;--blue:#0091FF}}
-.g{overflow-x:clip}
+/* The page is drawn to the edges of the screen (viewport-fit=cover) so the grid can cover all of it; the text keeps
+   clear of the rounded corners and the camera in landscape through the safe areas. */
+.g{overflow-x:clip;padding:0 env(safe-area-inset-right) 0 env(safe-area-inset-left)}
 /* Sticks to the top right corner, under the grid, as the app's icon sits under its grid in the menu bar.
    40 x 30, Apple's 4:3 of the menu bar glyph, a step bigger than before so it reads on a phone; the whole
    corner taps. The select is invisible and covers the corner, so the list that opens is the system's own.
    16 px stops iOS zooming on focus. */
-.menu{position:fixed;top:0;right:0;width:72px;height:62px;display:flex;align-items:center;justify-content:center}
+.menu{position:fixed;top:env(safe-area-inset-top);right:env(safe-area-inset-right);width:72px;height:62px;display:flex;align-items:center;justify-content:center}
 .menu svg{display:block;width:40px;height:30px}
 .menu select{position:absolute;inset:0;width:100%;height:100%;margin:0;border:0;opacity:0;font-size:16px;cursor:pointer}
 .menu:has(select:focus-visible) svg{outline:3px solid currentColor;outline-offset:4px;border-radius:6px}

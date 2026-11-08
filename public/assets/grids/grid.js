@@ -12,10 +12,11 @@ const MODES = {
 let mode = 'halves', on = true;
 
 // The grid is laid out once for the screen and stays: a phone's zoom and its collapsing toolbar change
-// nothing here. Height is the small viewport (100svh), which stays put while a phone's toolbar collapses.
-// Only a real change of layout, such as turning the phone, redraws.
+// nothing here. Height is the large viewport (100lvh): with viewport-fit=cover that is the whole screen of a
+// phone, status bar and toolbar area included, and it stays put while the toolbar collapses, as the app's grid
+// covers the whole display of a Mac. Only a real change of layout, such as turning the phone, redraws.
 const probe = document.createElement('div');
-probe.style.cssText = 'position:absolute;visibility:hidden;height:100svh;width:0';
+probe.style.cssText = 'position:fixed;top:0;visibility:hidden;width:0;height:100vh;height:100lvh';
 document.body.append(probe);
 const size = () => [root.clientWidth, probe.getBoundingClientRect().height];
 let drawn = '';
