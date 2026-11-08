@@ -12,8 +12,8 @@ const MODES = {
 let mode = 'halves', on = true;
 
 // The grid is laid out once for the screen and stays: a phone's zoom and its collapsing toolbar change
-// nothing here. Height is the small viewport (100svh), the one the page's window is sized from, so the
-// quarter lines keep to the window. Only a real change of layout, such as turning the phone, redraws.
+// nothing here. Height is the small viewport (100svh), which stays put while a phone's toolbar collapses.
+// Only a real change of layout, such as turning the phone, redraws.
 const probe = document.createElement('div');
 probe.style.cssText = 'position:absolute;visibility:hidden;height:100svh;width:0';
 document.body.append(probe);

@@ -1,14 +1,17 @@
 // One page, three languages. Each page keeps its translations next to the English text, in
-// data-ru and data-uk attributes; this Worker picks the language the visitor's system asks for
-// (Accept-Language) and writes it into the HTML before it leaves, so nothing flickers and no script
-// is needed. ?lang=ru gives search engines an address for each language; nothing on the site links
-// to it as a switch.
+// data-ru and data-uk attributes; this Worker picks the language and writes it into the HTML before
+// it leaves, so nothing flickers and no script is needed.
+// The language is the one the visitor's system asks for (Accept-Language), unless they picked one
+// with the switch at the bottom of every page: that gives ?lang=xx, and the site's own links then
+// carry it along, so the choice holds from page to page without a cookie. ?lang=xx is also the
+// address search engines get for each language (hreflang).
 
-const LANGS = ['en', 'ru', 'uk'];
+const LANGS = ['en', 'uk', 'ru'];
+const NAMES = { en: 'English', uk: 'Українська', ru: 'Русский' };
 
 function pick(request, url) {
   const asked = url.searchParams.get('lang');
-  if (LANGS.includes(asked)) return asked;
+  if (LANGS.includes(asked)) return { lang: asked, chosen: true };
   const ranked = (request.headers.get('accept-language') || '')
     .split(',')
     .map((part) => {
@@ -16,7 +19,7 @@ function pick(request, url) {
       return { lang: tag.split('-')[0].toLowerCase(), q: q === undefined ? 1 : Number(q) };
     })
     .sort((a, b) => b.q - a.q);
-  return ranked.find((r) => LANGS.includes(r.lang))?.lang ?? 'en';
+  return { lang: ranked.find((r) => LANGS.includes(r.lang))?.lang ?? 'en', chosen: false };
 }
 
 export default {
@@ -25,8 +28,14 @@ export default {
     if (!response.headers.get('content-type')?.includes('text/html')) return response;
 
     const url = new URL(request.url);
-    const lang = pick(request, url);
+    const { lang, chosen } = pick(request, url);
     const address = (l) => url.origin + url.pathname + (l === 'en' ? '' : `?lang=${l}`);
+    // Each language in its own name, no flags; the current one is plain text.
+    const sw = LANGS.map((l) =>
+      l === lang
+        ? `<span lang="${l}" aria-current="true">${NAMES[l]}</span>`
+        : `<a href="${url.pathname}?lang=${l}" hreflang="${l}" lang="${l}">${NAMES[l]}</a>`,
+    ).join(' ');
 
     const rewritten = new HTMLRewriter()
       .on('html', { element: (e) => e.setAttribute('lang', lang) })
@@ -40,6 +49,15 @@ export default {
           else e.setInnerContent(text, { html: true });
         },
       })
+      .on('a[href^="/"]', {
+        element(e) {
+          if (!chosen) return;
+          const href = e.getAttribute('href');
+          if (href.startsWith('//') || href.includes('?')) return;
+          e.setAttribute('href', `${href}?lang=${lang}`);
+        },
+      })
+      .on('main', { element: (e) => e.append(`<p class="lang">${sw}</p>`, { html: true }) })
       .on('link[rel="canonical"]', { element: (e) => e.setAttribute('href', address(lang)) })
       .on('meta[property="og:url"]', { element: (e) => e.setAttribute('content', address(lang)) })
       .on('head', {

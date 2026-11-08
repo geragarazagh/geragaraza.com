@@ -1,0 +1,7 @@
+/* Blog: his own texts, in Russian only. The list: title in the size of the rows, date under it in the small size.
+   A post: title where every page has it, date under it, the text at the size of the rows, a reading line. */
+.posts{gap:calc(var(--l)/2)}
+.posts li{display:flex;flex-direction:column;gap:calc(var(--l)/12)}
+.posts time,.date{font-size:calc(var(--l)*.32)}
+.date{margin:calc(var(--l)/4) 0 0}
+article>p:not(.date){margin:calc(var(--l)/2) 0 0;line-height:1.4;max-width:34em}
