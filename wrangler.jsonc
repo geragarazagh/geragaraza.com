@@ -7,7 +7,7 @@
     "binding": "ASSETS",
     "not_found_handling": "404-page",
     // Only pages go through the Worker. Files don't: they stay free and unlimited on Workers Free.
-    "run_worker_first": ["/*", "!/assets/*", "!/fonts/*", "!/icons/*", "!/favicon.png", "!/og.png"]
+    "run_worker_first": ["/*", "!/assets/*", "!/fonts/*", "!/icons/*", "!/favicon.ico", "!/favicon.svg", "!/apple-touch-icon.png", "!/og.png"]
   },
   "routes": [
     { "pattern": "geragaraza.com", "custom_domain": true },

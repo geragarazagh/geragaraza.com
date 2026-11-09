@@ -64,6 +64,11 @@ export default {
         element(e) {
           const links = LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${address(l)}">`);
           links.push(`<link rel="alternate" hreflang="x-default" href="${address('en')}">`);
+          // The fonts the page will draw with, fetched together with the stylesheet instead of after it, so the
+          // text appears in Inter at once and doesn't jump from a fallback font. Every page has latin 500 and 600
+          // and the Cyrillic 500 of the language line; Cyrillic 600 only where the page itself is in ru or uk.
+          const fonts = ['latin-500', 'latin-600', 'cyrillic-500'].concat(lang === 'en' ? [] : ['cyrillic-600']);
+          for (const f of fonts) links.push(`<link rel="preload" href="/fonts/inter-${f}.woff2" as="font" type="font/woff2" crossorigin>`);
           e.append(links.join('\n') + '\n', { html: true });
         },
       })
