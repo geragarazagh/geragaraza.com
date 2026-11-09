@@ -13,3 +13,10 @@ h1+.lead{margin:calc(var(--l)/4) 0 0}
 .about li+li{margin-top:calc(var(--l)/8)}
 /* Paths and commands have no spaces to wrap at: they may break anywhere rather than run past the screen's edge. */
 code{font:inherit;overflow-wrap:anywhere}
+/* The Homebrew line: a button that looks like the links under it, the command in the row's own size.
+   It breaks only after a space or a slash, never inside a name. */
+.cmd{display:inline-flex;align-items:center;gap:calc(var(--l)/3);padding:0;border:0;background:none;color:inherit;font:inherit;text-align:left;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.cmd:focus-visible{outline:3px solid currentColor;outline-offset:4px;border-radius:6px}
+.cmd code{overflow-wrap:normal}
+.cmd .c,.cmd.done .p{display:none}
+.cmd.done .c{display:inline}
