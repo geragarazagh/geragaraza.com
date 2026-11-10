@@ -1,33 +1,29 @@
-// TTS's voices without typing anything: the app's own voice choice and speed, a sample from its own set.
+// TTS's voices without typing anything: the app's own voice choice and speed, each sample spoken by the voice itself.
 //
-// The voice choice is the app's since 2026-11-10 (dev/tts.md, «Next»; his words on 0.1: a pick sounded late, broke off,
-// and nothing showed the state or how to stop it). The button with the chosen voice opens the list: Male, Voice 1-5,
-// Female, Voice 6-10 (Supertone's M1-M5, F1-F5, in their order). A name only chooses the voice (the tick moves, no
-// sound). The waveform button on the right of each row only listens: pressed, the voice's sample plays at once and the
-// button turns blue and moves; pressed again, another voice's button, Esc, a click outside the list or closing it stops
-// the sound. A sample plays to its end once and stops. As in the app, one fixed passage per language (PASSAGE).
+// As in the app (0.3, 2026-11-10): the button with the chosen voice opens the list of the voices of the text's language,
+// here the page's: Russian Siri «Голос 1» and «Голос 2», Ukrainian Lesya (Siri has no Ukrainian), English Siri «Voice 2»
+// and «Voice 4» (Apple's numbers). A name only chooses the voice (the tick moves, no sound). The waveform button on the
+// right of each row only listens: pressed, the voice's sample plays at once and the button turns blue and moves; pressed
+// again, another voice's button, Esc, a click outside the list or closing it stops the sound. A sample plays to its end
+// once and stops. The passage is the app's (Bulgakov's Woland, Kotliarevsky's «Енеїда», Shakespeare's seven ages).
 //
-// The speed is the app's: 0.70 to 2.00 in steps of 0.05, 1.05 standard. Like the app, the voice itself is made only at
-// speeds the model speaks well (measured: 0.95 to 1.25) and the rest is time-stretch with the pitch kept: the page has
-// the passages made at 1.05 and 1.25 (samples.json) and plays the one made at the highest speed not above the chosen
-// one, stretched to it. Moving the slider changes a sample that is already playing.
+// The speed is the app's: 0.6 to 3.5 in steps of 0.1, 1.0 standard (the Mac's normal rate). The app has the voice speak
+// anew at the new speed, never stretched, so the page has every passage spoken at every step (samples.json), made on the
+// author's Mac through the app's own pipeline (bench/siteclips). A new speed stops a sample, as in the app.
 
 const lang = ['en', 'uk', 'ru'].includes(document.documentElement.lang) ? document.documentElement.lang : 'en';
-// The passage each language's samples read (index into samples.json, which holds the app's two passages per language):
-// ru Bulgakov's Woland (the one in the mockup he approved), uk Kotliarevsky's «Енеїда», en Shakespeare.
-const PASSAGE = { ru: 1, uk: 0, en: 0 };
 const pick = document.querySelector('#voices .pick'), pop = document.getElementById('voice'), list = document.getElementById('voice-list');
-const shownName = document.getElementById('voice-name');
+const ul = list.querySelector('ul'), shownName = document.getElementById('voice-name');
 const speed = document.getElementById('speed'), shown = document.getElementById('speed-value');
-let table = null, audio = null, playing = null;
-fetch('/assets/tts/samples.json').then((r) => r.json()).then((d) => (table = d));
+const WAVE = '<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="5" width="2" height="6" rx="1"/><rect x="5.5" y="2" width="2" height="12" rx="1"/>' +
+  '<rect x="9.5" y="4" width="2" height="8" rx="1"/><rect x="13" y="6" width="2" height="4" rx="1"/></svg>';
+const TICK = '<svg viewBox="0 0 100 100" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"><path d="M10 52l26 26 54-56"/></svg>';
+const LISTEN = { en: 'Listen', ru: 'Послушать', uk: 'Послухати' }[lang];
+let table = null, audio = null, playing = null, chosen = null;
 
-// The decimal sign of the page's language: 1.05 in English, 1,05 in Ukrainian and Russian, as the app writes it.
-const fmt = new Intl.NumberFormat(lang, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-function rate() {
-  shown.textContent = fmt.format(+speed.value);
-  if (audio) { audio.preservesPitch = audio.webkitPreservesPitch = true; audio.playbackRate = +speed.value / audio.base; }
-}
+// The decimal sign of the page's language: 1.0× in English, 1,0× in Ukrainian and Russian, as the app writes it.
+const fmt = new Intl.NumberFormat(lang, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+function showSpeed() { shown.textContent = fmt.format(+speed.value) + '×'; }
 
 function mark(li, on) {
   const b = li.querySelector('.lb');
@@ -40,19 +36,31 @@ function stop() {
 function listen(li) {
   if (playing === li) { stop(); return; }
   stop();
-  const made = table && table[lang] && table[lang][li.dataset.v];
-  if (!made) return;
-  const bases = Object.keys(made).map(Number).sort((a, b) => a - b), s = +speed.value;
-  const base = bases.filter((b) => b <= s + 1e-9).pop() ?? bases[0], files = made[base.toFixed(2)];
-  const a = new Audio(files[Math.min(PASSAGE[lang], files.length - 1)]);
-  a.base = base; audio = a; playing = li; mark(li, true); rate();
+  const a = new Audio(`/assets/tts/${lang}-${li.dataset.v}-${(+speed.value).toFixed(1)}.m4a`);
+  audio = a; playing = li; mark(li, true);
   a.addEventListener('ended', () => { if (audio === a) stop(); });
   a.play().catch(() => { if (audio === a) stop(); });
 }
 function choose(li) {
+  chosen = li;
   for (const b of list.querySelectorAll('.name')) { const on = b.parentNode === li; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); }
-  shownName.textContent = li.querySelector('.name span:last-child').textContent;
+  shownName.textContent = li.dataset.name;
 }
+
+// The rows: the page language's voices from samples.json; the first female voice is chosen, as the app does.
+fetch('/assets/tts/samples.json').then((r) => r.json()).then((d) => {
+  table = d;
+  for (const v of d.voices[lang]) {
+    const li = document.createElement('li');
+    li.dataset.v = v.v; li.dataset.name = v.name;
+    li.innerHTML = `<button class="name" type="button" aria-pressed="false"><span class="tick">${TICK}</span><span></span></button>` +
+      `<button class="lb" type="button" aria-pressed="false">${WAVE}<span class="vh">${LISTEN}</span></button>`;
+    li.querySelector('.name span:last-child').textContent = v.name;
+    ul.appendChild(li);
+  }
+  const first = d.voices[lang].findIndex((v) => v.gender === 2);
+  choose(ul.children[Math.max(0, first)]);
+});
 
 function openList(open) {
   list.hidden = !open; pop.setAttribute('aria-expanded', open);
@@ -66,5 +74,5 @@ list.addEventListener('click', (e) => {
 // A press anywhere outside the button and its list closes the list, as a click outside a menu does on the Mac.
 document.addEventListener('pointerdown', (e) => { if (!list.hidden && !pick.contains(e.target)) openList(false); });
 addEventListener('keydown', (e) => { if (e.key === 'Escape' && (!list.hidden || audio)) { openList(false); pop.focus(); } });
-speed.addEventListener('input', rate);
-rate();
+speed.addEventListener('input', () => { showSpeed(); stop(); });
+showSpeed();
