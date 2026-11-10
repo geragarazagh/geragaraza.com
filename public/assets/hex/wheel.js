@@ -183,7 +183,9 @@ function resized() {
 }
 // The box's own size is watched, not the window's: Safari can run this before the stylesheet applies, when the box
 // is still the whole page wide, and the column that follows fires no window resize.
-new ResizeObserver(resized).observe(box);
+// Drawn on the next frame: resizing the canvas inside the observer's own callback made WebKit report
+// «ResizeObserver loop completed with undelivered notifications» (2026-11-10, live site).
+new ResizeObserver(() => requestAnimationFrame(resized)).observe(box);
 addEventListener('resize', resized);
 dark.addEventListener('change', () => { if (shown && last) paint(last.x, last.y); });
 resized();
