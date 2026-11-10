@@ -1,9 +1,35 @@
-/* The app's toolbar on the page: the voice list on the left, the speed on the right, as in the app's window;
-   on a narrow screen the speed wraps under the list. One L under the system line, the row size of the page, so the
-   controls are easy to hit with a finger. The list and the slider are the system's own controls. */
+/* The app's toolbar on the page: the voice button on the left, the speed on the right, as in the app's window;
+   on a narrow screen the speed wraps under the button. One L under the system line; every control at least 44 px,
+   so it is easy to hit with a finger. Blue is the system's: the app's waveform button is blue while it plays. */
+:root{--ac:#007aff}
+@media (prefers-color-scheme:dark){:root{--ac:#0a84ff}}
 .bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:calc(var(--l)/4) calc(var(--l)/2);margin:var(--l) 0 0}
-.pick,.speed{display:inline-flex;align-items:center;gap:calc(var(--l)/4)}
-.bar select{font:inherit;font-size:max(16px,1em);color:inherit}
+.pick{position:relative}
+.speed{display:inline-flex;align-items:center;gap:calc(var(--l)/4)}
 .speed input{width:calc(var(--l)*2.6);margin:0}
 .speed output{min-width:2.4em;text-align:right;font-variant-numeric:tabular-nums}
+.bar button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.bar button:focus-visible{outline:3px solid currentColor;outline-offset:2px}
+/* The button with the chosen voice, the app's pop-up button: a frame of one device pixel and a chevron. */
+.pop{display:inline-flex;align-items:center;gap:calc(var(--l)/5);min-height:max(44px,calc(var(--l)*.8));padding:0 calc(var(--l)/4) 0 calc(var(--l)/3)!important;border:var(--px) solid!important;border-radius:calc(var(--l)/6)}
+.pop svg{width:calc(var(--l)*.3);height:calc(var(--l)*.3)}
+/* The list opens under the button, over the page, like the app's menu. */
+.pop-list{position:absolute;top:calc(100% + 6px);left:0;z-index:3;width:max-content;min-width:100%;padding:calc(var(--l)/8);background:var(--bg);border:var(--px) solid;border-radius:calc(var(--l)/5);box-shadow:0 12px 32px rgba(0,0,0,.18)}
+.pop-list[hidden]{display:none}
+.pop-list .hdr{margin:calc(var(--l)/8) calc(var(--l)/4) 0;font-size:calc(var(--l)*.28);font-weight:600}
+.pop-list ul{display:block;margin:0}
+.pop-list li{display:flex;align-items:center;gap:calc(var(--l)/4)}
+.pop-list .name{flex:1;display:flex;align-items:center;gap:calc(var(--l)/5);min-height:44px;padding:0 calc(var(--l)/4) 0 calc(var(--l)/8)!important;text-align:left;border-radius:calc(var(--l)/8)}
+.tick{display:block;width:calc(var(--l)*.36);height:calc(var(--l)*.36)}
+.tick svg{display:block;width:100%;height:100%;visibility:hidden}
+.name.on .tick svg{visibility:visible}
+/* The waveform button: only listens. Blue with moving bars while its voice plays. */
+.lb{flex:none;display:grid;place-items:center;width:44px;height:44px;border-radius:50%}
+.lb svg{width:calc(var(--l)*.4);height:calc(var(--l)*.4)}
+.lb rect{fill:currentColor;transform-origin:center;transform-box:fill-box}
+.lb.on{background:var(--ac);color:#fff}
+.lb.on rect{animation:tts-bar .9s ease-in-out infinite}
+.lb.on rect:nth-child(2){animation-delay:.15s}.lb.on rect:nth-child(3){animation-delay:.3s}.lb.on rect:nth-child(4){animation-delay:.45s}
+@keyframes tts-bar{0%,100%{transform:scaleY(.35)}50%{transform:scaleY(1)}}
+@media (prefers-reduced-motion:reduce){.lb.on rect{animation:none}}
 .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
