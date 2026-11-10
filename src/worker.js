@@ -24,6 +24,14 @@ function pick(request, url) {
 
 export default {
   async fetch(request, env) {
+    // One address per page: www answers with a permanent redirect to the bare domain. Until 2026-11-10 it served a
+    // full copy of every page with its own canonical (https://www.geragaraza.com/), a duplicate site for search engines.
+    // Files under run_worker_first exclusions never reach this; only pages do, and pages are what get indexed.
+    const host = new URL(request.url);
+    if (host.hostname === 'www.geragaraza.com') {
+      host.hostname = 'geragaraza.com';
+      return Response.redirect(host.toString(), 301);
+    }
     const response = await env.ASSETS.fetch(request);
     if (!response.headers.get('content-type')?.includes('text/html')) return response;
 
