@@ -21,13 +21,13 @@
   ],
   "en": [
    {
-    "v": "v2",
-    "name": "Voice 2",
-    "gender": 2
+    "v": "v1",
+    "name": "Voice 1",
+    "gender": 1
    },
    {
-    "v": "v4",
-    "name": "Voice 4",
+    "v": "v2",
+    "name": "Voice 2",
     "gender": 2
    }
   ]
@@ -64,5 +64,5 @@
   3.4,
   3.5
  ],
- "made": "2026-11-10: macOS 27.2 voices (ru Siri gryphon-neural Aleksei and Yelena, uk Lesya compact, en-US Siri Simone and Nora), the app's sample passages through its own pipeline (tts-app/bench/siteclips), AAC 64 kbit/s"
+ "made": "2026-11-10: macOS 27.2 voices, per language the best male and the best female voice the system has (ru Siri gryphon-neural Aleksei and Yelena; uk only Lesya compact, female; en-US Siri Aaron and Simone, chosen of the seven en-US Siri voices by Whisper read-back at 1x-3.5x), the app's sample passages through its own pipeline (tts-app/bench/siteclips), AAC 64 kbit/s"
 }

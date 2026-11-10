@@ -1,8 +1,9 @@
 // TTS's voices without typing anything: the app's own voice choice and speed, each sample spoken by the voice itself.
 //
 // As in the app (0.3, 2026-11-10): the button with the chosen voice opens the list of the voices of the text's language,
-// here the page's: Russian Siri «Голос 1» and «Голос 2», Ukrainian Lesya (Siri has no Ukrainian), English Siri «Voice 2»
-// and «Voice 4» (Apple's numbers). A name only chooses the voice (the tick moves, no sound). The waveform button on the
+// here the page's, the best male and the best female voice macOS has for it: Russian Siri «Голос 1» and «Голос 2»,
+// Ukrainian Lesya alone (Siri has no Ukrainian, macOS no male Ukrainian voice), English Siri «Voice 1» and «Voice 2»
+// (Apple's numbers; Aaron and Simone, the clearest of the seven US Siri voices). A name only chooses the voice (the tick moves, no sound). The waveform button on the
 // right of each row only listens: pressed, the voice's sample plays at once and the button turns blue and moves; pressed
 // again, another voice's button, Esc, a click outside the list or closing it stops the sound. A sample plays to its end
 // once and stops. The passage is the app's (Bulgakov's Woland, Kotliarevsky's «Енеїда», Shakespeare's seven ages).

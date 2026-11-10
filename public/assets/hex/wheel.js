@@ -10,7 +10,10 @@
 // The loupe is the system's color sampler as #HEX opens it, measured from Retina screenshots of it: 121 pt across,
 // a 13 pt ring in the color of the centre pixel, a 3 pt inner line, one device pixel per 10.5 pt cell with 1 pt
 // grid lines, the centre cell framed by a 3 pt rounded square. A click copies the centre pixel the way #HEX
-// does: sRGB, 8 bits per channel, upper case, #RRGGBB. Nothing says so on screen, as nothing does in the app.
+// does: sRGB, 8 bits per channel, upper case, #RRGGBB. Nothing says so on screen, as nothing does in the app:
+// there the loupe vanishes at the press and the arrow is back. Here it then returns after AGAIN ms, as if #HEX
+// were opened again, appearing at once like the system's (no fade either way: measured at 60 fps on his screen
+// recording of 2026-11-10, where his click-to-shortcut gaps were 1.0-1.25 s).
 // On a touch screen a finger held still for a moment brings the loupe up above the finger; letting go copies.
 
 const box = document.getElementById('wheel'), wheel = box.querySelector('canvas'), loupe = document.getElementById('loupe');
@@ -123,7 +126,8 @@ function paint(cx, cy) {
   g.beginPath(); g.roundRect(o - PITCH / 2, o - PITCH / 2, PITCH, PITCH, 1.5); g.stroke();
 }
 
-let shown = false, last = null;
+let shown = false, last = null, resting = 0, pointer = null, picked = null;
+const AGAIN = 1200;
 function hide() { loupe.style.display = 'none'; shown = false; wheel.style.cursor = ''; }
 // Where the pointer is, in the wheel's device pixels, and whether that is on the wheel itself.
 function locate(clientX, clientY) {
@@ -149,12 +153,29 @@ async function copy(p) {
   try { await navigator.clipboard.writeText(text); } catch {}
 }
 
-// Mouse and pen.
-wheel.addEventListener('pointermove', (e) => { if (e.pointerType !== 'touch') show(e.clientX, e.clientY, false); });
-wheel.addEventListener('pointerleave', (e) => { if (e.pointerType !== 'touch') hide(); });
+// Mouse and pen. While the loupe rests after a press, the pointer is only followed, not shown.
+wheel.addEventListener('pointermove', (e) => {
+  if (e.pointerType === 'touch') return;
+  pointer = [e.clientX, e.clientY];
+  if (!resting) show(e.clientX, e.clientY, false);
+});
+wheel.addEventListener('pointerleave', (e) => { if (e.pointerType !== 'touch') { pointer = null; hide(); } });
+// The press is the pick, as in the system's sampler: the loupe goes at once and the pixel under it is the one copied.
+wheel.addEventListener('pointerdown', (e) => {
+  if (e.pointerType === 'touch' || e.button !== 0 || !shown) return;
+  picked = locate(e.clientX, e.clientY);
+  hide();
+  clearTimeout(resting);
+  resting = setTimeout(() => { resting = 0; if (pointer) show(pointer[0], pointer[1], false); }, AGAIN);
+});
 // Safari's click carries no pointer type, so a click soon after a touch is taken as the finger's and ignored: on a
-// touch screen only a held finger copies.
-wheel.addEventListener('click', (e) => { if (e.pointerType !== 'touch' && !touching && Date.now() - touched > 1000) copy(locate(e.clientX, e.clientY)); });
+// touch screen only a held finger copies. The clipboard is written on the click, where every browser allows it.
+wheel.addEventListener('click', (e) => {
+  if (e.pointerType === 'touch' || touching || Date.now() - touched <= 1000) return;
+  // A click while the loupe is away picks nothing, as there is no sampler open in the app then.
+  if (resting && !picked) return;
+  copy(picked || locate(e.clientX, e.clientY)); picked = null;
+});
 
 // Touch: hold still for 300 ms (iOS's own long-press time) and the loupe comes up; until then the page scrolls as usual.
 let timer = 0, touching = false, start = null, touched = 0;
