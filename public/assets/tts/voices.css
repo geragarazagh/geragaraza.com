@@ -1,0 +1,9 @@
+/* The app's toolbar on the page: the voice list on the left, the speed on the right, as in the app's window;
+   on a narrow screen the speed wraps under the list. One L under the system line, the row size of the page, so the
+   controls are easy to hit with a finger. The list and the slider are the system's own controls. */
+.bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:calc(var(--l)/4) calc(var(--l)/2);margin:var(--l) 0 0}
+.pick,.speed{display:inline-flex;align-items:center;gap:calc(var(--l)/4)}
+.bar select{font:inherit;font-size:max(16px,1em);color:inherit}
+.speed input{width:calc(var(--l)*2.6);margin:0}
+.speed output{min-width:2.4em;text-align:right;font-variant-numeric:tabular-nums}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}

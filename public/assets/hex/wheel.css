@@ -1,0 +1,7 @@
+/* The wheel follows the system line, one L below it, in the middle of the column. Its size is the column's width,
+   but never taller than the window less L above and below, so the whole wheel can always be seen at once. */
+.wheel{margin:var(--l) auto 0;width:min(100%,calc(100vh - var(--l)*2));aspect-ratio:1;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+@supports (height:1svh){.wheel{width:min(100%,calc(100svh - var(--l)*2))}}
+.wheel canvas{display:block;-webkit-tap-highlight-color:transparent}
+/* The loupe floats over everything and never takes a click. */
+#loupe{position:fixed;left:0;top:0;z-index:2;display:none;pointer-events:none}

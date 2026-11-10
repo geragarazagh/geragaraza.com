@@ -1,0 +1,8 @@
+/* The page follows the system line, one L below it. As wide as the column, but never taller than the window less L
+   above and below, so a whole-page selection is one drag without scrolling. 2400 x 2867 is the scan's own ratio. */
+.page{position:relative;margin:var(--l) 0 0;width:min(100%,calc((100vh - var(--l)*2)*2400/2867));-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+@supports (height:1svh){.page{width:min(100%,calc((100svh - var(--l)*2)*2400/2867))}}
+.page img{display:block;width:100%;height:auto;cursor:none;-webkit-user-drag:none;-webkit-tap-highlight-color:transparent}
+/* macOS's selection: the picture under it, darkened by black at 10 %, no border (measured: paper 255 becomes 229). */
+.page .sel{position:absolute;background:rgba(0,0,0,.1);pointer-events:none}
+#cross{position:fixed;left:0;top:0;z-index:2;display:none;pointer-events:none}
