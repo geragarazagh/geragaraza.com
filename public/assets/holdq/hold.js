@@ -65,11 +65,19 @@ async function cycle() {
 }
 new IntersectionObserver(([e]) => { on = e.isIntersecting; if (on) cycle(); }, { threshold: 0.6 }).observe(box);
 
-// The film is started here by play(), not by the autoplay attribute (2026-11-11). Safari puts an autoplay video it judges
-// invisible into an «invisible autoplay» interruption and lifts it only when the video's own visibility changes. Safari 27.2
-// started cold and sent straight to this page left the film standing on its first frame, in view, loaded and with the page
-// visible, until the player's first quit and return toggled that visibility; a Safari already running played at once.
-// play() is ordinary muted playback, which Safari allows without a click and never holds back, and in that stuck state it
-// started the film at once. Out of view the film pauses, as autoplay did. Where autoplay is refused (Low Power Mode, a
-// site setting) play() fails quietly and the still frame stays.
-new IntersectionObserver(([e]) => { if (e.isIntersecting) video.play().catch(() => {}); else video.pause(); }).observe(video);
+// The film is started here by play(), not by the autoplay attribute (2026-11-11). Safari 27.2 started cold and sent straight
+// to this page left the autoplay film standing on its first frame (in view, loaded, the page visible) on every cold start
+// tried, until the player's first quit and return changed the video's visibility, which lifts WebKit's «invisible autoplay»
+// hold; a Safari already running played at once. A single play() at load was not enough either: on 2 of 7 cold starts it
+// was lost the same way (the film stayed on its first frame with only its header loaded), why is not known, while a later
+// play() always started it at once. So while the film is in view and standing, the page asks again each second; it pauses
+// out of view, as autoplay did. Where autoplay is refused (Low Power Mode, a site setting) play() fails quietly each time
+// and the still frame stays.
+function film() {
+  if (document.hidden) return;
+  const r = video.getBoundingClientRect();
+  if (r.bottom > 0 && r.top < innerHeight && r.right > 0 && r.left < innerWidth) { if (video.paused) video.play().catch(() => {}); }
+  else if (!video.paused) video.pause();
+}
+new IntersectionObserver(film).observe(video);
+setInterval(film, 1000);
