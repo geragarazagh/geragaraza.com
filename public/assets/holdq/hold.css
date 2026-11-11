@@ -1,24 +1,11 @@
-/* HoldQ on its own page (his pick 2026-11-11): a film playing in a player, the keys ⌘ and Q under it, and HoldQ's sign over the film while
-   they are held. The film frame takes the column's width at the film's own 4:3, one L under the system line. */
+/* HoldQ on its own page (his pick 2026-11-11): a film playing in a player and HoldQ's sign over it, playing by itself (hold.js).
+   The film frame takes the column's width at the film's own 4:3, one L under the system line. */
 .hold{margin:var(--l) 0 0}
 .scene{position:relative;aspect-ratio:4/3;background:none}
 .scene video{display:block;width:100%;height:100%;object-fit:cover;background:#000}
 .scene video.gone{visibility:hidden}
 .scene video.back{animation:back .2s ease-out}
 @keyframes back{from{opacity:0}to{opacity:1}}
-
-/* The keys: a MacBook's ⌘ and Q, outlined in the page's one-pixel line, side by side in the middle under the film.
-   One button: holding it is holding both. The key is L tall, ⌘ 1.25 L wide as on the keyboard, the gap L/8. */
-.keys{display:flex;gap:calc(var(--l)/8);margin:calc(var(--l)/2) auto 0;padding:0;border:0;background:none;color:inherit;cursor:pointer;
-  -webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent;touch-action:none}
-.keys:focus-visible{outline:3px solid currentColor;outline-offset:4px;border-radius:calc(var(--l)*.18)}
-.key{position:relative;box-sizing:border-box;width:var(--l);height:var(--l);border:var(--px) solid;border-radius:calc(var(--l)*.14);
-  font:400 calc(var(--l)*.3)/1 system-ui,-apple-system,sans-serif;transition:transform .06s,background-color .06s}
-.key.command{width:calc(var(--l)*1.25)}
-.key b{position:absolute;right:calc(var(--l)*.12);top:calc(var(--l)*.12);font-weight:400}
-.key i{position:absolute;left:calc(var(--l)*.12);bottom:calc(var(--l)*.12);font-style:normal;font-size:calc(var(--l)*.19)}
-.key.q b{right:auto;top:50%;left:50%;transform:translate(-50%,-50%);font-size:calc(var(--l)*.36)}
-.keys.down .key{transform:translateY(1px);background:color-mix(in srgb,currentColor 8%,transparent)}
 
 /* HoldQ's sign, in its own points (main.swift): 260 x 168, corners 18, the system's HUD material; the ring 88 pt across with
    a 4 pt line, from twelve o'clock clockwise, the app's 64 pt icon in it, 18 pt under it the line in the system font
@@ -41,4 +28,3 @@
   .hud .track{stroke:rgba(255,255,255,.18)}
   .hud .fill{stroke:rgba(255,255,255,.9)}
 }
-.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
