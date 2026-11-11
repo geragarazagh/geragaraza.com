@@ -1,4 +1,7 @@
-// The first page of «War and Peace» (1937 Jubilee edition, vol. 9, p. 3), and OCR's selection over it.
+// A page of «War and Peace» (1937 Jubilee edition, vol. 9, p. 5), and OCR's selection over it. Page 5, the first page
+// of plain running text, since 2026-11-11 (his note: the old page 3 opened with «Часть первая / I.»); it continues the
+// salon of chapter I in French and Russian, the case OCR's line-by-line language work is for. Scan: archive.org
+// tolstoy-leo-war-and-peace-4-volumes, Vol I jp2 0025, 2400 px wide, cropped as page 3 was (220 px over the first ink).
 //
 // The page was read beforehand by OCR's own engine (its main.swift, unchanged: Vision at 1.5x, tiles, the second
 // look at words in another script, the cleanup), with the box of every word kept (page.json). So a selection

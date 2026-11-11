@@ -1,82 +1,60 @@
-// STT on its own page: a button, a voice, and the text dropped into a field the way STT drops it at the cursor.
+// STT on its own page: a Mac's screen in small and STT's shortcut under it, Option-Command-Space.
 //
-// The button is STT's wave in the icon's own grammar: 11 bars, bar = gap, heights in whole bar widths, 18 at most,
-// silence a small bar 3 widths tall. At rest it is the wave of «STT» from the icon. A tap plays a phrase (the next
-// one in the page's language, phrases.json): the icon's bars step off to the left one per 75 ms and the voice's own
-// loudness comes in from the right, one bar per 75 ms, the time «STT» takes to say per bar. When the voice ends,
-// small bars run for 0.7 s, the moment STT spends recognising, then the whole text lands in the field at once (the
-// app has no live text) and the icon's wave steps back in. A second tap while it plays stops it with no text.
-// phrases.json and the recordings come from tools/sttphrases.py; nothing here changes when the recordings do.
+// What STT does (dev card stt.md, «Keys» and «Output»): a short press of the shortcut starts recording, the next press
+// stops it, recording runs 0.3 s past the stop so the last word isn't cut, then the whole text is pasted at once where
+// the cursor is: no live text, no sound, no window; the only sign is macOS's orange microphone dot in the menu bar.
+// Here a press of the keys starts it and the dot comes on; the voice is one of his nine recorded phrases in the page's
+// language, in turn (phrases.json, made by tools/sttphrases.py). When it ends the keys are pressed again by themselves,
+// as the speaker would; after the 0.3 s tail the dot goes out, 0.7 s of recognising pass, and the text lands at the
+// cursor at once, after a space if it would touch a word. A press while a phrase runs changes nothing: the speaker is
+// still talking. The menu bar clock is the visitor's own time, written as macOS writes it.
 
-const ICON = [12, 18, 10, 3, 9, 15, 8, 3, 9, 13, 7], TALL = 18, QUIET = 3, N = 11, PAUSE = 0.7;
-const btn = document.getElementById('talk'), canvas = btn.querySelector('canvas'), ctx = canvas.getContext('2d');
-const field = document.getElementById('field');
+const box = document.getElementById('stt'), keys = box.querySelector('.keys'), doc = box.querySelector('.doc');
+const txt = doc.querySelector('.txt'), caret = doc.querySelector('.caret'), dot = box.querySelector('.dot'), clock = box.querySelector('.clock');
 const lang = ['en', 'uk', 'ru'].includes(document.documentElement.lang) ? document.documentElement.lang : 'en';
-let data = null, next = 0, run = null, unit = 0;
-// L itself is a CSS expression; an empty block one L tall gives its value in pixels.
-const probe = document.createElement('div');
-probe.style.cssText = 'position:absolute;visibility:hidden;width:0;height:var(--l)';
-document.body.append(probe);
+const TAIL = 300, THINK = 700;
+let data = null, next = 0, busy = false;
 fetch('/assets/stt/phrases.json').then((r) => r.json()).then((d) => { data = d; next = Math.floor(Math.random() * (d[lang] || []).length); });
 
-// One bar width in CSS px: a ninth of L, so the tallest bar is 2 L; made a whole even number of device pixels so
-// every bar and every half-step of centring sits on the pixel grid, as the icon's bars do.
-function size() {
-  const s = window.devicePixelRatio || 1, L = probe.getBoundingClientRect().height || 52;
-  unit = Math.max(2, 2 * Math.round((L / 9) * s / 2)) / s;
-  canvas.width = Math.round((N * 2 - 1) * unit * s); canvas.height = Math.round(TALL * unit * s);
-  canvas.style.width = (N * 2 - 1) * unit + 'px'; canvas.style.height = TALL * unit + 'px';
+// The clock: weekday, day, month and time, without commas, the weekday with a capital, as in macOS's menu bar. The
+// visitor's own locale when it is the page's language (so en-US gets «Wed Nov 11 6:05 AM», en-GB «Wed 11 Nov 6:05»).
+const loc = (navigator.language || '').toLowerCase().startsWith(lang) ? navigator.language : { en: 'en-US', ru: 'ru-RU', uk: 'uk-UA' }[lang];
+function tick() {
+  const d = new Date(), day = d.toLocaleDateString(loc, { weekday: 'short', day: 'numeric', month: 'short' }).replace(/,/g, '');
+  clock.textContent = day[0].toUpperCase() + day.slice(1) + ' ' + d.toLocaleTimeString(loc, { hour: 'numeric', minute: '2-digit' });
+  setTimeout(tick, 60000 - (Date.now() % 60000) + 50);
 }
-function draw(cols) {
-  const s = window.devicePixelRatio || 1, u = unit * s;
-  ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = getComputedStyle(btn).color;
-  cols.forEach((h, i) => { ctx.beginPath(); ctx.roundRect(i * 2 * u, (TALL - h) / 2 * u, u, h * u, u / 2); ctx.fill(); });
-}
-const bar = (e) => Math.min(TALL, Math.max(QUIET, Math.round(e * TALL)));
+tick();
 
-// The strip of columns as time goes: the icon, the voice, the pause, the icon again. The window shows the last 11.
-function frame() {
-  if (!run) return;
-  const { p, audio, t0 } = run, slice = data.slice;
-  let cols;
-  if (!run.ended) {
-    const k = Math.floor(audio.currentTime / slice);
-    cols = ICON.concat(p.e.slice(0, k + 1).map(bar));
-  } else {
-    const since = performance.now() / 1000 - run.ended, k = Math.floor(since / slice);
-    const pause = Math.round(PAUSE / slice);
-    if (since >= PAUSE && !run.typed) { run.typed = true; type(p.t); }
-    cols = ICON.concat(p.e.map(bar), Array(Math.min(k, pause)).fill(QUIET), ICON.slice(0, Math.max(0, k - pause)));
-    if (k - pause >= N) { run = null; draw(ICON); btn.removeAttribute('aria-pressed'); return; }
-  }
-  draw(cols.slice(-N));
-  requestAnimationFrame(frame);
+function tap() { keys.classList.add('down'); setTimeout(() => keys.classList.remove('down'), 140); }
+const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+function paste(t) {
+  const v = txt.textContent;
+  txt.textContent = v + (v && !/\s$/.test(v) ? ' ' : '') + t;
+  doc.scrollTop = doc.scrollHeight;
 }
 
-// The text goes where the field's cursor is, with a space if it would touch a word, as a paste from STT would.
-function type(t) {
-  const v = field.value, at = field.selectionEnd ?? v.length, before = v.slice(0, at);
-  const text = (before && !/\s$/.test(before) ? ' ' : '') + t;
-  field.setRangeText(text, at, at, 'end');
-  field.dispatchEvent(new Event('input', { bubbles: true }));
-}
-
-btn.addEventListener('click', () => {
-  if (run) { run.audio.pause(); run = null; draw(ICON); btn.removeAttribute('aria-pressed'); return; }
+keys.addEventListener('click', async () => {
+  tap();
   const list = data && data[lang];
-  if (!list || !list.length) return;
+  if (busy || !list || !list.length) return;
+  busy = true;
   const p = list[next % list.length]; next++;
   const audio = new Audio(p.a);
-  run = { p, audio };
-  btn.setAttribute('aria-pressed', 'true');
-  audio.addEventListener('ended', () => { if (run && run.audio === audio) run.ended = performance.now() / 1000; });
-  audio.play().then(() => requestAnimationFrame(frame)).catch(() => { run = null; draw(ICON); btn.removeAttribute('aria-pressed'); });
+  caret.classList.add('still');
+  dot.classList.add('on');
+  try {
+    await audio.play();
+    // A recording that breaks off (the network) ends the run with no text, rather than leaving the keys busy.
+    await new Promise((r, no) => { audio.addEventListener('ended', r, { once: true }); audio.addEventListener('error', no, { once: true }); });
+    tap();
+    await wait(TAIL);
+    dot.classList.remove('on');
+    await wait(THINK);
+    paste(p.t);
+  } catch (e) {
+    dot.classList.remove('on');
+  }
+  caret.classList.remove('still');
+  busy = false;
 });
-
-function redraw() { size(); if (!run) draw(ICON); }
-// L is measured on a probe; Safari can run this before the stylesheet applies, so the probe's size is watched.
-new ResizeObserver(redraw).observe(probe);
-addEventListener('resize', redraw);
-matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { if (!run) draw(ICON); });
-redraw();
