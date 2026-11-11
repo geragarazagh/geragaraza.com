@@ -53,6 +53,21 @@ txt.addEventListener('focus', () => { touched = true; caret.hidden = true; });
 txt.addEventListener('blur', () => { const v = txt.innerText.replace(/\n$/, ''); if (txt.textContent !== v) txt.textContent = v; pos = Math.min(pos, v.length); place(); });
 txt.addEventListener('input', () => { touched = true; typed = performance.now(); });
 new ResizeObserver(() => requestAnimationFrame(place)).observe(doc);
+// The field is four lines tall, or as tall as the whole round of the page's phrases needs at this width, so none of
+// the scene's own text ever scrolls out of sight (2026-11-11: Roosevelt's sentence took five lines on a 390 pt phone).
+// Measured with an invisible copy of the text box holding the round; again whenever the block's width changes.
+let fitWidth = 0;
+function fit() {
+  if (!list.length || box.clientWidth === fitWidth) return;
+  fitWidth = box.clientWidth; doc.style.height = '';
+  const probe = txt.cloneNode(false);
+  probe.style.cssText = 'position:absolute;left:0;right:0;top:0;visibility:hidden;min-height:0';
+  probe.textContent = list.map((p) => p.t).join(' ');
+  doc.appendChild(probe);
+  const need = probe.offsetHeight; probe.remove();
+  if (need > doc.clientHeight) doc.style.height = need + doc.offsetHeight - doc.clientHeight + 'px';
+}
+new ResizeObserver(() => requestAnimationFrame(() => { fit(); place(); })).observe(box);
 
 // The paste: at the cursor, replacing a selection as Cmd-V does; a space before or after it where it would touch a word
 // (what the speaker would type between two dictations; STT itself adds none).
@@ -116,6 +131,7 @@ async function loop() {
 
 fetch(box.dataset.set).then((r) => r.json()).then((d) => {
   list = d[lang] || d.en;
+  fit(); place();
   new IntersectionObserver((e) => { inView = e[0].isIntersecting; }, { threshold: .6 }).observe(box);
   loop();
 });
