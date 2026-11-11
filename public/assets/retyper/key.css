@@ -1,4 +1,4 @@
-/* SourceKey on its own page: a text in the site's one-pixel frame that types itself, and the input source sign in its
+/* Retyper on its own page: a text in the site's one-pixel frame that types itself, and the input source sign in its
    top right corner, where the menu bar shows it. The sign as macOS 27.2 draws it (his recording 2026-11-11): 21.5 x 15.5
    pt, a 4 pt corner, ABC outlined, a Cyrillic layout filled with the letters cut out; it changes in one frame. */
 .sk{margin:var(--l) 0 0}

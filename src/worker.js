@@ -32,6 +32,11 @@ export default {
       host.hostname = 'geragaraza.com';
       return Response.redirect(host.toString(), 301);
     }
+    // SourceKey was renamed Retyper on 2026-11-11 (0.1.1): its old page address keeps working, language choice included.
+    if (host.pathname === '/apps/sourcekey' || host.pathname.startsWith('/apps/sourcekey/')) {
+      host.pathname = '/apps/retyper/';
+      return Response.redirect(host.toString(), 301);
+    }
     const response = await env.ASSETS.fetch(request);
     if (!response.headers.get('content-type')?.includes('text/html')) return response;
 

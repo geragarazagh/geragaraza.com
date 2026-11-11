@@ -1,4 +1,4 @@
-// SourceKey's block (his pick 2026-11-11, variant A): text typed in the wrong layout, retyped as the app does it. A word
+// Retyper's block (SourceKey until 0.1.1) (his pick 2026-11-11, variant A): text typed in the wrong layout, retyped as the app does it. A word
 // typed on the wrong layout is replaced at Space (Backspaces, then the new text, in a blink), the input source sign
 // switches at once, and the rest comes out right because the layout is now the right one. Every result here is one the
 // app gave on a test machine (26.6.2, 2026-11-11). Plays while in view; nothing to press.
