@@ -1,0 +1,16 @@
+/* SourceKey on its own page: a text in the site's one-pixel frame that types itself, and the input source sign in its
+   top right corner, where the menu bar shows it. The sign as macOS 27.2 draws it (his recording 2026-11-11): 21.5 x 15.5
+   pt, a 4 pt corner, ABC outlined, a Cyrillic layout filled with the letters cut out; it changes in one frame. */
+.sk{margin:var(--l) 0 0}
+.sk .doc{position:relative;height:calc(var(--l)*.32*1.4*2 + var(--l)*.5);border:var(--px) solid;border-radius:calc(var(--l)*.14);overflow:hidden}
+.sk .txt{box-sizing:border-box;padding:calc(var(--l)/4) calc(var(--l)*1.1) calc(var(--l)/4) calc(var(--l)/3);
+  font:400 calc(var(--l)*.32)/1.4 system-ui,-apple-system,sans-serif;white-space:pre-wrap;overflow-wrap:anywhere}
+.sk .caret{display:inline-block;width:2px;height:1.15em;margin:0 -1px;vertical-align:-.2em;background:#007aff;animation:skblink 1.06s step-end infinite}
+.sk .caret.still{animation:none}
+@keyframes skblink{50%{opacity:0}}
+.sk .src{position:absolute;top:calc(var(--l)*.2);right:calc(var(--l)*.2);width:calc(var(--l)*.417);height:calc(var(--l)*.3);
+  box-sizing:border-box;border:calc(var(--l)*.024) solid currentColor;border-radius:calc(var(--l)*.08);
+  display:flex;align-items:center;justify-content:center;font:600 calc(var(--l)*.22)/1 system-ui,-apple-system,sans-serif}
+.sk .src.fill{background:currentColor;font-size:calc(var(--l)*.19)}
+.sk .src.fill span{color:#fff}
+@media (prefers-color-scheme:dark){.sk .caret{background:#0a84ff}.sk .src.fill{opacity:.88}.sk .src.fill span{color:#000}}
