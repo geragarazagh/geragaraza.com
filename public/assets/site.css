@@ -43,3 +43,23 @@ a:focus-visible{outline:3px solid currentColor;outline-offset:4px;border-radius:
    the content on Apps and Blog). A little smaller than the path line; its tap zone (above) keeps it easy to hit. */
 .lang{position:absolute;left:0;right:0;bottom:var(--l);margin:0;display:flex;flex-wrap:wrap;gap:0 calc(var(--l)/3);font-size:calc(var(--l)*.28);line-height:1.2}
 .lang [aria-current]{font-weight:600}
+/* A command or a text to copy (2026-11-11, his choice V1 after three variants; the terminal glyph is gone everywhere).
+   A block in a frame of one device pixel, the line the apps and icons use; the command in a monospaced face, as
+   code is set everywhere; at the right edge a copy icon (two sheets) that turns into a check mark for 1.5 s, as in
+   Google, Gemini, ChatGPT and GitHub (his examples). Tap zone 44 pt. A command breaks only at a space before its
+   package or after a slash in it (span.nw keeps each part whole, a flag stays with the name: «convert -g»), so on a
+   narrow phone it takes two clean lines and nothing hangs alone. A long text (a skill) scrolls inside its block,
+   the icon stays at its top. */
+li.cl{align-self:stretch}
+.cmdline{display:flex;align-items:center;margin:calc(var(--l)/2) 0 0;max-width:34em;min-height:44px;padding-left:14px;border:var(--px) solid currentColor;border-radius:10px;font:400 calc(var(--l)*.28)/1.45 ui-monospace,SFMono-Regular,Menlo,monospace}
+li .cmdline{margin:0}
+.cmdline code{flex:1;min-width:0;padding:10px 0;font:inherit;overflow-wrap:normal}
+.cmdline .nw{white-space:nowrap}
+.cmdline .copy{flex:none;align-self:stretch;display:flex;align-items:center;justify-content:center;width:44px;margin:0;padding:0;border:0;background:none;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.cmdline .copy svg{width:20px;height:20px}
+.cmdline .copy .c,.cmdline .copy.done .p{display:none}
+.cmdline .copy.done .c{display:inline}
+.cmdline .copy:focus-visible{outline:3px solid currentColor;outline-offset:-6px;border-radius:8px}
+.cmdline.text{align-items:flex-start}
+.cmdline.text .copy{align-self:flex-start;height:44px}
+.cmdline pre{flex:1;min-width:0;margin:0;padding:12px 0;max-height:50vh;overflow:auto;font:400 12px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace;white-space:pre-wrap}
