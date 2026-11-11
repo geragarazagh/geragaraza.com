@@ -64,3 +64,12 @@ async function cycle() {
   running = false;
 }
 new IntersectionObserver(([e]) => { on = e.isIntersecting; if (on) cycle(); }, { threshold: 0.6 }).observe(box);
+
+// The film is started here by play(), not by the autoplay attribute (2026-11-11). Safari puts an autoplay video it judges
+// invisible into an «invisible autoplay» interruption and lifts it only when the video's own visibility changes. Safari 27.2
+// started cold and sent straight to this page left the film standing on its first frame, in view, loaded and with the page
+// visible, until the player's first quit and return toggled that visibility; a Safari already running played at once.
+// play() is ordinary muted playback, which Safari allows without a click and never holds back, and in that stuck state it
+// started the film at once. Out of view the film pauses, as autoplay did. Where autoplay is refused (Low Power Mode, a
+// site setting) play() fails quietly and the still frame stays.
+new IntersectionObserver(([e]) => { if (e.isIntersecting) video.play().catch(() => {}); else video.pause(); }).observe(video);
