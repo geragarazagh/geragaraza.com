@@ -65,14 +65,14 @@ async function cycle() {
 }
 new IntersectionObserver(([e]) => { on = e.isIntersecting; if (on) cycle(); }, { threshold: 0.6 }).observe(box);
 
-// The film is started here by play(), not by the autoplay attribute (2026-11-11). Safari 27.2 started cold and sent straight
-// to this page left the autoplay film standing on its first frame (in view, loaded, the page visible) on every cold start
-// tried, until the player's first quit and return changed the video's visibility, which lifts WebKit's «invisible autoplay»
-// hold; a Safari already running played at once. A single play() at load was not enough either: on 2 of 7 cold starts it
-// was lost the same way (the film stayed on its first frame with only its header loaded), why is not known, while a later
-// play() always started it at once. So while the film is in view and standing, the page asks again each second; it pauses
-// out of view, as autoplay did. Where autoplay is refused (Low Power Mode, a site setting) play() fails quietly each time
-// and the still frame stays.
+// The film is also started by play(), not only by the autoplay attribute (2026-11-11). Safari 27.2 started cold and sent
+// straight to this page could leave the autoplay film standing on its first frame (in view, loaded, the page visible) until
+// the player's first quit and return changed the video's visibility; a Safari already running played at once. A play()
+// from the page is ordinary muted playback and lifts WebKit's «invisible autoplay» hold, so the film also keeps running
+// while the player is gone. Measured on his Mac: with play() alone (no autoplay) a cold start sometimes had every play()
+// refused for the whole page load (Safari then wants a click), while autoplay woke at the player's return in his report;
+// so both stay: whatever Safari allows first starts the film. While the film is in view and standing the page asks again
+// each second; out of view it pauses. Where autoplay is refused (Low Power Mode, a site setting) the still frame stays.
 function film() {
   if (document.hidden) return;
   const r = video.getBoundingClientRect();
