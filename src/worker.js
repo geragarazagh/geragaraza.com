@@ -91,6 +91,13 @@ export default {
     const out = new Response(rewritten.body, rewritten);
     out.headers.set('Vary', 'Accept-Language');
     out.headers.delete('ETag');
+    // Security headers (2026-11-12, Mozilla Observatory in release.md «Security scanners»): every script, style, font,
+    // picture and sound is the site's own, so a page loads nothing from elsewhere and no other site may frame it.
+    // 'unsafe-inline' for styles only: the home page keeps one <style> for its logo in the dark theme.
+    out.headers.set('Content-Security-Policy', "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; " +
+      "img-src 'self'; media-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'");
+    out.headers.set('X-Frame-Options', 'DENY');
+    out.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
     return out;
   },
 };
