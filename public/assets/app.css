@@ -14,3 +14,9 @@ h1+.lead{margin:calc(var(--l)/4) 0 0}
 /* Paths and commands have no spaces to wrap at: they may break anywhere rather than run past the screen's edge. */
 code{font:inherit;overflow-wrap:anywhere}
 /* The Homebrew line is a .cmdline block since 2026-11-11 (site.css). */
+/* The download block (2026-11-12, his pick A): a group per device, its name small above it; each row a label and, under it,
+   the source and size in a smaller, quieter line. The second group sits 1/2 L lower, the step layer 2 uses before a subheading. */
+.get .dev{font-size:calc(var(--l)*.28);line-height:1.2;opacity:.62}
+.get .dev~.dev{margin-top:calc(var(--l)/4)}
+.get .two{display:flex;flex-direction:column;line-height:1.15}
+.get .sub{font-size:.62em;font-weight:500;opacity:.62}
