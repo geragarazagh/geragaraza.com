@@ -1,0 +1,4 @@
+Contact: mailto:geragaraza@gmail.com
+Expires: 2027-11-12T00:00:00.000Z
+Preferred-Languages: en, ru, uk
+Canonical: https://geragaraza.com/.well-known/security.txt
