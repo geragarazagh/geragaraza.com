@@ -8,19 +8,22 @@
 // The text is a real text: a click or a tap puts the cursor anywhere, it can be typed into and selected, and the next
 // phrase lands where the cursor was left. Nothing asks for a real shortcut (dev/rules.md, section 5).
 //
-// The scene plays by itself while the block is in view, as HoldQ's does (his pick 2026-11-11, of three: this, a record
-// button, his own voice); the voice is muted until the sound button is pressed (a browser plays no sound before a press).
-// After the round of phrases the text is cleared and the round starts again, unless the visitor has touched the text:
-// then it stays theirs. data-set: the phrases of each language (voices.json: ru Tolstoy 1908, en Nightingale 1890, uk
-// his own three; files made by tools/sttphrases.py, text = what STT typed for the served file; dev/site.md).
+// Nothing happens by itself (his rules 2026-11-12 06:37, after «опять что-то загорелось, хотя я ничего не нажимал»): no dot,
+// no sound, no text until the visitor presses the sound button. A press is the shortcut: the dot comes on and the next
+// phrase is heard; at its end, or at a second press at any moment, the recording stops (0.3 s tail), the dot goes out,
+// and after 0.7 s of recognising the text of what was heard so far lands at the cursor: the whole phrase, or the words
+// whose end the voice had reached (voices.json «w», each word's end in seconds, from Whisper's word timestamps on the
+// served file, matched to STT's own text). Then nothing more until the next press. The text stays until the visitor
+// removes it (Delete, ⌘Z, ⌘X; his word 2026-11-12 07:24: no clear button). data-set: the phrases of each language (voices.json: ru Tolstoy 1908, en
+// Roosevelt 1912, uk his own three; files made by tools/sttphrases.py, text = what STT typed for the served file;
+// dev/site.md).
 
 const box = document.getElementById('stt'), doc = box.querySelector('.doc'), txt = box.querySelector('.txt');
 const caret = box.querySelector('.caret'), dot = box.querySelector('.dot'), snd = box.querySelector('.snd');
 const lang = ['en', 'uk', 'ru'].includes(document.documentElement.lang) ? document.documentElement.lang : 'en';
 const TAIL = 300, THINK = 700;
 const audio = new Audio(); audio.preload = 'auto';
-let list = [], pos = 0, touched = false, typed = 0, sound = false, busy = false, inView = false, abort = false;
-const HUSH = 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAIA+AAACABAAZGF0YQAAAAA=';
+let list = [], next = 0, pos = 0, typed = 0, phase = 'idle', stop = null;
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
 // The cursor. While the text has focus the browser draws its own; without focus this one stands where the visitor left
@@ -30,9 +33,10 @@ const node = () => { if (!txt.firstChild) txt.appendChild(document.createTextNod
 function place() {
   if (document.activeElement === txt) { caret.hidden = true; return; }
   const n = node(), v = n.data, d = doc.getBoundingClientRect(), r = document.createRange();
-  let x, y, h;
-  if (pos > 0 && v[pos - 1] !== '\n') { r.setStart(n, pos - 1); r.setEnd(n, pos); const q = [...r.getClientRects()].pop(); x = q.right; y = q.top; h = q.height; }
-  else if (pos < v.length) { r.setStart(n, pos); r.setEnd(n, pos + 1); const q = r.getClientRects()[0]; x = q.left; y = q.top; h = q.height; }
+  pos = Math.max(0, Math.min(pos, v.length));   // the visitor may have cut text meanwhile
+  let x, y, h, q;
+  if (pos > 0 && v[pos - 1] !== '\n') { r.setStart(n, pos - 1); r.setEnd(n, pos); q = [...r.getClientRects()].pop(); if (q) { x = q.right; y = q.top; h = q.height; } }
+  else if (pos < v.length) { r.setStart(n, pos); r.setEnd(n, pos + 1); q = r.getClientRects()[0]; if (q) { x = q.left; y = q.top; h = q.height; } }
   if (x === undefined) {
     const s = getComputedStyle(txt), lh = parseFloat(s.lineHeight), lines = v.slice(0, pos).split('\n').length - 1;
     x = d.left + parseFloat(s.paddingLeft); y = d.top + parseFloat(s.paddingTop) + lines * lh - doc.scrollTop; h = lh;
@@ -49,9 +53,9 @@ function where() {
   return r.toString().length;
 }
 document.addEventListener('selectionchange', () => { if (document.activeElement === txt) pos = where(); });
-txt.addEventListener('focus', () => { touched = true; caret.hidden = true; });
+txt.addEventListener('focus', () => { caret.hidden = true; });
 txt.addEventListener('blur', () => { const v = txt.innerText.replace(/\n$/, ''); if (txt.textContent !== v) txt.textContent = v; pos = Math.min(pos, v.length); place(); });
-txt.addEventListener('input', () => { touched = true; typed = performance.now(); });
+txt.addEventListener('input', () => { typed = performance.now(); });
 new ResizeObserver(() => requestAnimationFrame(place)).observe(doc);
 // The field is four lines tall, or as tall as the whole round of the page's phrases needs at this width, so none of
 // the scene's own text ever scrolls out of sight (2026-11-11: Roosevelt's sentence took five lines on a 390 pt phone).
@@ -92,55 +96,51 @@ function paste(t) {
   });
 }
 
-// One dictation: dot on, the voice (heard if sound is on, else only its time passes), tail, dot off, recognising, paste.
-async function speak(p) {
-  busy = true; abort = false; caret.classList.add('still'); dot.classList.add('on');
-  const t0 = performance.now();
-  let heard = false;
-  if (sound) { audio.src = p.a; heard = await audio.play().then(() => true, () => false); }
-  while (!abort && performance.now() - t0 < p.d * 1000 + 60 && !(heard && audio.ended)) await wait(40);
-  if (!abort) await wait(TAIL);
-  dot.classList.remove('on');
-  if (!abort) {
-    await wait(THINK);
-    while (performance.now() - typed < 1500) await wait(200); // never into the middle of someone's typing
-    paste(p.t);
-  }
-  caret.classList.remove('still'); busy = false;
-  return !abort;
+// The words of a phrase whose end the voice had reached after «t» seconds.
+function heard(p, t) {
+  if (t >= p.d) return p.t;
+  return p.t.split(' ').filter((_, i) => p.w && p.w[i] <= t).join(' ');
 }
 
-// Time that passes only while the block is in view and the page is shown.
-async function gate(ms) {
-  let left = ms;
-  while (left > 0) { await wait(50); if (inView && !document.hidden) left -= 50; }
-}
-async function loop() {
-  let i = 0;
-  await gate(1500);
-  for (;;) {
-    const p = list[i % list.length];
-    if (!(await speak(p))) { await wait(200); continue; } // the sound came on mid-phrase: the same phrase again, heard
-    i++;
-    if (i % list.length) { await gate(2200); continue; }
-    await gate(4000);
-    if (!touched) { node().data = ''; pos = 0; place(); }
-    await gate(1200);
+// One dictation, from the press to the paste. Whatever goes wrong, the block is ready for the next press (2026-11-12
+// 07:24: a stop near the end of the phrase threw and left it deaf until a reload).
+async function dictate() {
+  try { await record(list[next++ % list.length]); }
+  catch (e) { console.error(e); }
+  finally {
+    audio.pause(); dot.classList.remove('on'); snd.setAttribute('aria-pressed', 'false'); caret.classList.remove('still');
+    stop = null; phase = 'idle';
   }
+}
+async function record(p) {
+  phase = 'rec'; snd.setAttribute('aria-pressed', 'true'); dot.classList.add('on'); caret.classList.add('still');
+  const t0 = performance.now();
+  audio.src = p.a; audio.play().catch(() => {});
+  let pressed = false;
+  await new Promise((r) => {
+    stop = () => { stop = null; pressed = true; r(); };
+    const tick = () => { if (!stop) return; if (performance.now() - t0 >= p.d * 1000 + 60) { stop = null; r(); } else setTimeout(tick, 40); };
+    tick();
+  });
+  const t = (performance.now() - t0) / 1000 + TAIL / 1000;   // the recording runs 0.3 s past the stop, and so does the voice
+  await wait(TAIL);
+  audio.pause();
+  phase = 'think'; dot.classList.remove('on'); snd.setAttribute('aria-pressed', 'false');
+  await wait(THINK);
+  while (performance.now() - typed < 1500) await wait(200); // never into the middle of someone's typing
+  const text = pressed ? heard(p, t) : p.t;
+  if (text) paste(text);
 }
 
 fetch(box.dataset.set).then((r) => r.json()).then((d) => {
   list = d[lang] || d.en;
   fit(); place();
-  new IntersectionObserver((e) => { inView = e[0].isIntersecting; }, { threshold: .6 }).observe(box);
-  loop();
 });
 place();
 
 snd.addEventListener('click', () => {
-  sound = !sound; snd.setAttribute('aria-pressed', sound);
-  // A press unlocks the player for the phrases to come (a browser lets a page play only after one); a phrase already
-  // running is cut and said again, now heard.
-  if (sound) { audio.src = HUSH; audio.play().catch(() => {}); if (busy) abort = true; }
-  else audio.pause();
+  if (!list.length) return;
+  if (phase === 'idle') dictate();
+  else if (phase === 'rec' && stop) stop();
+  // while recognising, a press changes nothing: the text is on its way, as in STT
 });
