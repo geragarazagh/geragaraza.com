@@ -8,22 +8,19 @@
   const txt = root.querySelector('.txt'), src = root.querySelector('.src');
   // ['src', sign] sets the layout, ['type', text] types it key by key, ['fix', n, text, sign] is SourceKey: n characters
   // back, the text, the new layout.
+  // Four per page, its own language first; every language the app knows shows on every page (his review 2026-11-11:
+  // more varied phrases, to show it is not tied to one language). Each one replayed on 26.6.2 with Retyper 0.1.1 on
+  // 2026-11-12 (test/run.py): the result below is what it typed.
+  const RU = [['src', 'A'], ['type', 'ghbdtn'], ['type', ' '], ['fix', 7, 'привет ', 'РУ'], ['type', 'мир']];
+  const UK = [['src', 'A'], ['type', 'lzre.'], ['type', ' '], ['fix', 6, 'дякую ', 'УК'], ['type', 'за допомогу']];
+  const BACK = [['src', 'A'], ['type', 'd 2022 ujle'], ['type', ' '], ['fix', 12, 'в 2022 году ', 'РУ'], ['type', 'всё получилось']];
+  const EN_RU = [['src', 'РУ'], ['type', 'ыуу'], ['type', ' '], ['fix', 4, 'see ', 'A'], ['type', 'you tomorrow']];
+  const EN_UK = [['src', 'УК'], ['type', 'іуу'], ['type', ' '], ['fix', 4, 'see ', 'A'], ['type', 'you tomorrow']];
+  const LET = [['src', 'РУ'], ['type', 'дуе'], ['type', ' '], ['fix', 4, 'let ', 'A'], ['type', 'me know']];
   const SC = {
-    ru: [
-      [['src', 'A'], ['type', 'ghbdtn'], ['type', ' '], ['fix', 7, 'привет ', 'РУ'], ['type', 'как дела?']],
-      [['src', 'A'], ['type', 'd 2022 ujle'], ['type', ' '], ['fix', 12, 'в 2022 году ', 'РУ'], ['type', 'всё получилось']],
-      [['src', 'РУ'], ['type', 'ырщцштп'], ['type', ' '], ['fix', 8, 'showing ', 'A'], ['type', 'this']],
-    ],
-    uk: [
-      [['src', 'A'], ['type', 'ghbdsn'], ['type', ' '], ['fix', 7, 'привіт ', 'УК'], ['type', 'як справи?']],
-      [['src', 'A'], ['type', 'd 2022 hjws'], ['type', ' '], ['fix', 12, 'в 2022 році ', 'УК'], ['type', 'усе вийшло']],
-      [['src', 'УК'], ['type', 'ірщцштп'], ['type', ' '], ['fix', 8, 'showing ', 'A'], ['type', 'this']],
-    ],
-    en: [
-      [['src', 'РУ'], ['type', 'ырщцштп'], ['type', ' '], ['fix', 8, 'showing ', 'A'], ['type', 'this']],
-      [['src', 'A'], ['type', 'ghbdtn'], ['type', ' '], ['fix', 7, 'привет ', 'РУ'], ['type', 'мир']],
-      [['src', 'A'], ['type', 'd 2022 ujle'], ['type', ' '], ['fix', 12, 'в 2022 году ', 'РУ'], ['type', 'всё получилось']],
-    ],
+    ru: [[['src', 'A'], ['type', 'ghbdtn'], ['type', ' '], ['fix', 7, 'привет ', 'РУ'], ['type', 'как дела?']], EN_RU, UK, BACK],
+    uk: [[['src', 'A'], ['type', 'ghbdsn'], ['type', ' '], ['fix', 7, 'привіт ', 'УК'], ['type', 'як справи?']], EN_UK, RU, UK],
+    en: [[['src', 'РУ'], ['type', 'ырщцштп'], ['type', ' '], ['fix', 8, 'showing ', 'A'], ['type', 'this']], LET, RU, UK],
   }[lang];
   const caret = document.createElement('i'); caret.className = 'caret';
   let text = '';

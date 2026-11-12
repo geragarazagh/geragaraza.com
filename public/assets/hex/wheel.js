@@ -199,6 +199,9 @@ wheel.addEventListener('contextmenu', (e) => e.preventDefault());
 
 let size = 0;
 function resized() {
+  // Not before wheel.css applies: Safari ran this with the box still the page's full width and no square shape, and
+  // the first frame showed a slice of a huge wheel on the right before the real one (his review 2026-11-11, 0:07).
+  if (getComputedStyle(box).aspectRatio.replace(/\s/g, '') !== '1/1') return;
   const w = box.getBoundingClientRect().width;
   if (w !== size || (window.devicePixelRatio || 1) !== dpr) { size = w; draw(); }
 }
@@ -208,5 +211,6 @@ function resized() {
 // «ResizeObserver loop completed with undelivered notifications» (2026-11-10, live site).
 new ResizeObserver(() => requestAnimationFrame(resized)).observe(box);
 addEventListener('resize', resized);
+addEventListener('load', resized);
 dark.addEventListener('change', () => { if (shown && last) paint(last.x, last.y); });
 resized();
