@@ -1,4 +1,10 @@
 /* App pages: layer 1 (title, the lead, Download, GitHub, the system line), then layer 2 under its own label. No pictures. */
+/* The app's icon beside its name (his pick Б of three, 2026-11-13): two logo heights, so it is the largest thing in the title
+   line, the important thing big. An Apple icon's plate is 824 of its 1024 units, centred, so 100/1024 of the picture is empty
+   on each side: the negative margins put the plate itself on the column line and the name L/3 from it, the gap between a
+   logo and its label everywhere on the site. */
+.appicon{flex:none;width:calc(var(--l)*2);height:calc(var(--l)*2);margin:0 calc(var(--l)*-.1953)}
+.appicon img{display:block;width:100%;height:100%}
 h1+.lead{margin:calc(var(--l)/4) 0 0}
 .small{margin:var(--l) 0 0;font-size:calc(var(--l)*.32);line-height:1.35}
 /* Layer 2: the full text for advanced users and language models, one step smaller than the rows, same column.
@@ -13,7 +19,10 @@ h1+.lead{margin:calc(var(--l)/4) 0 0}
 .about li+li{margin-top:calc(var(--l)/8)}
 /* Paths and commands have no spaces to wrap at: they may break anywhere rather than run past the screen's edge. */
 code{font:inherit;overflow-wrap:anywhere}
-/* The Homebrew line is a .cmdline block since 2026-11-11 (site.css). */
+/* The Homebrew line is a .cmdline block since 2026-11-11 (site.css), and so is every command of layer 2 since 2026-11-13,
+   L/4 under the sentence that leads to it, the step between paragraphs. Its words may break anywhere only if they must. */
+.about .cmdline{margin:calc(var(--l)/4) 0 0}
+.about .cmdline code{overflow-wrap:anywhere}
 /* The download block (2026-11-12, his pick A): a group per device, its name small above it; each row a label and, under it,
    the source and size in a smaller, quieter line. The second group sits 1/2 L lower, the step layer 2 uses before a subheading. */
 .get .dev{font-size:calc(var(--l)*.28);line-height:1.2;opacity:.62}

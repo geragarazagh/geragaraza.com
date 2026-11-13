@@ -47,8 +47,8 @@ a:focus-visible{outline:3px solid currentColor;outline-offset:4px;border-radius:
    A block in a frame of one device pixel, the line the apps and icons use; the command in a monospaced face, as
    code is set everywhere; at the right edge a copy icon (two sheets) that turns into a check mark for 1.5 s, as in
    Google, Gemini, ChatGPT and GitHub (his examples). Tap zone 44 pt. A command breaks only at a space before its
-   package or after a slash in it (span.nw keeps each part whole, a flag stays with the name: «convert -g»), so on a
-   narrow phone it takes two clean lines and nothing hangs alone. A long text (a skill) scrolls inside its block,
+   package (span.nw keeps each word whole, a flag stays with its name: «convert -g»; gen.py lets only a word over 24
+   characters break after its slashes), so on a narrow phone it takes two clean lines and nothing hangs alone. A long text (a skill) scrolls inside its block,
    the icon stays at its top. */
 li.cl{align-self:stretch}
 .cmdline{display:flex;align-items:center;margin:calc(var(--l)/2) 0 0;max-width:34em;min-height:44px;padding-left:14px;border:var(--px) solid currentColor;border-radius:10px;font:400 calc(var(--l)*.28)/1.45 ui-monospace,SFMono-Regular,Menlo,monospace}
