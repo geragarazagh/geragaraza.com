@@ -7,6 +7,11 @@
 // WebKit's own, from their .loctable/.strings on macOS 27.2. Keys as in Finder and its menus: Esc closes, arrows move
 // the highlight, Return acts, a letter jumps; on a selected file Space is Quick Look, Return renames, ⌘⌫ trashes,
 // ⌘C copies, ⌘D duplicates, ⌘O opens.
+// Several files, as on the Mac's Desktop (his word 2026-11-14 ~11:07): ⌘-click or ⇧-click adds a file to the selection or
+// takes it out (in Finder's icon view both do that), ⌘A selects all; a right click on one of them opens the menu for all
+// of them, with Finder's own titles for several items («Quick Look 3 Items»), and keeps only what a page can do for several
+// at once: Move to Trash, Duplicate, Quick Look (← → step through them, as in Finder), and Share… where the browser can
+// share several files. ⌘⌫, ⌘D and Space act on all the selected files.
 'use strict';
 (() => {
   const desk = document.getElementById('px-desk');
@@ -17,6 +22,9 @@
     ru: { open: 'Открыть', trash: 'Переместить в Корзину', rename: 'Переименовать', dup: 'Дублировать', ql: 'Быстрый просмотр', copy: 'Скопировать', dl: 'Загрузить изображение', share: 'Поделиться…', close: 'Закрыть' },
     uk: { open: 'Відкрити', trash: 'Перемістити в Смітник', rename: 'Перейменувати', dup: 'Дублювати', ql: 'Швидкий перегляд', copy: 'Скопіювати', dl: 'Викачати зображення', share: 'Поширити…', close: 'Закрити' },
   };
+  // Finder's titles for several items (Finder.app Localizable.strings on macOS 27.2, key N169.18_V3; ^0 is the count).
+  const QLN = { en: 'Quick Look ^0 Items', ru: 'Быстрый просмотр объектов (^0)', uk: 'Швидкий перегляд ^0 елем.' };
+  const qln = (n) => (QLN[document.documentElement.lang] || QLN.en).replace('^0', n);
   const t = () => T[document.documentElement.lang] || T.en;
   const ICON = {
     trash: '<svg viewBox="0 0 11.5 13"><path d="M1 3h9.5M4 3V1.6h3.5V3M2.1 3l.6 8.6c.05.6.45.9 1 .9h4.1c.55 0 .95-.3 1-.9L9.4 3M4.6 5.3v4.9M6.9 5.3v4.9"/></svg>',
@@ -24,47 +32,54 @@
   };
   const files = () => [...desk.querySelectorAll('.px-file')];
   const select = (f) => { files().forEach((x) => x.classList.toggle('on', x === f)); };
+  const chosen = () => files().filter((x) => x.classList.contains('on'));
 
   // ---- actions -------------------------------------------------------------------------------------------------
   const fileOf = (f) => new File([f.pxBlob], f.pxName + '.png', { type: 'image/png' });
-  const canShare = (f) => { try { return !!(navigator.share && navigator.canShare && navigator.canShare({ files: [fileOf(f)] })); } catch { return false; } };
+  const canShare = (fs) => { try { return !!(navigator.share && navigator.canShare && navigator.canShare({ files: fs.map(fileOf) })); } catch { return false; } };
   const act = {
     open(f) { window.open(f.pxUrl, '_blank'); },
-    trash(f) {
-      const next = f.nextElementSibling || f.previousElementSibling;
-      if (ql.file === f) ql.hide(true);
-      PX.taken.delete(f.pxName); f.remove();
-      setTimeout(() => URL.revokeObjectURL(f.pxUrl), 60000);
+    trash(f, fs = [f]) {
+      const last = fs.at(-1);
+      let next = last.nextElementSibling; while (next && fs.includes(next)) next = next.nextElementSibling;
+      if (!next) { next = fs[0].previousElementSibling; while (next && fs.includes(next)) next = next.previousElementSibling; }
+      if (ql.file && fs.includes(ql.file)) ql.hide(true);
+      for (const g of fs) { PX.taken.delete(g.pxName); g.remove(); setTimeout(() => URL.revokeObjectURL(g.pxUrl), 60000); }
       if (next && next.classList.contains('px-file')) { select(next); next.focus({ preventScroll: true }); }
     },
     rename(f) { rename(f); },
-    dup(f) {
-      const base = f.pxName.replace(/ \(\d+\)$/, '');
-      let n = base, i = 2; while (PX.taken.has(n)) n = `${base} (${i++})`;
-      PX.taken.add(n);
-      const g = PX.land(desk, f.pxBlob, n); f.after(g); select(g); g.focus({ preventScroll: true });
+    // Finder puts each copy after its original and selects the copies.
+    dup(f, fs = [f]) {
+      const made = fs.map((o) => {
+        const base = o.pxName.replace(/ \(\d+\)$/, '');
+        let n = base, i = 2; while (PX.taken.has(n)) n = `${base} (${i++})`;
+        PX.taken.add(n);
+        const g = PX.land(desk, o.pxBlob, n); o.after(g); return g;
+      });
+      files().forEach((x) => x.classList.toggle('on', made.includes(x))); made.at(-1).focus({ preventScroll: true });
     },
-    ql(f) { ql.show(f); },
+    ql(f, fs = [f]) { ql.show(fs.length > 1 ? fs[0] : f, fs); }, // several: from the first, ← → through the rest
     copy(f) { PX.copy(Promise.resolve(f.pxBlob)); },
     dl(f) { PX.save(f); },
-    share(f) { navigator.share({ files: [fileOf(f)] }).catch(() => {}); },
+    share(f, fs = [f]) { navigator.share({ files: fs.map(fileOf) }).catch(() => {}); },
   };
 
   // ---- the menu ------------------------------------------------------------------------------------------------
   const menu = document.createElement('div');
   menu.className = 'px-menu'; menu.hidden = true; menu.tabIndex = -1; menu.setAttribute('role', 'menu');
   document.body.append(menu);
-  let target = null, rows = [], hi = -1;
-  function build(f) {
-    const s = t(), groups = [['open'], ['trash'], ['rename', 'dup', 'ql', 'copy', 'dl']];
-    if (canShare(f)) groups.push(['share']);
+  let target = null, targets = [], rows = [], hi = -1;
+  function build(fs) {
+    const s = t(), many = fs.length > 1;
+    const groups = many ? [['trash'], ['dup', 'ql']] : [['open'], ['trash'], ['rename', 'dup', 'ql', 'copy', 'dl']];
+    if (canShare(fs)) groups.push(['share']);
     menu.textContent = ''; rows = [];
     groups.forEach((g, gi) => {
       if (gi) { const sp = document.createElement('div'); sp.className = 'sp'; sp.setAttribute('role', 'separator'); menu.append(sp); }
       g.forEach((k) => {
         const r = document.createElement('div'); r.className = 'it'; r.setAttribute('role', 'menuitem'); r.dataset.k = k;
         if (ICON[k]) { const ic = document.createElement('span'); ic.className = 'ic'; ic.innerHTML = ICON[k]; r.append(ic); }
-        r.append(s[k]); menu.append(r); rows.push(r);
+        r.append(k === 'ql' && many ? qln(fs.length) : s[k]); menu.append(r); rows.push(r);
       });
     });
   }
@@ -85,7 +100,8 @@
   function open(f, x, y) {
     if (ql.file) ql.hide();
     stop();
-    target = f; select(f); build(f); light(-1);
+    if (!f.classList.contains('on')) select(f);
+    target = f; targets = chosen(); build(targets); light(-1);
     menu.hidden = false;
     const vw = document.documentElement.clientWidth, vh = window.innerHeight, w = menu.offsetWidth, h = menu.offsetHeight;
     // macOS puts the menu's top left corner at the pointer, opens to the left near the right edge and slides up near the
@@ -107,18 +123,18 @@
   }
   function choose(i) {
     if (menu.classList.contains('gone')) return;
-    const k = rows[i]?.dataset.k, f = target, r = rows[i];
+    const k = rows[i]?.dataset.k, f = target, fs = targets.filter((x) => x.isConnected), r = rows[i];
     if (!k) return;
     const touch = choose.touch; choose.touch = false;
     const now = NOW.has(k) || (k === 'rename' && touch);
     if (k !== 'rename' && k !== 'ql') target.focus({ preventScroll: true });
-    if (now && f.isConnected) act[k](f);
+    if (now && f.isConnected) act[k](f, fs);
     menu.classList.add('gone');
     light(i); r.classList.remove('hl');
     timers.push(setTimeout(() => r.classList.add('hl'), BLINK_OFF));
     timers.push(setTimeout(() => {
       going = fade(FADE_PICK);
-      going.onfinish = () => { hide(); if (!now && f.isConnected) act[k](f); };
+      going.onfinish = () => { hide(); if (!now && f.isConnected) act[k](f, fs); };
     }, BLINK_OFF + BLINK_ON));
   }
   menu.addEventListener('pointermove', (e) => { if (menu.classList.contains('gone')) return; const r = e.target.closest('.it'); light(r ? rows.indexOf(r) : -1); });
@@ -149,8 +165,21 @@
     if (e.button !== 0) return;
     const f = e.target.closest('.px-file');
     if (f?.querySelector('[contenteditable]')) return;
+    if (f && (e.metaKey || e.shiftKey)) {
+      // ⌘ or ⇧: this file in or out of the selection, the others stay. A file taken out is not focused, so focusing it
+      // can't select it again.
+      e.preventDefault(); f.classList.toggle('on');
+      const rest = chosen(); if (f.classList.contains('on')) f.focus({ preventScroll: true }); else if (rest.length) rest.at(-1).focus({ preventScroll: true });
+      return;
+    }
+    if (!f && (e.metaKey || e.shiftKey)) return;
+    if (f && f.classList.contains('on') && chosen().length > 1) { e.preventDefault(); f.focus({ preventScroll: true }); pending = f; return; }
     select(f); if (f) { e.preventDefault(); f.focus({ preventScroll: true }); }
   });
+  // A plain click on one of several selected files leaves only it selected when the button comes up (Finder waits, so a
+  // press that starts a drag or a right click keeps them all).
+  let pending = null;
+  desk.addEventListener('mouseup', (e) => { const f = e.target.closest('.px-file'); if (pending && f === pending && !e.metaKey && !e.shiftKey) select(f); pending = null; });
   desk.addEventListener('dblclick', (e) => { const f = e.target.closest('.px-file'); if (f && !f.querySelector('[contenteditable]')) act.open(f); });
   desk.addEventListener('contextmenu', (e) => {
     const f = e.target.closest('.px-file');
@@ -162,20 +191,22 @@
   desk.addEventListener('keydown', (e) => {
     const f = e.target.closest('.px-file');
     if (!f || f.querySelector('[contenteditable]')) return;
-    const k = e.key, m = e.metaKey || e.ctrlKey;
-    if (k === ' ' && !m) act.ql(f);
-    else if (k === 'Enter' && !m) act.rename(f);
-    else if (m && k === 'Backspace') act.trash(f);
-    else if (m && (k === 'c' || k === 'C')) act.copy(f);
-    else if (m && (k === 'd' || k === 'D')) act.dup(f);
-    else if (m && (k === 'o' || k === 'O')) act.open(f);
+    const k = e.key, m = e.metaKey || e.ctrlKey, fs = chosen().length ? chosen() : [f], one = fs.length === 1;
+    if (k === ' ' && !m) act.ql(f, fs);
+    else if (k === 'Enter' && !m) { if (one) act.rename(f); }
+    else if (m && k === 'Backspace') act.trash(f, fs);
+    else if (m && (k === 'c' || k === 'C')) { if (one) act.copy(f); }
+    else if (m && (k === 'd' || k === 'D')) act.dup(f, fs);
+    else if (m && (k === 'o' || k === 'O')) { if (one) act.open(f); }
+    else if (m && (k === 'a' || k === 'A')) files().forEach((x) => x.classList.add('on'));
+    else if ((k === 'ArrowRight' || k === 'ArrowLeft') && ql.file && ql.list.length > 1) return; // Quick Look steps
     else if (k === 'ArrowRight' || k === 'ArrowLeft') {
       const all = files(), i = all.indexOf(f) + (k === 'ArrowRight' ? 1 : -1);
       if (all[i]) { select(all[i]); all[i].focus({ preventScroll: true }); }
     } else return;
     e.preventDefault();
   });
-  desk.addEventListener('focusin', (e) => { const f = e.target.closest('.px-file'); if (f && !f.classList.contains('on')) select(f); });
+  desk.addEventListener('focusin', (e) => { const f = e.target.closest('.px-file'); if (f && !f.classList.contains('on') && !e.relatedTarget?.closest?.('.px-menu')) select(f); });
 
   // Touch: a tap is Quick Look (as a tap on a file in the iPhone's Files), a long press opens the menu under the finger.
   let timer = 0, start = null, touchMenu = false, held = false;
@@ -239,12 +270,19 @@
   }), { duration: c.t.at(-1), easing: 'linear' });
   const onIcon = (src, ix, iy, w) => { const r = src.getBoundingClientRect(), k = Math.max(r.width / w, 0.02); return [r.left - ix * k, r.top - iy * k, k]; };
   const ql = {
-    el: null, file: null,
+    el: null, file: null, list: [],
     title() { if (this.el) this.el.querySelector('.t').textContent = this.file.pxName + '.png'; },
-    show(f) {
+    // ← → with several files: the next one in the same panel, no zoom (Finder steps through them in place).
+    step(d) {
+      const l = this.list.filter((x) => x.isConnected), i = l.indexOf(this.file) + d;
+      if (!this.el || i < 0 || i >= l.length) return;
+      this.file = l[i]; const im = this.el.querySelector('img'); im.src = this.file.pxUrl; this.title();
+      im.decode().catch(() => {}).then(() => this.fit(false));
+    },
+    show(f, list = [f]) {
       if (this.file === f) return this.hide();
       if (this.file) this.hide(true);
-      this.file = f; f.focus({ preventScroll: true });
+      this.file = f; this.list = list; f.focus({ preventScroll: true });
       const el = this.el = document.createElement('div'); el.className = 'px-ql'; el.setAttribute('role', 'dialog');
       const bar = document.createElement('div'); bar.className = 'bar';
       const x = document.createElement('button'); x.className = 'x'; x.type = 'button'; x.setAttribute('aria-label', t().close);
@@ -254,8 +292,9 @@
       bar.append(x, tt);
       const im = new Image(); im.src = f.pxUrl; im.alt = ''; im.draggable = false;
       el.append(bar, im); document.body.append(el); this.title();
-      const dpr = window.devicePixelRatio || 1, src = f.querySelector('.th img');
-      const go = () => {
+      const dpr = window.devicePixelRatio || 1;
+      this.fit = (zoomIn) => {
+        const src = this.file.querySelector('.th img');
         const vw = document.documentElement.clientWidth, vh = window.innerHeight;
         let w = im.naturalWidth / dpr, h = im.naturalHeight / dpr;
         const k = Math.min(1, (vw - 40) / (w + 10), (vh - 80) / (h + 42)); w *= k; h *= k;
@@ -263,11 +302,11 @@
         const W = Math.max(w + 10, 220), H = h + 42, L = (vw - W) / 2, Tp = (vh - H) / 2;
         el.style.width = W + 'px'; im.style.margin = `0 ${(W - 10 - w) / 2}px`;
         this.at = [L, Tp, 5 + (W - 10 - w) / 2, 37, w];
-        zoom(el, QL_OPEN, onIcon(src, this.at[2], 37, w), [L, Tp, 1]);
+        if (zoomIn) zoom(el, QL_OPEN, onIcon(src, this.at[2], 37, w), [L, Tp, 1]);
         el.style.transform = `translate(${L}px, ${Tp}px)`;
       };
       el.style.visibility = 'hidden';
-      im.decode().catch(() => {}).then(() => { el.style.visibility = ''; go(); });
+      im.decode().catch(() => {}).then(() => { el.style.visibility = ''; this.fit(true); });
     },
     hide(now) {
       const el = this.el, f = this.file;
@@ -283,5 +322,6 @@
   addEventListener('keydown', (e) => {
     if (!ql.file || !menu.hidden) return;
     if (e.key === 'Escape' || (e.key === ' ' && !e.target.closest?.('.px-file'))) { e.preventDefault(); ql.hide(); }
+    else if ((e.key === 'ArrowRight' || e.key === 'ArrowLeft') && ql.list.length > 1) { e.preventDefault(); e.stopPropagation(); ql.step(e.key === 'ArrowRight' ? 1 : -1); }
   });
 })();

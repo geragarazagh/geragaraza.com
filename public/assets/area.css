@@ -1,0 +1,4 @@
+/* macOS's area selection, shared by OCR's page and Pixlift's (area.js): the grey veil, black at 10 %, no border (measured:
+   paper 255 becomes 229), and the crosshair canvas that follows the pointer. */
+.sel{position:absolute;background:rgba(0,0,0,.1);pointer-events:none}
+#cross{position:fixed;left:0;top:0;z-index:2;display:none;pointer-events:none}

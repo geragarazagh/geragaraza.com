@@ -6,7 +6,6 @@
 .px-pic{position:relative;margin:var(--l) 0 0;width:min(100%,calc((100vh - var(--l)*2)*2400/1558));-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 @supports (height:1svh){.px-pic{width:min(100%,calc((100svh - var(--l)*2)*2400/1558))}}
 .px-pic img{display:block;width:100%;height:auto;-webkit-user-drag:none;-webkit-tap-highlight-color:transparent}
-.px-pic .sel{position:absolute;background:rgba(0,0,0,.1);pointer-events:none}
 .px-desk{display:flex;flex-wrap:wrap;gap:calc(var(--l)/4) calc(var(--l)/3);min-height:calc(var(--l)*1.25 + var(--l)*.2*1.25*2 + var(--l)/8);margin:calc(var(--l)/4) 0 0}
 .px-file{display:flex;flex-direction:column;align-items:center;gap:calc(var(--l)/16);width:calc(var(--l)*1.6);color:inherit;text-decoration:none;outline:none;cursor:default;-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
 .px-file .th{display:flex;align-items:center;justify-content:center;width:calc(var(--l)*1.25);height:calc(var(--l)*1.25);padding:calc(var(--l)*.06);border-radius:calc(var(--l)*.09)}
@@ -18,4 +17,3 @@
 .px-file.px-file .nm>span[contenteditable]{background:Canvas;color:CanvasText;font-weight:400;outline:3px solid rgba(0,122,255,.5);outline:3px solid color-mix(in srgb,AccentColor 50%,transparent);outline-offset:0;cursor:text;-webkit-user-select:text;user-select:text}
 .px-file img{-webkit-user-drag:none}
 @media (prefers-color-scheme:dark){.px-file img{box-shadow:0 0 0 1px rgba(255,255,255,.22),0 1px 3px rgba(0,0,0,.6)}.px-file.on .th{background:rgba(255,255,255,.09)}.px-file.on .nm>span{background:rgb(0,88,208);background:color-mix(in srgb,AccentColor 82%,#000)}}
-#cross{position:fixed;left:0;top:0;z-index:2;display:none;pointer-events:none}

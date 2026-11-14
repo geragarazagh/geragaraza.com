@@ -1,6 +1,5 @@
-// Pixlift's live block, the common parts: file names as the app writes them, the «Desktop» row, the clipboard, and
-// macOS's screenshot crosshair (OCR's page, measured from a Retina capture: arms 11.5 pt of #404040, a grey ring,
-// the position or the selection's size beside it).
+// Pixlift's live block, the common parts: file names as the app writes them, the «Desktop» row, the clipboard, the cut.
+// The area selection itself is /assets/area.js, shared with OCR's page.
 'use strict';
 const PX = {};
 // «2026-11-14 05-47-12», « (2)» when a name is taken in the same second, as the app names its files.
@@ -32,25 +31,6 @@ PX.save = (f) => { const a = document.createElement('a'); a.href = f.pxUrl; a.do
 // inside the click, so Safari lets it through; a browser that refuses keeps the file only.
 PX.copy = (blobPromise) => {
   try { if (window.ClipboardItem && navigator.clipboard?.write) navigator.clipboard.write([new ClipboardItem({ 'image/png': blobPromise })]).catch(() => {}); } catch {}
-};
-PX.crosshair = () => {
-  const cross = document.getElementById('cross'), g = cross.getContext('2d'), SIZE = 80, O = 40;
-  return {
-    paint(readout, flip) {
-      const s = window.devicePixelRatio || 1;
-      if (cross.width !== SIZE * s) { cross.width = cross.height = SIZE * s; cross.style.width = cross.style.height = SIZE + 'px'; }
-      g.setTransform(1, 0, 0, 1, 0, 0); g.clearRect(0, 0, cross.width, cross.height); g.setTransform(s, 0, 0, s, 0, 0);
-      g.fillStyle = 'rgba(0,0,0,.12)'; g.beginPath(); g.arc(O, O, 8, 0, Math.PI * 2); g.fill();
-      g.strokeStyle = 'rgba(0,0,0,.34)'; g.lineWidth = 1; g.beginPath(); g.arc(O, O, 7.5, 0, Math.PI * 2); g.stroke();
-      g.fillStyle = '#404040'; g.fillRect(O - 11.5, O - 0.5, 23, 1); g.fillRect(O - 0.5, O - 11.5, 1, 23);
-      g.fillStyle = '#c8c8c8'; g.fillRect(O - 0.5, O - 0.5, 1, 1);
-      g.font = '9px system-ui, -apple-system, sans-serif'; g.lineJoin = 'round'; g.strokeStyle = '#fff'; g.lineWidth = 2.5; g.fillStyle = '#000';
-      g.textAlign = flip ? 'right' : 'left'; const x = flip ? O - 7.75 : O + 7.75;
-      readout.forEach((t, i) => { const y = O + 9.75 + i * 9; g.strokeText(t, x, y); g.fillText(t, x, y); });
-    },
-    place(x, y) { cross.style.transform = `translate(${x - O}px, ${y - O}px)`; cross.style.display = 'block'; },
-    hide() { cross.style.display = 'none'; },
-  };
 };
 // A piece of a picture as a Retina capture would hold it: the selection's points times the screen's scale, cut from
 // the picture's own pixels. The file the browser chose from srcset is read again as a plain image, because an <img>
