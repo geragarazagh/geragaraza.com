@@ -2,9 +2,16 @@
 // page and Pixlift's telegram run this one file, so the two can never drift apart (his word 2026-11-14 ~11:07, on Pixlift's
 // page: OCR's selection is the right one, «такая же как вот здесь», Pixlift's must be exactly it).
 //
-// Over the picture the pointer becomes macOS's screenshot crosshair, measured from a Retina capture: arms 11.5 pt of #404040,
-// 1 pt thick, a light centre, a grey ring 8 pt across, and beside it the position in points (before the drag) or the
-// selection's width and height (during it). The selection is macOS's grey veil, black at 10 %, no border (paper 255
+// Over the picture the pointer becomes macOS's screenshot crosshair (⇧⌘4), measured from Retina captures of the real one on
+// white and on black (OCR's page 2026-11-09; his recordings 2026-11-14 11:07 and 11:49). Every part is a black layer and a
+// white layer, so it reads on any background: the arms 11.5 pt from the centre, a 1 pt core of black at 75 % (#404040 on
+// white, black on black) inside a 0.875 pt rim of white at 19 % (invisible on white, grey 48 on black); the ring 8 pt
+// across, filled black 12 % + white 2.5 %, its 1 pt line black 40 % + white 14 %; the centre point black 23 % + white 5 %.
+// The readout beside it has no outline (his word 11:49: «эта белая обводка неправильная, её в оригинале нету… на белом
+// фоне оно просто чёрное полностью»): it is what lies under it turned over (white in difference) and then darkened by black
+// at 31 %, so black on white, grey 176 on black, light over black letters, as measured. The difference half is a second
+// canvas with mix-blend-mode: difference (area.css), under the first. The position in points before the drag, the
+// selection's width and height during it. The selection is macOS's grey veil, black at 10 %, no border (paper 255
 // becomes 229). A click without a drag selects nothing, as in macOS; Esc drops a drag. On a touch screen a finger held
 // still for 300 ms starts the selection; until then the page scrolls as usual.
 //
@@ -13,26 +20,36 @@
 'use strict';
 function area(img, veil, done) {
   const cross = document.getElementById('cross'), g = cross.getContext('2d');
+  const diff = document.createElement('canvas'); diff.id = 'crossd'; diff.setAttribute('aria-hidden', 'true'); cross.before(diff);
+  const gd = diff.getContext('2d');
   img.style.cursor = 'none';
   const at = (cx, cy) => { const r = img.getBoundingClientRect(); return { x: Math.min(Math.max(cx - r.left, 0), r.width), y: Math.min(Math.max(cy - r.top, 0), r.height), r }; };
   const SIZE = 80, O = 40; // canvas size and where the cross's centre sits in it
+  // The plus as one outline: arms reaching a from the centre, half as thick as h.
+  const plus = (c, a, h) => { c.moveTo(O - h, O - a); c.lineTo(O + h, O - a); c.lineTo(O + h, O - h); c.lineTo(O + a, O - h); c.lineTo(O + a, O + h); c.lineTo(O + h, O + h);
+    c.lineTo(O + h, O + a); c.lineTo(O - h, O + a); c.lineTo(O - h, O + h); c.lineTo(O - a, O + h); c.lineTo(O - a, O - h); c.lineTo(O - h, O - h); c.closePath(); };
   function paint(readout, flip) {
     const s = window.devicePixelRatio || 1;
-    if (cross.width !== SIZE * s) { cross.width = cross.height = SIZE * s; cross.style.width = cross.style.height = SIZE + 'px'; }
-    g.setTransform(1, 0, 0, 1, 0, 0); g.clearRect(0, 0, cross.width, cross.height); g.setTransform(s, 0, 0, s, 0, 0);
-    g.fillStyle = 'rgba(0,0,0,.12)'; g.beginPath(); g.arc(O, O, 8, 0, Math.PI * 2); g.fill();
-    g.strokeStyle = 'rgba(0,0,0,.34)'; g.lineWidth = 1; g.beginPath(); g.arc(O, O, 7.5, 0, Math.PI * 2); g.stroke();
-    g.fillStyle = '#404040'; g.fillRect(O - 11.5, O - 0.5, 23, 1); g.fillRect(O - 0.5, O - 11.5, 1, 23);
-    g.fillStyle = '#c8c8c8'; g.fillRect(O - 0.5, O - 0.5, 1, 1);
+    for (const [c, x] of [[cross, g], [diff, gd]]) {
+      if (c.width !== SIZE * s) { c.width = c.height = SIZE * s; c.style.width = c.style.height = SIZE + 'px'; }
+      x.setTransform(1, 0, 0, 1, 0, 0); x.clearRect(0, 0, c.width, c.height); x.setTransform(s, 0, 0, s, 0, 0);
+    }
+    g.beginPath(); g.arc(O, O, 8, 0, Math.PI * 2); g.fillStyle = 'rgba(0,0,0,.124)'; g.fill(); g.fillStyle = 'rgba(255,255,255,.024)'; g.fill();
+    g.lineWidth = 1; g.beginPath(); g.arc(O, O, 7.5, 0, Math.PI * 2); g.strokeStyle = 'rgba(0,0,0,.396)'; g.stroke(); g.strokeStyle = 'rgba(255,255,255,.137)'; g.stroke();
+    // The rim: the plus grown by 0.875 pt with the core cut out (even-odd), then the core.
+    g.beginPath(); plus(g, 11.5 + .875, .5 + .875); plus(g, 11.5, .5); g.fillStyle = 'rgba(255,255,255,.19)'; g.fill('evenodd');
+    g.beginPath(); plus(g, 11.5, .5); g.fillStyle = 'rgba(0,0,0,.75)'; g.fill();
+    g.fillStyle = 'rgba(0,0,0,.228)'; g.fillRect(O - 0.5, O - 0.5, 1, 1); g.fillStyle = 'rgba(255,255,255,.05)'; g.fillRect(O - 0.5, O - 0.5, 1, 1);
     // Readout: 9 pt digits on 9 pt lines, left edge 7.75 pt right of the centre, first baseline 9.75 pt below it; near the
     // right edge of the window it moves to the cross's left, so it never leaves the screen.
-    g.font = '9px system-ui, -apple-system, sans-serif'; g.textBaseline = 'alphabetic';
-    g.lineJoin = 'round'; g.strokeStyle = '#fff'; g.lineWidth = 2.5; g.fillStyle = '#000';
-    g.textAlign = flip ? 'right' : 'left'; const x = flip ? O - 7.75 : O + 7.75;
-    readout.forEach((t, i) => { const y = O + 9.75 + i * 9; g.strokeText(t, x, y); g.fillText(t, x, y); });
+    const x = flip ? O - 7.75 : O + 7.75;
+    for (const [c, col] of [[gd, '#fff'], [g, 'rgba(0,0,0,.31)']]) {
+      c.font = '9px system-ui, -apple-system, sans-serif'; c.textBaseline = 'alphabetic'; c.textAlign = flip ? 'right' : 'left'; c.fillStyle = col;
+      readout.forEach((t, i) => c.fillText(t, x, O + 9.75 + i * 9));
+    }
   }
-  const place = (cx, cy) => { cross.style.transform = `translate(${cx - O}px, ${cy - O}px)`; cross.style.display = 'block'; };
-  const hide = () => { cross.style.display = 'none'; };
+  const place = (cx, cy) => { for (const c of [cross, diff]) { c.style.transform = `translate(${cx - O}px, ${cy - O}px)`; c.style.display = 'block'; } };
+  const hide = () => { cross.style.display = diff.style.display = 'none'; };
   let start = null, now = null;
   function drawVeil() {
     if (!start || !now) { veil.hidden = true; return; }
