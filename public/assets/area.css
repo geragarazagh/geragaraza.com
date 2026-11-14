@@ -1,6 +1,5 @@
-/* macOS's area selection, shared by OCR's page and Pixlift's (area.js): the grey veil, black at 10 %, no border (measured:
-   paper 255 becomes 229), and the crosshair canvases that follow the pointer. */
-.sel{position:absolute;background:rgba(0,0,0,.1);pointer-events:none}
-#cross,#crossd{position:fixed;left:0;top:0;z-index:2;display:none;pointer-events:none}
-/* The readout's first half: white digits that turn over what lies under them (area.js, «readout»). */
-#crossd{mix-blend-mode:difference}
+/* macOS's area selection, shared by OCR's page and Pixlift's (area.js): the veil, grey 150 at 24.7 % inside a 1 pt opaque
+   white line (measured 2026-11-14 12:18: white 255 becomes 229, black 37; the line shows on black and on the telegram's
+   paper, not on white), and the crosshair canvas that follows the pointer. */
+.sel{position:absolute;box-sizing:border-box;background:rgba(150,150,150,.247);border:1px solid #fff;pointer-events:none}
+#cross{position:fixed;left:0;top:0;z-index:2;display:none;pointer-events:none}
