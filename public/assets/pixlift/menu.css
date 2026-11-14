@@ -1,0 +1,28 @@
+/* Finder's context menu for a file, measured on macOS 27.2 (Finder, icon view, a .png; 2x captures, light and dark):
+   13 pt system font; rows 24 pt; menu padding 5 pt, the highlight inset 5 pt from each side with corners of 7 pt, in
+   the system accent colour (the captures' (52,120,246) in Display P3 is sRGB #007AFF); titles 16 pt from the menu's edge,
+   36.5 pt when the row has an icon (icon centred at 21.75 pt); separators 11 pt tall, a 1 pt line 4.5 pt from the top,
+   inset 16 pt; menu corners 13 pt; a 0.5 pt outer line (black 30 % light, near black dark) and a white inner rim;
+   text black 85 % / white 85 %; the material near white (254) light, (47,47,47) at 92 % dark (light 93 %, so a browser without blur still reads), over a blur of what lies
+   behind; a soft wide shadow. Quick Look's panel from the same Mac: title bar 37 pt, the picture 5 pt in, corners 16 pt
+   outside and 10 pt on the picture. */
+.px-menu{position:fixed;left:0;top:0;z-index:5;box-sizing:border-box;width:max-content;padding:5px;margin:0;border-radius:13px;font:13px/1 system-ui,-apple-system,BlinkMacSystemFont,sans-serif;letter-spacing:0;color:rgba(0,0,0,.85);background:rgba(255,255,255,.93);-webkit-backdrop-filter:blur(24px) saturate(1.8);backdrop-filter:blur(24px) saturate(1.8);box-shadow:0 0 0 .5px rgba(0,0,0,.3),inset 0 0 0 .5px rgba(255,255,255,.9),0 10px 36px rgba(0,0,0,.16),0 2px 6px rgba(0,0,0,.06);outline:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;cursor:default}
+.px-menu[hidden]{display:none}
+.px-menu .it{display:flex;align-items:center;height:24px;padding:0 20px 0 11px;border-radius:7px;white-space:nowrap}
+.px-menu .it .ic{display:flex;justify-content:center;width:11.5px;margin-right:9px}
+.px-menu .it svg{width:11.5px;height:13px;fill:none;stroke:currentColor;stroke-width:1.15;stroke-linecap:round;stroke-linejoin:round}
+.px-menu .it.hl{background:#007aff;background:AccentColor;color:#fff}
+.px-menu .sp{height:11px;margin:0 11px;display:flex}
+.px-menu .sp::before{content:'';flex:1;height:1px;margin-top:4.5px;background:rgba(0,0,0,.1)}
+@media (prefers-color-scheme:dark){
+  .px-menu{color:rgba(255,255,255,.85);background:rgba(46,46,46,.92);box-shadow:0 0 0 .5px rgba(0,0,0,.85),inset 0 .5px 0 rgba(255,255,255,.3),inset 0 0 0 .5px rgba(255,255,255,.1),0 10px 36px rgba(0,0,0,.45)}
+  .px-menu .sp::before{background:rgba(255,255,255,.14)}
+}
+/* Quick Look: the panel grows out of the file's thumbnail and goes back into it. */
+.px-ql{position:fixed;left:0;top:0;z-index:4;box-sizing:border-box;padding:0 5px 5px;border-radius:16px;background:rgba(236,236,236,.9);-webkit-backdrop-filter:blur(30px) saturate(1.8);backdrop-filter:blur(30px) saturate(1.8);box-shadow:0 0 0 .5px rgba(0,0,0,.25),inset 0 0 0 .5px rgba(255,255,255,.7),0 22px 60px rgba(0,0,0,.3);transform-origin:0 0;color:rgba(0,0,0,.85);font:600 13px/1 system-ui,-apple-system,BlinkMacSystemFont,sans-serif;-webkit-user-select:none;user-select:none}
+.px-ql .bar{display:flex;align-items:center;gap:8px;height:37px;padding:0 6px}
+.px-ql .x{box-sizing:content-box;display:flex;align-items:center;justify-content:center;width:16px;height:16px;padding:6px;margin:-6px;border:0;background:none;color:inherit;cursor:default}
+.px-ql .x svg{width:16px;height:16px}
+.px-ql .t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-left:6px}
+.px-ql img{display:block;border-radius:10px;background:#fff;max-width:none}
+@media (prefers-color-scheme:dark){.px-ql{background:rgba(40,40,40,.9);color:rgba(255,255,255,.9);box-shadow:0 0 0 .5px rgba(0,0,0,.85),inset 0 .5px 0 rgba(255,255,255,.25),0 22px 60px rgba(0,0,0,.6)}}

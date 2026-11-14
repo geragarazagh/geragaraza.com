@@ -11,15 +11,23 @@ PX.name = () => {
   let n = b, i = 2; while (PX.taken.has(n)) n = `${b} (${i++})`;
   PX.taken.add(n); return n;
 };
-// One file on the «Desktop»: its thumbnail and name; a press saves it (the browser's own download).
+// One file on the «Desktop»: its thumbnail and its full name, as Finder shows a file whose extension is not hidden (the
+// app writes its files itself, so nothing hides «.png»). What a file answers to (selection, the context menu, Quick
+// Look, Rename) lives in menu.js; without it the file still saves on a press.
 PX.land = (desk, blob, name) => {
-  const url = URL.createObjectURL(blob), a = document.createElement('a');
-  a.className = 'px-file'; a.href = url; a.download = name + '.png';
+  const url = URL.createObjectURL(blob), f = document.createElement('div');
+  f.className = 'px-file'; f.tabIndex = 0; f.setAttribute('role', 'button');
+  Object.assign(f, { pxBlob: blob, pxUrl: url, pxName: name });
   const th = document.createElement('span'); th.className = 'th';
-  const im = new Image(); im.src = url; im.alt = ''; th.append(im);
-  const nm = document.createElement('span'); nm.className = 'nm'; nm.textContent = name.replace(' ', '\n');
-  a.append(th, nm); desk.append(a); return a;
+  const im = new Image(); im.src = url; im.alt = ''; im.draggable = false; th.append(im);
+  const nm = document.createElement('span'); nm.className = 'nm';
+  const t = document.createElement('span'); t.textContent = name + '.png'; nm.append(t);
+  f.append(th, nm); desk.append(f);
+  if (!PX.menu) f.addEventListener('click', () => PX.save(f));
+  return f;
 };
+// A real file for the visitor: the browser's own download, under the file's current name.
+PX.save = (f) => { const a = document.createElement('a'); a.href = f.pxUrl; a.download = f.pxName + '.png'; document.body.append(a); a.click(); a.remove(); };
 // The clipboard, as the app fills it: the picture, replacing what was there. The item is made at once from a promise,
 // inside the click, so Safari lets it through; a browser that refuses keeps the file only.
 PX.copy = (blobPromise) => {
