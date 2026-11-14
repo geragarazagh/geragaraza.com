@@ -1,4 +1,4 @@
-// Pixlift's live block, shared parts: file names as the app writes them, the «Desktop» row, the clipboard, and
+// Pixlift's live block, the common parts: file names as the app writes them, the «Desktop» row, the clipboard, and
 // macOS's screenshot crosshair (OCR's page, measured from a Retina capture: arms 11.5 pt of #404040, a grey ring,
 // the position or the selection's size beside it).
 'use strict';

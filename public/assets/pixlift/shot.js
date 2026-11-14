@@ -1,4 +1,4 @@
-// Variant A, «Снимок области»: the README's telegram (Orville Wright to his father, 17 December 1903, Library of Congress,
+// Pixlift's live block (his pick 2026-11-14, variant A of three, «Снимок области»): the README's telegram (Orville Wright to his father, 17 December 1903, Library of Congress,
 // public domain) under macOS's crosshair. A drag over it is Capture Selected Portion: the area's own pixels become a PNG,
 // put on the clipboard (the real one: it pastes anywhere) and landed on the «Desktop» row under the picture, named as
 // the app names its files. One or twenty in a row; the clipboard holds the last. Touch: hold still 300 ms, then drag.

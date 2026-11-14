@@ -69,8 +69,22 @@
     });
   }
   const light = (i) => { hi = i; rows.forEach((r, j) => r.classList.toggle('hl', j === i)); };
+  // Motion, measured on macOS 27.2 by 120 fps screen recordings of Finder (2026-11-14): the menu appears at once, in one
+  // frame. Esc or a click outside fades it out over 183 ms (opacity per 60 fps frame below). Choosing an item blinks it:
+  // the highlight goes off for 75 ms and comes back for 50 ms, then the menu fades over 225 ms, a slower start than Esc;
+  // only then does Finder act (Quick Look began 75 ms after the fade ended). What needs the visitor's own click to be
+  // allowed by the browser (opening a tab, the clipboard, a download, sharing; the iPhone's keyboard for Rename on touch)
+  // runs at the click itself; what only shows (Quick Look, Duplicate, Trash, Rename with a mouse) waits for the fade.
+  const FADE_ESC = { t: [0, 17, 42, 58, 75, 92, 108, 125, 142, 158, 183], o: [1, .84, .62, .47, .33, .24, .16, .1, .06, .03, 0] };
+  const FADE_PICK = { t: [0, 17, 33, 50, 67, 83, 100, 117, 142, 158, 175, 192, 208, 225], o: [1, .9, .77, .61, .44, .32, .23, .16, .084, .061, .045, .018, .007, 0] };
+  const BLINK_OFF = 75, BLINK_ON = 50;
+  const NOW = new Set(['open', 'copy', 'dl', 'share']);
+  let going = null, timers = [];
+  const fade = (c) => menu.animate(c.t.map((t, i) => ({ opacity: c.o[i], offset: t / c.t.at(-1) })), { duration: c.t.at(-1), easing: 'linear' });
+  function stop() { timers.forEach(clearTimeout); timers = []; if (going) { going.cancel(); going = null; } menu.classList.remove('gone'); }
   function open(f, x, y) {
     if (ql.file) ql.hide();
+    stop();
     target = f; select(f); build(f); light(-1);
     menu.hidden = false;
     const vw = document.documentElement.clientWidth, vh = window.innerHeight, w = menu.offsetWidth, h = menu.offsetHeight;
@@ -82,34 +96,50 @@
     menu.style.transform = `translate(${Math.round(l)}px, ${Math.round(tp)}px)`;
     menu.focus({ preventScroll: true });
   }
-  function close(back) {
-    if (menu.hidden) return;
-    menu.hidden = true; light(-1);
+  const hide = () => { stop(); menu.hidden = true; light(-1); };
+  // how: 'fade' (Esc, a click outside), 'now' (scroll, resize, the window losing focus).
+  function close(back, how) {
+    if (menu.hidden || menu.classList.contains('gone')) return;
     if (back && target && target.isConnected) target.focus({ preventScroll: true });
+    if (how !== 'fade') { hide(); return; }
+    menu.classList.add('gone');
+    going = fade(FADE_ESC); going.onfinish = hide;
   }
   function choose(i) {
-    const k = rows[i]?.dataset.k, f = target;
-    close(k !== 'rename' && k !== 'ql');
-    if (k && f && f.isConnected) act[k](f);
+    if (menu.classList.contains('gone')) return;
+    const k = rows[i]?.dataset.k, f = target, r = rows[i];
+    if (!k) return;
+    const touch = choose.touch; choose.touch = false;
+    const now = NOW.has(k) || (k === 'rename' && touch);
+    if (k !== 'rename' && k !== 'ql') target.focus({ preventScroll: true });
+    if (now && f.isConnected) act[k](f);
+    menu.classList.add('gone');
+    light(i); r.classList.remove('hl');
+    timers.push(setTimeout(() => r.classList.add('hl'), BLINK_OFF));
+    timers.push(setTimeout(() => {
+      going = fade(FADE_PICK);
+      going.onfinish = () => { hide(); if (!now && f.isConnected) act[k](f); };
+    }, BLINK_OFF + BLINK_ON));
   }
-  menu.addEventListener('pointermove', (e) => { const r = e.target.closest('.it'); light(r ? rows.indexOf(r) : -1); });
-  menu.addEventListener('pointerleave', (e) => { if (e.pointerType !== 'touch') light(-1); });
-  menu.addEventListener('pointerdown', (e) => { e.preventDefault(); const r = e.target.closest('.it'); if (r) light(rows.indexOf(r)); });
+  menu.addEventListener('pointermove', (e) => { if (menu.classList.contains('gone')) return; const r = e.target.closest('.it'); light(r ? rows.indexOf(r) : -1); });
+  menu.addEventListener('pointerleave', (e) => { if (e.pointerType !== 'touch' && !menu.classList.contains('gone')) light(-1); });
+  menu.addEventListener('pointerdown', (e) => { e.preventDefault(); if (menu.classList.contains('gone')) return; const r = e.target.closest('.it'); if (r) light(rows.indexOf(r)); choose.touch = e.pointerType === 'touch'; });
   menu.addEventListener('click', (e) => { const r = e.target.closest('.it'); if (r) choose(rows.indexOf(r)); });
   menu.addEventListener('contextmenu', (e) => e.preventDefault());
   menu.addEventListener('keydown', (e) => {
     const n = rows.length;
-    if (e.key === 'Escape') close(true);
+    if (menu.classList.contains('gone')) { e.preventDefault(); return; }
+    if (e.key === 'Escape') close(true, 'fade');
     else if (e.key === 'ArrowDown') light(hi < 0 ? 0 : Math.min(n - 1, hi + 1));
     else if (e.key === 'ArrowUp') light(hi < 0 ? n - 1 : Math.max(0, hi - 1));
-    else if (e.key === 'Enter' || e.key === ' ') { if (hi >= 0) choose(hi); else close(true); }
+    else if (e.key === 'Enter' || e.key === ' ') { if (hi >= 0) choose(hi); else close(true, 'fade'); }
     else if (e.key.length === 1 && !e.metaKey && !e.ctrlKey) {
       const c = e.key.toLocaleLowerCase(), from = hi + 1;
       for (let j = 0; j < n; j++) { const i = (from + j) % n; if (rows[i].textContent.toLocaleLowerCase().startsWith(c)) { light(i); break; } }
     } else if (e.key !== 'Tab') return;
     e.preventDefault();
   });
-  addEventListener('pointerdown', (e) => { if (!menu.hidden && !menu.contains(e.target)) close(false); }, true);
+  addEventListener('pointerdown', (e) => { if (!menu.hidden && !menu.contains(e.target)) close(false, 'fade'); }, true);
   addEventListener('scroll', () => close(false), true);
   addEventListener('resize', () => close(false));
   addEventListener('blur', () => close(false));
@@ -197,7 +227,17 @@
   }
 
   // ---- Quick Look ------------------------------------------------------------------------------------------------
-  // Measured on macOS 27.2: the panel shrinks back into the file's icon in about 0.17 s; it opens by the same path.
+  // Measured on macOS 27.2 at 120 fps (2026-11-14): the panel opens out of the file's icon in 200 ms, fast at first (a fifth
+  // of the way after one 60 fps frame, 60 % after two), and shrinks back into it in 167 ms, nearly evenly, slowing at the
+  // end; the picture inside stays on the icon's picture all the way. Progress per frame below.
+  const QL_OPEN = { t: [0, 17, 33, 50, 67, 83, 100, 117, 133, 150, 167, 200], p: [0, .2, .6, .72, .8, .87, .91, .94, .96, .98, .99, 1] };
+  const QL_CLOSE = { t: [0, 17, 33, 50, 67, 83, 100, 117, 133, 150, 167], p: [0, .13, .24, .37, .5, .63, .75, .85, .915, .954, 1] };
+  // Keyframes moving the panel between its place (L, T, scale 1) and the one where its picture covers the icon's.
+  const zoom = (el, c, from, to) => el.animate(c.t.map((tt, i) => {
+    const q = c.p[i], x = from[0] + (to[0] - from[0]) * q, y = from[1] + (to[1] - from[1]) * q, k = from[2] + (to[2] - from[2]) * q;
+    return { transform: `translate(${x}px, ${y}px) scale(${k})`, offset: tt / c.t.at(-1) };
+  }), { duration: c.t.at(-1), easing: 'linear' });
+  const onIcon = (src, ix, iy, w) => { const r = src.getBoundingClientRect(), k = Math.max(r.width / w, 0.02); return [r.left - ix * k, r.top - iy * k, k]; };
   const ql = {
     el: null, file: null,
     title() { if (this.el) this.el.querySelector('.t').textContent = this.file.pxName + '.png'; },
@@ -222,13 +262,9 @@
         im.style.width = w + 'px'; im.style.height = h + 'px';
         const W = Math.max(w + 10, 220), H = h + 42, L = (vw - W) / 2, Tp = (vh - H) / 2;
         el.style.width = W + 'px'; im.style.margin = `0 ${(W - 10 - w) / 2}px`;
-        const r = src.getBoundingClientRect(), s = Math.max(r.width / W, 0.02);
-        el.animate([
-          { transform: `translate(${r.left}px, ${r.top}px) scale(${s})`, opacity: 0.6 },
-          { transform: `translate(${L}px, ${Tp}px) scale(1)`, opacity: 1 },
-        ], { duration: 200, easing: 'cubic-bezier(.2,.8,.2,1)' });
+        this.at = [L, Tp, 5 + (W - 10 - w) / 2, 37, w];
+        zoom(el, QL_OPEN, onIcon(src, this.at[2], 37, w), [L, Tp, 1]);
         el.style.transform = `translate(${L}px, ${Tp}px)`;
-        this.at = [L, Tp, W];
       };
       el.style.visibility = 'hidden';
       im.decode().catch(() => {}).then(() => { el.style.visibility = ''; go(); });
@@ -239,11 +275,8 @@
       this.el = this.file = null;
       const src = f.isConnected && f.querySelector('.th img');
       if (now || !src || !this.at) { el.remove(); return; }
-      const r = src.getBoundingClientRect(), [L, Tp, W] = this.at, s = Math.max(r.width / W, 0.02);
-      el.animate([
-        { transform: `translate(${L}px, ${Tp}px) scale(1)`, opacity: 1 },
-        { transform: `translate(${r.left}px, ${r.top}px) scale(${s})`, opacity: 0.6 },
-      ], { duration: 170, easing: 'cubic-bezier(.4,0,.6,1)' }).finished.then(() => el.remove(), () => el.remove());
+      const [L, Tp, ix, iy, w] = this.at;
+      zoom(el, QL_CLOSE, [L, Tp, 1], onIcon(src, ix, iy, w)).finished.then(() => el.remove(), () => el.remove());
       f.focus({ preventScroll: true });
     },
   };
