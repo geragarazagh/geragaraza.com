@@ -1,0 +1,7 @@
+/* Variant C: one button in the look of the page's download rows; the captures land on the «Desktop» row under it. */
+.px-scr{margin:var(--l) 0 0}
+.px-scr button{display:inline-flex;align-items:center;gap:calc(var(--l)/3);padding:0;border:0;background:none;color:inherit;font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.px-scr button[disabled]{opacity:.45;cursor:default}
+.px-scr .px-desk{margin-top:calc(var(--l)/2)}
+.px-scr .px-file{width:calc(var(--l)*2.4)}
+.px-scr .px-file .th{width:calc(var(--l)*2);height:calc(var(--l)*1.4)}

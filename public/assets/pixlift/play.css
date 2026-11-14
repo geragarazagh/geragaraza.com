@@ -1,0 +1,8 @@
+/* Variant B: under the picture the «Desktop» file and the note it was pasted into, side by side on every width. */
+.px-after{display:flex;align-items:flex-start;gap:calc(var(--l)/3);margin:calc(var(--l)/4) 0 0;min-height:calc(var(--l)*2.6)}
+.px-after .px-desk{margin:0;flex:none;width:calc(var(--l)*1.6);min-height:0}
+.px-note{flex:1;min-width:0;border:var(--px) solid;border-radius:calc(var(--l)*.14);padding:calc(var(--l)/5) calc(var(--l)/4) calc(var(--l)/4);visibility:hidden}
+.px-note.on{visibility:visible}
+.px-note .t{font:600 calc(var(--l)*.22)/1.3 system-ui,-apple-system,sans-serif;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.px-note img{display:block;max-width:100%;margin:calc(var(--l)/6) 0 0}
+.px-pic.play img{cursor:default}
