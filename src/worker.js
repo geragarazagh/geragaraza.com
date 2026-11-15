@@ -14,6 +14,8 @@ export default {
     // SourceKey was renamed Retyper on 2026-11-11 (0.1.1): its old page address keeps working.
     if (url.pathname === '/apps/sourcekey' || url.pathname.startsWith('/apps/sourcekey/')) { url.pathname = '/apps/retyper/'; moved = true; }
     if (url.searchParams.has('lang')) { url.searchParams.delete('lang'); moved = true; }
+    // The convert skill's page was a blog post until 2026-11-15; the blog holds only his own posts since (dev/rules.md).
+    if (url.pathname === '/blog/navyk-convert' || url.pathname.startsWith('/blog/navyk-convert/')) { url.pathname = '/skills/convert/'; moved = true; }
     if (moved) return Response.redirect(url.toString(), 301);
 
     const response = await env.ASSETS.fetch(request);
@@ -26,13 +28,40 @@ export default {
     const fonts = ['latin-500', 'latin-600']
       .concat(blog || url.pathname.startsWith('/apps/retyper/') ? ['cyrillic-500'] : [])
       .concat(blog ? ['cyrillic-600'] : []);
+    // The page's colour before anything else is drawn (his recording 2026-11-15 15:50: a white flash before the black
+    // page in a new Safari window): the background on <html> itself and Safari's bar colour, in the first bytes of
+    // <head>, so neither waits for site.css.
+    const first = '<style>html{background:#fff}@media (prefers-color-scheme:dark){html{background:#000}}</style>\n' +
+      '<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">\n' +
+      '<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">\n';
+    // The site's own files named in the page carry this deployment's id (?v=…): public/_headers lets a browser keep
+    // /assets/* and /icons/* for an hour without asking again (until 2026-11-15 every visit asked for each file again
+    // and the link icons came after the text), and a new deployment changes every address, so a page never meets the
+    // files of an older one. Files a script fetches by itself keep their bare address and are at most an hour old.
+    const v = env.CF_VERSION_METADATA?.id;
+    const own = /^\/(assets|icons)\//;
+    const stamp = (u) => (v && own.test(u) && !u.includes('?') ? `${u}?v=${v}` : u);
+    const versioned = (attr) => ({
+      element(e) {
+        const a = e.getAttribute(attr);
+        if (!a) return;
+        e.setAttribute(attr, attr === 'srcset' ? a.split(',').map((p) => p.trim().replace(/^\S+/, stamp)).join(', ') : stamp(a));
+      },
+    });
     const rewritten = new HTMLRewriter()
       .on('head', {
         element(e) {
+          e.prepend(first, { html: true });
           const links = fonts.map((f) => `<link rel="preload" href="/fonts/inter-${f}.woff2" as="font" type="font/woff2" crossorigin>`);
           e.append(links.join('\n') + '\n', { html: true });
         },
       })
+      .on('link[href]', versioned('href'))
+      .on('script[src]', versioned('src'))
+      .on('img[src]', versioned('src'))
+      .on('img[srcset], source[srcset]', versioned('srcset'))
+      .on('video[src], audio[src], source[src]', versioned('src'))
+      .on('video[poster]', versioned('poster'))
       .transform(response);
 
     // The page differs from the stored file by the preload lines, so the file's ETag no longer fits.
@@ -40,10 +69,12 @@ export default {
     out.headers.delete('ETag');
     // Security headers (2026-11-12, Mozilla Observatory in release.md «Security scanners»): every script, style, font,
     // picture and sound is the site's own, so a page loads nothing from elsewhere and no other site may frame it.
-    // 'unsafe-inline' for styles only: the home page keeps one <style> for its logo in the dark theme. blob: for pictures
-    // only: Pixlift's live block makes its captures in the page and shows them from memory (2026-11-14).
+    // 'unsafe-inline' for styles only: the home page keeps one <style> for its logo in the dark theme, and every page the
+    // first-paint background above. blob: for pictures
+    // only: Pixlift's live block makes its captures in the page and shows them from memory (2026-11-14); data: for the
+    // Instagram logo inlined in the home page (its gradient is Meta's own raster, 2026-11-15).
     out.headers.set('Content-Security-Policy', "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; " +
-      "img-src 'self' blob:; media-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'");
+      "img-src 'self' blob: data:; media-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'");
     out.headers.set('X-Frame-Options', 'DENY');
     out.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
     return out;
