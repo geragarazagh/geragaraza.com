@@ -3,19 +3,19 @@
   "ru": [
    {
     "v": "v1",
-    "name": "Голос 1",
+    "name": "Voice 1",
     "gender": 1
    },
    {
     "v": "v2",
-    "name": "Голос 2",
+    "name": "Voice 2",
     "gender": 2
    }
   ],
   "uk": [
    {
     "v": "lesya",
-    "name": "Леся",
+    "name": "Lesya",
     "gender": 2
    }
   ],
