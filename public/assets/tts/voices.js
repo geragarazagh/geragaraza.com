@@ -1,7 +1,8 @@
 // TTS's voices without typing anything: the app's own voice choice and speed, each sample spoken by the voice itself.
 //
 // As in the app (0.3, 2026-11-10): the button with the chosen voice opens the list of the voices of the text's language,
-// here the page's, the best male and the best female voice macOS has for it: Russian Siri «Голос 1» and «Голос 2»,
+// here English (the site is English only since 2026-11-15; samples.json and the clips still hold the Russian and
+// Ukrainian voices of the pages that were), the best male and the best female voice macOS has for it: Russian Siri «Голос 1» and «Голос 2»,
 // Ukrainian Lesya alone (Siri has no Ukrainian, macOS no male Ukrainian voice), English Siri «Voice 1» and «Voice 2»
 // (Apple's numbers; Aaron and Simone, the clearest of the seven US Siri voices). A name only chooses the voice (the tick moves, no sound). The waveform button on the
 // right of each row only listens: pressed, the voice's sample plays at once and the button turns blue and moves; pressed
@@ -12,17 +13,17 @@
 // anew at the new speed, never stretched, so the page has every passage spoken at every step (samples.json), made on the
 // author's Mac through the app's own pipeline (bench/siteclips). A new speed stops a sample, as in the app.
 
-const lang = ['en', 'uk', 'ru'].includes(document.documentElement.lang) ? document.documentElement.lang : 'en';
+const lang = 'en';
 const pick = document.querySelector('#voices .pick'), pop = document.getElementById('voice'), list = document.getElementById('voice-list');
 const ul = list.querySelector('ul'), shownName = document.getElementById('voice-name');
 const speed = document.getElementById('speed'), shown = document.getElementById('speed-value');
 const WAVE = '<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="5" width="2" height="6" rx="1"/><rect x="5.5" y="2" width="2" height="12" rx="1"/>' +
   '<rect x="9.5" y="4" width="2" height="8" rx="1"/><rect x="13" y="6" width="2" height="4" rx="1"/></svg>';
 const TICK = '<svg viewBox="0 0 100 100" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"><path d="M10 52l26 26 54-56"/></svg>';
-const LISTEN = { en: 'Listen', ru: 'Послушать', uk: 'Послухати' }[lang];
+const LISTEN = 'Listen';
 let table = null, audio = null, playing = null, chosen = null;
 
-// The decimal sign of the page's language: 1.0× in English, 1,0× in Ukrainian and Russian, as the app writes it.
+// The decimal sign as the app writes it in English: 1.0×.
 const fmt = new Intl.NumberFormat(lang, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 function showSpeed() { shown.textContent = fmt.format(+speed.value) + '×'; }
 

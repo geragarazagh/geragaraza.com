@@ -14,13 +14,13 @@
 // and after 0.7 s of recognising the text of what was heard so far lands at the cursor: the whole phrase, or the words
 // whose end the voice had reached (voices.json «w», each word's end in seconds, from Whisper's word timestamps on the
 // served file, matched to STT's own text). Then nothing more until the next press. The text stays until the visitor
-// removes it (Delete, ⌘Z, ⌘X; his word 2026-11-12 07:24: no clear button). data-set: the phrases of each language (voices.json: ru Tolstoy 1908, en
-// Roosevelt 1912, uk his own three; files made by tools/sttphrases.py, text = what STT typed for the served file;
-// dev/site.md).
+// removes it (Delete, ⌘Z, ⌘X; his word 2026-11-12 07:24: no clear button). data-set: the phrases (voices.json: en Roosevelt 1912, ru Tolstoy 1908, uk his own
+// three; files made by tools/sttphrases.py, text = what STT typed for the served file; dev/site.md). The site is English
+// only since 2026-11-15, and every press takes the next phrase of all of them in that order, so Tolstoy's voice and the
+// Ukrainian ones stay on the one page (before, each language's page had its own).
 
 const box = document.getElementById('stt'), doc = box.querySelector('.doc'), txt = box.querySelector('.txt');
 const caret = box.querySelector('.caret'), dot = box.querySelector('.dot'), snd = box.querySelector('.snd');
-const lang = ['en', 'uk', 'ru'].includes(document.documentElement.lang) ? document.documentElement.lang : 'en';
 const TAIL = 300, THINK = 700;
 const audio = new Audio(); audio.preload = 'auto';
 let list = [], next = 0, pos = 0, typed = 0, phase = 'idle', stop = null;
@@ -133,7 +133,7 @@ async function record(p) {
 }
 
 fetch(box.dataset.set).then((r) => r.json()).then((d) => {
-  list = d[lang] || d.en;
+  list = ['en', 'ru', 'uk'].flatMap((k) => d[k]);
   fit(); place();
 });
 place();

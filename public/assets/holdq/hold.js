@@ -2,16 +2,14 @@
 //
 // «Le Voyage dans la Lune» (Méliès, 1902; public domain), the film of HoldQ's README picture: 16 s of the rocket flying to
 // the Moon's eye, looped, no sound. Over it, on its own and over and over, what HoldQ does with ⌘Q (main.swift): first a
-// short press, the sign with the app's icon, the ring and «Hold ⌘Q to quit QuickTime Player» (HoldQ's own strings in the
-// page's language), let go at 0.45 s: the ring stays where it was and the sign fades in 0.3 s, ease-in; the film goes on.
+// short press, the sign with the app's icon, the ring and «Hold ⌘Q to quit QuickTime Player» (HoldQ's own string), let go at 0.45 s: the ring stays where it was and the sign fades in 0.3 s, ease-in; the film goes on.
 // Then a hold: the ring fills clockwise in exactly one second, the player quits, its window gone at once as a quitting
 // app's windows are, the sign fades in 0.15 s, ease-out; two seconds later the player is back, the film still running.
 // Nothing on the page asks for a key press (his decision 2026-11-11): drawn keys to hold made people press the real ⌘Q,
 // and without HoldQ that quits the browser at once. The cycle starts when the block comes into view and stops outside it.
 
 const box = document.getElementById('hold'), video = box.querySelector('video');
-const lang = ['en', 'uk', 'ru'].includes(document.documentElement.lang) ? document.documentElement.lang : 'en';
-const LINE = { en: 'Hold ⌘Q to quit %@', ru: 'Удерживать ⌘Q, чтобы завершить %@', uk: 'Утримувати ⌘Q, щоб завершити %@' };
+const LINE = 'Hold ⌘Q to quit %@';
 const HOLD = 1000, SHORT = 450, C = 2 * Math.PI * 42;
 const dark = matchMedia('(prefers-color-scheme: dark)');
 const icon = () => `/assets/holdq/quicktime${dark.matches ? '-dark' : ''}.png`;
@@ -22,7 +20,7 @@ hud.setAttribute('aria-hidden', 'true');
 hud.innerHTML = `<div class="ring"><svg viewBox="0 0 88 88"><circle class="track" cx="44" cy="44" r="42"/><circle class="fill" cx="44" cy="44" r="42" stroke-dasharray="${C} ${C}"/></svg><img alt="" width="64" height="64"></div><p></p>`;
 box.querySelector('.scene').append(hud);
 const fill = hud.querySelector('.fill'), img = hud.querySelector('img');
-hud.querySelector('p').textContent = LINE[lang].replace('%@', 'QuickTime Player');
+hud.querySelector('p').textContent = LINE.replace('%@', 'QuickTime Player');
 img.src = icon();
 dark.addEventListener('change', () => { img.src = icon(); });
 

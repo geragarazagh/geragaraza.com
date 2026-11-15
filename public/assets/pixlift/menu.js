@@ -17,15 +17,10 @@
   const desk = document.getElementById('px-desk');
   if (!desk) return;
   PX.menu = true;
-  const T = {
-    en: { open: 'Open', trash: 'Move to Trash', rename: 'Rename', dup: 'Duplicate', ql: 'Quick Look', copy: 'Copy', dl: 'Download Image', share: 'Share…', close: 'Close' },
-    ru: { open: 'Открыть', trash: 'Переместить в Корзину', rename: 'Переименовать', dup: 'Дублировать', ql: 'Быстрый просмотр', copy: 'Скопировать', dl: 'Загрузить изображение', share: 'Поделиться…', close: 'Закрыть' },
-    uk: { open: 'Відкрити', trash: 'Перемістити в Смітник', rename: 'Перейменувати', dup: 'Дублювати', ql: 'Швидкий перегляд', copy: 'Скопіювати', dl: 'Викачати зображення', share: 'Поширити…', close: 'Закрити' },
-  };
-  // Finder's titles for several items (Finder.app Localizable.strings on macOS 27.2, key N169.18_V3; ^0 is the count).
-  const QLN = { en: 'Quick Look ^0 Items', ru: 'Быстрый просмотр объектов (^0)', uk: 'Швидкий перегляд ^0 елем.' };
-  const qln = (n) => (QLN[document.documentElement.lang] || QLN.en).replace('^0', n);
-  const t = () => T[document.documentElement.lang] || T.en;
+  const T = { open: 'Open', trash: 'Move to Trash', rename: 'Rename', dup: 'Duplicate', ql: 'Quick Look', copy: 'Copy', dl: 'Download Image', share: 'Share…', close: 'Close' };
+  // Finder's title for several items (Finder.app Localizable.strings on macOS 27.2, key N169.18_V3; ^0 is the count).
+  const qln = (n) => 'Quick Look ^0 Items'.replace('^0', n);
+  const t = () => T;
   const ICON = {
     trash: '<svg viewBox="0 0 11.5 13"><path d="M1 3h9.5M4 3V1.6h3.5V3M2.1 3l.6 8.6c.05.6.45.9 1 .9h4.1c.55 0 .95-.3 1-.9L9.4 3M4.6 5.3v4.9M6.9 5.3v4.9"/></svg>',
     share: '<svg viewBox="0 0 11.5 13"><path d="M5.75 8V.9M3.2 3.3 5.75.8 8.3 3.3M3.6 5.2H2.4c-.7 0-1.1.4-1.1 1.1v4.7c0 .7.4 1.1 1.1 1.1h6.7c.7 0 1.1-.4 1.1-1.1V6.3c0-.7-.4-1.1-1.1-1.1H7.9"/></svg>',

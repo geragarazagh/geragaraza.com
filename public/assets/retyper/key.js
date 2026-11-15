@@ -4,24 +4,16 @@
 // app gave on a test machine (26.6.2, 2026-11-11). Plays while in view; nothing to press.
 (() => {
   const root = document.getElementById('sk'); if (!root) return;
-  const lang = ['ru', 'uk'].includes(document.documentElement.lang) ? document.documentElement.lang : 'en';
   const txt = root.querySelector('.txt'), src = root.querySelector('.src');
   // ['src', sign] sets the layout, ['type', text] types it key by key, ['fix', n, text, sign] is SourceKey: n characters
   // back, the text, the new layout.
-  // Four per page, its own language first; every language the app knows shows on every page (his review 2026-11-11:
-  // more varied phrases, to show it is not tied to one language). Each one replayed on 26.6.2 with Retyper 0.1.1 on
+  // Four phrases, every language the app knows (his review 2026-11-11: more varied phrases, to show it is not tied to one
+  // language). The site is English only since 2026-11-15; the Russian and Ukrainian pages had their own four. Each one replayed on 26.6.2 with Retyper 0.1.1 on
   // 2026-11-12 (test/run.py): the result below is what it typed.
   const RU = [['src', 'A'], ['type', 'ghbdtn'], ['type', ' '], ['fix', 7, 'привет ', 'РУ'], ['type', 'мир']];
   const UK = [['src', 'A'], ['type', 'lzre.'], ['type', ' '], ['fix', 6, 'дякую ', 'УК'], ['type', 'за допомогу']];
-  const BACK = [['src', 'A'], ['type', 'd 2022 ujle'], ['type', ' '], ['fix', 12, 'в 2022 году ', 'РУ'], ['type', 'всё получилось']];
-  const EN_RU = [['src', 'РУ'], ['type', 'ыуу'], ['type', ' '], ['fix', 4, 'see ', 'A'], ['type', 'you tomorrow']];
-  const EN_UK = [['src', 'УК'], ['type', 'іуу'], ['type', ' '], ['fix', 4, 'see ', 'A'], ['type', 'you tomorrow']];
   const LET = [['src', 'РУ'], ['type', 'дуе'], ['type', ' '], ['fix', 4, 'let ', 'A'], ['type', 'me know']];
-  const SC = {
-    ru: [[['src', 'A'], ['type', 'ghbdtn'], ['type', ' '], ['fix', 7, 'привет ', 'РУ'], ['type', 'как дела?']], EN_RU, UK, BACK],
-    uk: [[['src', 'A'], ['type', 'ghbdsn'], ['type', ' '], ['fix', 7, 'привіт ', 'УК'], ['type', 'як справи?']], EN_UK, RU, UK],
-    en: [[['src', 'РУ'], ['type', 'ырщцштп'], ['type', ' '], ['fix', 8, 'showing ', 'A'], ['type', 'this']], LET, RU, UK],
-  }[lang];
+  const SC = [[['src', 'РУ'], ['type', 'ырщцштп'], ['type', ' '], ['fix', 8, 'showing ', 'A'], ['type', 'this']], LET, RU, UK];
   const caret = document.createElement('i'); caret.className = 'caret';
   let text = '';
   const draw = () => { txt.textContent = text; txt.append(caret); };
@@ -48,7 +40,7 @@
   }
   sign(SC[0][0][1]); draw();
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) {   // the end of the first scene, still
-    text = { ru: 'привет как дела?', uk: 'привіт як справи?', en: 'showing this' }[lang]; sign(SC[0][3][3]); draw(); return;
+    text = 'showing this'; sign(SC[0][3][3]); draw(); return;
   }
   let on = false;
   new IntersectionObserver((es) => { const now = es[0].isIntersecting; if (now && !on) { on = true; loop(); } else if (!now && on) { on = false; run++; } }, { threshold: .4 }).observe(root);
