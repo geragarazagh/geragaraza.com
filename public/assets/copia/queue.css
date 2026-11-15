@@ -1,0 +1,47 @@
+/* Copia on its own page: the paste queue (⌃⌥C) playing by itself in the site's one-pixel frame, which stands for the screen.
+   Above the line a page of Bell's notebook (10 March 1876, the first sentence carried by telephone), below it an empty note.
+   Three phrases are copied out of the sentence one after another, and the deck at the frame's bottom right grows by a
+   card each time; then each paste lands the next one in the note, and its card slides off the frame's right edge as off
+   the screen's. Text sizes as the other blocks (system font, L x .32); the deck in Copia's own points (deck.swift), so it
+   is the size it is on a Mac. */
+.cq{margin:var(--l) 0 0}
+.cq .scr{position:relative;overflow:hidden;border:var(--px) solid;border-radius:calc(var(--l)*.14);
+  font:400 calc(var(--l)*.32)/1.4 system-ui,-apple-system,sans-serif;-webkit-user-select:none;user-select:none}
+.cq .src,.cq .dst{padding:calc(var(--l)/4) calc(var(--l)/3)}
+.cq .dst{border-top:var(--px) solid;white-space:pre-wrap;overflow-wrap:anywhere}
+/* The selection: macOS's text highlight, the person's own highlight colour where the browser gives it (Safari's Highlight is
+   the system's selected text background), else macOS's blue one; the text keeps its colour, as in a text view. */
+.cq mark{color:inherit;background:#b3d7ff;background:Highlight;padding:.12em 0;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+/* The caret as macOS 27 draws it: the accent colour, blinking about once a second, still while typing or pasting. */
+.cq .caret{display:inline-block;width:2px;height:1.15em;margin:0 -1px;vertical-align:-.2em;background:#007aff;background:AccentColor;
+  animation:cqblink 1.06s step-end infinite}
+.cq .caret.still{animation:none}
+@keyframes cqblink{50%{opacity:0}}
+
+/* The deck (deck.swift): cards 192 x 128 pt, 12 pt from the screen's edges; two cards behind, each 7 pt higher and 10 pt
+   narrower a side; corners 10, a 0.5 pt separator line, a shadow of 6 pt at 22 % cast 2 pt UP (the layer is flipped: measured on the real deck, the strips of the cards behind darken from 238 to 214 toward the next card); light and dark as the app's
+   controlBackgroundColor (measured in its own window: #fff, #1e1e1e). */
+.cq .deck{position:absolute;right:12px;bottom:12px;width:192px;height:142px;font:400 12px/15px system-ui,-apple-system,sans-serif;
+  color:rgba(0,0,0,.85);opacity:0}
+.cq .cd{position:absolute;box-sizing:border-box;height:128px;border-radius:10px;background:#fff;
+  box-shadow:0 0 0 .5px rgba(0,0,0,.1),0 -2px 12px rgba(0,0,0,.22);overflow:hidden}
+.cq .cd .t{position:absolute;left:10px;right:10px;top:9px;bottom:26px;overflow:hidden;white-space:pre-wrap;overflow-wrap:anywhere}
+.cq .cd .f{position:absolute;left:10px;right:10px;bottom:8px;font-size:10.5px;line-height:13px;color:rgba(0,0,0,.5);white-space:nowrap}
+/* The empty queue's card: one line in the middle, secondary. */
+.cq .cd.none .t{top:56px;bottom:auto;text-align:center;color:rgba(0,0,0,.5)}
+/* The count left, as Apple's badges: 24 pt on the front card's top right corner, the accent colour in a 1.5 pt white ring,
+   the number in the rounded system face, bold, 0.58 of the height. */
+.cq .bdg{position:absolute;left:180px;top:2px;z-index:9;box-sizing:border-box;min-width:24px;height:24px;padding:0 4px;border-radius:12px;
+  border:1.5px solid #fff;background:#007aff;background:AccentColor;color:#fff;
+  font:700 13.9px/21px ui-rounded,system-ui,-apple-system,sans-serif;text-align:center}
+.cq .bdg[hidden]{display:none}
+.cq .fly{position:absolute;z-index:20;will-change:transform}
+@media (prefers-color-scheme:dark){
+  .cq mark{background:#3f638b;background:Highlight}
+  .cq.hl mark{background:#3f638b}
+  .cq .caret{background:#0a84ff;background:AccentColor}
+  .cq .deck{color:rgba(255,255,255,.85)}
+  .cq .cd{background:#1e1e1e;box-shadow:0 0 0 .5px rgba(255,255,255,.1),0 -2px 12px rgba(0,0,0,.22)}
+  .cq .cd .f,.cq .cd.none .t{color:rgba(255,255,255,.55)}
+  .cq .bdg{background:#0a84ff;background:AccentColor}
+}
