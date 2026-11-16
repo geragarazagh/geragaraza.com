@@ -55,3 +55,9 @@ li .cmdline{margin:0}
 .cmdline.text{align-items:flex-start}
 .cmdline.text .copy{align-self:flex-start;height:44px}
 .cmdline pre{flex:1;min-width:0;margin:0;padding:12px 0;max-height:50vh;overflow:auto;font:400 12px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace;white-space:pre-wrap}
+/* Skip to the page's text (2026-11-16): the first thing the Tab key reaches on every page (src/worker.js puts it in
+   first in <body> and gives <main> its id), out of sight until it has focus, then in the top space over the column with
+   the site's own focus ring, in the page's own colours. */
+.skip{position:absolute;z-index:30;top:8px;left:16px;padding:10px 12px;background:var(--bg);font-size:calc(var(--l)*.32)}
+@media (min-width:900px){.skip{left:25%}}
+.skip:not(:focus){clip-path:inset(50%);width:1px;height:1px;overflow:hidden;white-space:nowrap;padding:0}

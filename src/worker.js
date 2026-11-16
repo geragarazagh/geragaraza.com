@@ -19,6 +19,13 @@ export default {
     if (moved) return Response.redirect(url.toString(), 301);
 
     const response = await env.ASSETS.fetch(request);
+    // The blog's RSS feed (2026-11-16, made from the posts by publish-drafts/src/feed.py): the assets serve .xml as
+    // application/xml; readers and validators expect the feed's own type.
+    if (url.pathname === '/blog/feed.xml' && response.ok) {
+      const feed = new Response(response.body, response);
+      feed.headers.set('Content-Type', 'application/rss+xml; charset=utf-8');
+      return feed;
+    }
     if (!response.headers.get('content-type')?.includes('text/html')) return response;
 
     // The fonts the page draws with, fetched together with the stylesheet instead of after it, so the text appears in
@@ -56,6 +63,10 @@ export default {
           e.append(links.join('\n') + '\n', { html: true });
         },
       })
+      // A skip link first in every page (2026-11-16): a keyboard reaches the page's text without passing the path line;
+      // site.css (.skip) keeps it out of sight until it has focus. Every page has one <main>, which gets its target id.
+      .on('body', { element(e) { e.prepend('<a class="skip" href="#main">Skip to content</a>\n', { html: true }); } })
+      .on('main', { element(e) { if (!e.getAttribute('id')) e.setAttribute('id', 'main'); } })
       .on('link[href]', versioned('href'))
       .on('script[src]', versioned('src'))
       .on('img[src]', versioned('src'))
