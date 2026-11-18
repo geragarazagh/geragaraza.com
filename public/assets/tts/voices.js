@@ -14,6 +14,11 @@
 // The speed is the app's: 0.6 to 3.5 in steps of 0.1, 1.0 standard (the Mac's normal rate). The app has the voice speak
 // anew at the new speed, never stretched, so the page has every passage spoken at every step (samples.json), made on the
 // author's Mac through the app's own pipeline (bench/siteclips). A new speed stops a sample, as in the app.
+//
+// The proof under the list (his pick Б, 2026-11-18; gen.py, LIVE['tts']): the same waveform button plays the app's own clip
+// of the Gagarin line (made by its tts command, Siri Voice 2, 1x, 9.3 s; the speed does not apply to it). One sound at a
+// time on the page, as in the app: a sample stops the clip and the clip stops a sample. Closing the list stops only a sample
+// of the list; Esc and a new speed stop either.
 
 const LANGS = [['en', 'English'], ['ru', 'Russian'], ['uk', 'Ukrainian']];
 const pick = document.querySelector('#voices .pick'), pop = document.getElementById('voice'), list = document.getElementById('voice-list');
@@ -23,25 +28,23 @@ const WAVE = '<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="5" wi
   '<rect x="9.5" y="4" width="2" height="8" rx="1"/><rect x="13" y="6" width="2" height="4" rx="1"/></svg>';
 const TICK = '<svg viewBox="0 0 100 100" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"><path d="M10 52l26 26 54-56"/></svg>';
 const LISTEN = 'Listen';
-let table = null, audio = null, playing = null, chosen = null;
+const proof = document.querySelector('.proof .lb');
+let table = null, audio = null, playing = null, chosen = null;   // playing: the waveform button whose sound plays
 
 // The decimal sign as the app writes it in English: 1.0×.
 const fmt = new Intl.NumberFormat('en', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 function showSpeed() { shown.textContent = fmt.format(+speed.value) + '×'; }
 
-function mark(li, on) {
-  const b = li.querySelector('.lb');
-  b.classList.toggle('on', on); b.setAttribute('aria-pressed', on);
-}
+function mark(b, on) { b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); }
 function stop() {
   if (audio) { audio.pause(); audio.removeAttribute('src'); audio.load(); audio = null; }
   if (playing) { mark(playing, false); playing = null; }
 }
-function listen(li) {
-  if (playing === li) { stop(); return; }
+function listen(b, src) {
+  if (playing === b) { stop(); return; }
   stop();
-  const a = new Audio(`/assets/tts/${li.dataset.v}-${(+speed.value).toFixed(1)}.m4a`);
-  audio = a; playing = li; mark(li, true);
+  const a = new Audio(src);
+  audio = a; playing = b; mark(b, true);
   a.addEventListener('ended', () => { if (audio === a) stop(); });
   a.play().catch(() => { if (audio === a) stop(); });
 }
@@ -76,15 +79,21 @@ fetch('/assets/tts/samples.json').then((r) => r.json()).then((d) => {
 
 function openList(open) {
   list.hidden = !open; pop.setAttribute('aria-expanded', open);
-  if (!open) stop();
+  if (!open && playing && list.contains(playing)) stop();
 }
 pop.addEventListener('click', () => openList(list.hidden));
 list.addEventListener('click', (e) => {
   const li = e.target.closest('li'); if (!li) return;
-  if (e.target.closest('.lb')) listen(li); else if (e.target.closest('.name')) choose(li);
+  const b = e.target.closest('.lb');
+  if (b) listen(b, `/assets/tts/${li.dataset.v}-${(+speed.value).toFixed(1)}.m4a`); else if (e.target.closest('.name')) choose(li);
 });
+proof?.addEventListener('click', () => listen(proof, '/assets/tts/gagarin.m4a'));
 // A press anywhere outside the button and its list closes the list, as a click outside a menu does on the Mac.
 document.addEventListener('pointerdown', (e) => { if (!list.hidden && !pick.contains(e.target)) openList(false); });
-addEventListener('keydown', (e) => { if (e.key === 'Escape' && (!list.hidden || audio)) { openList(false); pop.focus(); } });
+addEventListener('keydown', (e) => {
+  if (e.key !== 'Escape') return;
+  if (!list.hidden) { openList(false); pop.focus(); }
+  stop();
+});
 speed.addEventListener('input', () => { showSpeed(); stop(); });
 showSpeed();
