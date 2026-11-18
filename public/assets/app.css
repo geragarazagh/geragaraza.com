@@ -17,6 +17,14 @@ h1+.lead{margin:calc(var(--l)/4) 0 0}
 .about h3+p{margin-top:0}
 .about ul{display:block;margin:calc(var(--l)/4) 0 0;padding-left:1.1em;list-style:disc}
 .about li+li{margin-top:calc(var(--l)/8)}
+/* The fact box that opens layer 2 (gen.py, facts): version, release date, size, system, permissions, licence, price. His pick Б
+   of three variants, 2026-11-18: rows with no frame, a line of one device pixel over the first row and under each, the label
+   in 600 and as narrow as its longest word, the value in the text's 500 across the rest of the column. */
+.about .facts{margin:calc(var(--l)/4) 0 0;border-collapse:collapse;width:100%}
+.about .facts tr{border-bottom:var(--px) solid currentColor}
+.about .facts tr:first-child{border-top:var(--px) solid currentColor}
+.about .facts th{width:1%;padding:5px 24px 5px 0;text-align:left;vertical-align:top;white-space:nowrap;font-weight:600}
+.about .facts td{padding:5px 0}
 /* Paths and commands have no spaces to wrap at: they may break anywhere rather than run past the screen's edge. */
 code{font:inherit;overflow-wrap:anywhere}
 /* The Homebrew line is a .cmdline block since 2026-11-11 (site.css), and so is every command of layer 2 since 2026-11-13,

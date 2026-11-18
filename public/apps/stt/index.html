@@ -44,6 +44,15 @@
 <div class="under"><button class="snd" type="button" aria-pressed="false"><svg viewBox="0 0 100 100" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 38h16l22-18v60L28 62H12z"/><path class="off" d="M66 40l20 20M86 40L66 60"/><path class="on" d="M64 36a20 20 0 0 1 0 28M76 24a36 36 0 0 1 0 52"/></svg><span class="vh">Sound</span></button></div></div>
 <div class="about">
 <h2 class="label">For advanced users and language models</h2>
+<table class="facts">
+<tr><th scope="row">Version</th><td>0.9</td></tr>
+<tr><th scope="row">Released</th><td>17 November 2026</td></tr>
+<tr><th scope="row">Download</th><td>4.4 MB</td></tr>
+<tr><th scope="row">Requires</th><td>Apple silicon, macOS 13 or later</td></tr>
+<tr><th scope="row">Permissions</th><td>Microphone, Accessibility</td></tr>
+<tr><th scope="row">License</th><td>MIT</td></tr>
+<tr><th scope="row">Price</th><td>Free</td></tr>
+</table>
 <p>Recognition runs on the Mac with an open model of choice: Whisper, Parakeet or Qwen. The network is used only to download that model and to check for updates; language, dictionary, the subtitles switch and the history setting also go through iCloud to the other Macs of the same account. Each recording is kept with its text on the Mac (History, below). No logs, no account of its own.</p>
 <p>Audio and video files: Choose File… in Settings, File › Transcribe File… (Command-O), a drop anywhere on either window, or Open With → STT in Finder. The text is saved beside the file as a <code>.txt</code> with the same name (<code>Interview.m4a</code> gives <code>Interview.txt</code>; an existing file is never overwritten, the new one is <code>Interview (2).txt</code>) and copied to the clipboard unless Copy Text is off; it is not pasted. A small window shows the progress with Cancel, then the name of the <code>.txt</code>, which shows it in Finder when clicked. Several files go one after another, each to its own <code>.txt</code>; a dictation made meanwhile waits for the file. With Save Subtitles (.srt) on, an <code>.srt</code> with timecodes goes beside the <code>.txt</code> under the same name (<code>Interview.srt</code>), one subtitle per stretch of speech the model marks. Files opened by another program than Finder or the Dock (<code>open -a STT</code> in Terminal, a script) are asked about first, since their text goes to the clipboard.</p>
 <h2>History</h2>
@@ -118,15 +127,12 @@
 <p><code>--add-word</code> and <code>--add-pair</code> are for AI agents and scripts that keep the dictionary for a person: an agent that sees the same word misheard again adds it, and nobody has to open Dictionary. They go through the running app as an edit in Dictionary does, so the other Macs get it too, and each is checked first: 200 characters at most, no control or text-direction characters. A word or replacement already there is left as it is; the same word in another spelling, or the same heard form with another written one, is changed. The answer says which (Added, Already in the dictionary, Changed), and an error exits with 1.</p>
 <h2>Details</h2>
 <ul>
-<li>Version: 0.9.</li>
 <li>Bundle ID: <code>com.geragaraza.stt</code>.</li>
-<li>Download: <code>STT.dmg</code>, 4.4 MB.</li>
+<li>Download: <code>STT.dmg</code>.</li>
 <li>Models: downloaded separately, 740 to 2,185 MB each.</li>
-<li>Requires: Apple silicon, macOS 13 or later.</li>
-<li>Permissions: Microphone, Accessibility. Network: to download a model and to check for updates; iCloud for four settings.</li>
+<li>Network: to download a model and to check for updates; iCloud for four settings.</li>
 <li>Signed with a Developer ID and notarized by Apple.</li>
 <li>Code: Swift with AppKit, SwiftUI and Core Data, about 3,600 lines, the transcribe.cpp framework, and Sparkle for updates.</li>
-<li>License: MIT.</li>
 </ul>
 </div>
 </main>
