@@ -7,50 +7,50 @@
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<title>Mac Clean: a skill for AI assistants that cleans, updates and checks a Mac</title>
+<title>Macliner: a skill for AI assistants that cleans, updates and checks a Mac</title>
 <meta name="description" content="A skill for large language models that cleans, updates and checks a Mac with macOS&#x27;s own commands: a plan with sizes first, caches and leftovers deleted for real, a question before anything a person might want, then a second look to verify.">
-<meta property="og:title" content="Mac Clean: a skill for AI assistants">
+<meta property="og:title" content="Macliner: a skill for AI assistants">
 <meta property="og:description" content="A skill for large language models that cleans, updates and checks a Mac with macOS&#x27;s own commands: a plan with sizes first, caches and leftovers deleted for real, a question before anything a person might want, then a second look to verify.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://geragaraza.com/skills/mac-clean/">
+<meta property="og:url" content="https://geragaraza.com/skills/macliner/">
 <meta property="og:image" content="https://geragaraza.com/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="canonical" href="https://geragaraza.com/skills/mac-clean/"><!-- nosemgrep: missing-integrity (the page's own address, not a file it loads) -->
+<link rel="canonical" href="https://geragaraza.com/skills/macliner/"><!-- nosemgrep: missing-integrity (the page's own address, not a file it loads) -->
 <link rel="stylesheet" href="/assets/site.css">
 <link rel="stylesheet" href="/assets/blog.css">
 <script src="/assets/copy.js" defer></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareSourceCode","name":"mac-clean","description":"A skill for large language models that cleans, updates and checks a Mac with macOS's own commands: a plan with sizes first, caches and leftovers deleted for real, a question before anything a person might want, then a second look to verify.","codeRepository":"https://github.com/geragarazagh/mac-clean","license":"https://opensource.org/licenses/MIT","url":"https://geragaraza.com/skills/mac-clean/","author":{"@type":"Person","name":"Herman Harazha","url":"https://geragaraza.com/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareSourceCode","name":"macliner","description":"A skill for large language models that cleans, updates and checks a Mac with macOS's own commands: a plan with sizes first, caches and leftovers deleted for real, a question before anything a person might want, then a second look to verify.","codeRepository":"https://github.com/geragarazagh/macliner","license":"https://opensource.org/licenses/MIT","url":"https://geragaraza.com/skills/macliner/","author":{"@type":"Person","name":"Herman Harazha","url":"https://geragaraza.com/"}}</script>
 </head>
 <body>
 <main>
 <p class="up"><a href="/">Herman Harazha</a> / <a href="/skills/">Skills</a></p>
 <article>
-<h1>Mac Clean</h1>
-<p>Code and description: <a class="t" href="https://github.com/geragarazagh/mac-clean">github.com/<wbr>geragarazagh/<wbr>mac-clean</a></p>
-<p>Mac Clean is an agent skill (a text file of instructions that an AI assistant reads and follows) that cleans, updates and checks a Mac in one run with macOS&#x27;s own commands. It measures first and shows a plan with sizes; deletes at once only what comes back by itself (app caches, logs, old Trash items, Homebrew downloads, leftovers of removed apps); asks before anything a person might want (developer caches, old downloads, large files, duplicates, apps not opened for six months, Safari data); installs Homebrew and App Store updates when asked; reports security settings, the battery and the disk; and measures again to verify. Settings that trade comfort for safety stay as macOS ships them unless the person asks. Documents, photos, mail, keys, virtual machines and AI models are never touched. Nothing keeps running afterwards and nothing is sent anywhere.</p>
+<h1>Macliner</h1>
+<p>Code and description: <a class="t" href="https://github.com/geragarazagh/macliner">github.com/<wbr>geragarazagh/<wbr>macliner</a></p>
+<p>Macliner is an agent skill (a text file of instructions that an AI assistant reads and follows) that cleans, updates and checks a Mac in one run with macOS&#x27;s own commands. It measures first and shows a plan with sizes; deletes at once only what comes back by itself (app caches, logs, old Trash items, Homebrew downloads, leftovers of removed apps); asks before anything a person might want (developer caches, old downloads, large files, duplicates, apps not opened for six months, Safari data); installs Homebrew and App Store updates when asked; reports security settings, the battery and the disk; and measures again to verify. Settings that trade comfort for safety stay as macOS ships them unless the person asks. Documents, photos, mail, keys, virtual machines and AI models are never touched. Nothing keeps running afterwards and nothing is sent anywhere.</p>
 <h2>Install</h2>
 <p>Terminal agents (Claude Code, Codex, Antigravity, OpenCode and others), one command:</p>
-<div class="cmdline"><code>npx skills add <span class="nw">geragarazagh/mac-clean -g</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
+<div class="cmdline"><code>npx skills add <span class="nw">geragarazagh/macliner -g</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
 <p>Gemini CLI, as an extension:</p>
-<div class="cmdline"><code><span class="nw">gemini</span> <span class="nw">extensions</span> <span class="nw">install</span> <span class="nw">https://github.com/</span><wbr><span class="nw">geragarazagh/</span><wbr><span class="nw">mac-clean</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
+<div class="cmdline"><code><span class="nw">gemini</span> <span class="nw">extensions</span> <span class="nw">install</span> <span class="nw">https://github.com/</span><wbr><span class="nw">geragarazagh/</span><wbr><span class="nw">macliner</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
 <p>The skill needs Python 3 from Apple&#x27;s command line tools, and uses Homebrew and mas when they are installed. When something is missing, the assistant names the install command and waits.</p>
 <p>With Full Disk Access for the terminal or the assistant&#x27;s app it also looks into Downloads, the Trash and Safari&#x27;s data; without it, it skips them and says so.</p>
 <p>Chat apps (Claude, ChatGPT, Gemini) cannot use it: they cannot reach the Mac.</p>
 <p>Any other agent that runs commands on a Mac: copy the text of the skill below and paste it into its instructions or as the first message.</p>
 <div class="cmdline text"><pre>---
-name: mac-clean
+name: macliner
 description: &quot;Cleans, updates and checks a Mac in one run: measures, shows a plan with sizes, deletes caches and leftovers for real, asks before anything a person might want, then verifies. Use when someone asks to clean up, free space on, speed up, update or check the security of their Mac.&quot;
 license: MIT
 compatibility: &quot;macOS only. Needs an assistant that runs commands on the Mac itself (a terminal agent) and Python 3 from Apple&#x27;s command line tools. Uses Homebrew and mas when they are installed. Not for chat apps: they cannot reach the Mac.&quot;
 ---
 
-# mac-clean
+# Macliner
 
 Cleans, updates and checks a Mac in one run, the way paid cleaner apps do, with
 the Mac&#x27;s own commands and nothing that stays running afterwards. The helper
-script `scripts/macclean.py` does the measuring and the deleting; it needs only
+script `scripts/macliner.py` does the measuring and the deleting; it needs only
 Python 3 (standard library) and macOS&#x27;s own commands.
 
 Answer in the language of the person&#x27;s message, briefly. A request such as
@@ -79,7 +79,7 @@ The script lives in this skill&#x27;s folder (next to this file), not in the
 person&#x27;s folder: call it by its full path. If that path is not known, find it:
 
 ```
-find -L ~/.[a-z]* -maxdepth 9 -path &#x27;*mac-clean/scripts/macclean.py&#x27; 2&gt;/dev/null | head -1
+find -L ~/.[a-z]* -maxdepth 9 -path &#x27;*macliner/scripts/macliner.py&#x27; 2&gt;/dev/null | head -1
 ```
 
 Below, SCRIPT means that full path. Run it with `/usr/bin/python3` (Apple&#x27;s
@@ -221,7 +221,7 @@ If the person wants the same answers next time, offer to keep them:
 `--yes` choices and updates are then done without asking, `--no` lines are
 left, and `--protect` paths are never deleted. Settings cannot be given a
 standing yes. The file is
-`~/.config/mac-clean/answers.json`; say where it is. Ids of apps, duplicates
+`~/.config/macliner/answers.json`; say where it is. Ids of apps, duplicates
 and files are tied to that item, so remember only answers the person meant to
 keep («never ask about Safari again»).
 

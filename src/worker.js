@@ -15,7 +15,12 @@ export default {
     if (url.pathname === '/apps/sourcekey' || url.pathname.startsWith('/apps/sourcekey/')) { url.pathname = '/apps/retyper/'; moved = true; }
     if (url.searchParams.has('lang')) { url.searchParams.delete('lang'); moved = true; }
     // The convert skill's page was a blog post until 2026-11-15; the blog holds only his own posts since (dev/rules.md).
-    if (url.pathname === '/blog/navyk-convert' || url.pathname.startsWith('/blog/navyk-convert/')) { url.pathname = '/skills/convert/'; moved = true; }
+    if (url.pathname === '/blog/navyk-convert' || url.pathname.startsWith('/blog/navyk-convert/')) { url.pathname = '/skills/converter/'; moved = true; }
+    // The five skills were renamed on 2026-11-18 (0.2.0, his choice of names): their old page addresses keep working.
+    const renamedSkills = { 'convert': 'converter', 'youtube-download': 'your-downloader', 'text-to-speech': 'offline-tts',
+      'audiobook': 'mp3-to-m4b', 'mac-clean': 'macliner' };
+    const skill = url.pathname.match(/^\/skills\/([a-z-]+)(\/.*)?$/);
+    if (skill && Object.hasOwn(renamedSkills, skill[1])) { url.pathname = '/skills/' + renamedSkills[skill[1]] + '/'; moved = true; }
     if (moved) return Response.redirect(url.toString(), 301);
 
     const response = await env.ASSETS.fetch(request);

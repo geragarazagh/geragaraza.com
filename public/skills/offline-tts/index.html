@@ -7,34 +7,34 @@
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<title>Text to Speech: a skill for AI assistants that reads a text aloud into an audio file</title>
+<title>Offline TTS: a skill for AI assistants that reads a text aloud into an audio file</title>
 <meta name="description" content="A skill for large language models that reads a text aloud into an mp3, m4a or wav with the computer&#x27;s own voices, offline: Siri voices on a Mac, Piper or system voices on Linux and Windows, numbers and dates read right.">
-<meta property="og:title" content="Text to Speech: a skill for AI assistants">
+<meta property="og:title" content="Offline TTS: a skill for AI assistants">
 <meta property="og:description" content="A skill for large language models that reads a text aloud into an mp3, m4a or wav with the computer&#x27;s own voices, offline: Siri voices on a Mac, Piper or system voices on Linux and Windows, numbers and dates read right.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://geragaraza.com/skills/text-to-speech/">
+<meta property="og:url" content="https://geragaraza.com/skills/offline-tts/">
 <meta property="og:image" content="https://geragaraza.com/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="canonical" href="https://geragaraza.com/skills/text-to-speech/"><!-- nosemgrep: missing-integrity (the page's own address, not a file it loads) -->
+<link rel="canonical" href="https://geragaraza.com/skills/offline-tts/"><!-- nosemgrep: missing-integrity (the page's own address, not a file it loads) -->
 <link rel="stylesheet" href="/assets/site.css">
 <link rel="stylesheet" href="/assets/blog.css">
 <script src="/assets/copy.js" defer></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareSourceCode","name":"text-to-speech","description":"A skill for large language models that reads a text aloud into an mp3, m4a or wav with the computer's own voices, offline: Siri voices on a Mac, Piper or system voices on Linux and Windows, numbers and dates read right.","codeRepository":"https://github.com/geragarazagh/text-to-speech","license":"https://opensource.org/licenses/MIT","url":"https://geragaraza.com/skills/text-to-speech/","author":{"@type":"Person","name":"Herman Harazha","url":"https://geragaraza.com/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareSourceCode","name":"offline-tts","description":"A skill for large language models that reads a text aloud into an mp3, m4a or wav with the computer's own voices, offline: Siri voices on a Mac, Piper or system voices on Linux and Windows, numbers and dates read right.","codeRepository":"https://github.com/geragarazagh/offline-tts","license":"https://opensource.org/licenses/MIT","url":"https://geragaraza.com/skills/offline-tts/","author":{"@type":"Person","name":"Herman Harazha","url":"https://geragaraza.com/"}}</script>
 </head>
 <body>
 <main>
 <p class="up"><a href="/">Herman Harazha</a> / <a href="/skills/">Skills</a></p>
 <article>
-<h1>Text to Speech</h1>
-<p>Code and description: <a class="t" href="https://github.com/geragarazagh/text-to-speech">github.com/<wbr>geragarazagh/<wbr>text-to-speech</a></p>
-<p>Text to Speech is an agent skill (a text file of instructions that an AI assistant reads and follows) that reads a text, a file or an assistant&#x27;s own answer aloud into an mp3, m4a or wav, offline, with the voices the computer has. On a Mac: the Siri voices, through the <a class="t" href="/apps/tts/">TTS</a> app&#x27;s command, which also reads Russian and Ukrainian numbers and dates in the right case. On Linux: Piper or espeak-ng. On Windows: the built-in voices. Elsewhere the assistant first writes numbers, signs and abbreviations as words. It asks once for the voice, the speed and the place, then makes the file and checks its length.</p>
+<h1>Offline TTS</h1>
+<p>Code and description: <a class="t" href="https://github.com/geragarazagh/offline-tts">github.com/<wbr>geragarazagh/<wbr>offline-tts</a></p>
+<p>Offline TTS is an agent skill (a text file of instructions that an AI assistant reads and follows) that reads a text, a file or an assistant&#x27;s own answer aloud into an mp3, m4a or wav, offline, with the voices the computer has. On a Mac: the Siri voices, through the <a class="t" href="/apps/tts/">TTS</a> app&#x27;s command, which also reads Russian and Ukrainian numbers and dates in the right case. On Linux: Piper or espeak-ng. On Windows: the built-in voices. Elsewhere the assistant first writes numbers, signs and abbreviations as words. It asks once for the voice, the speed and the place, then makes the file and checks its length.</p>
 <h2>Install</h2>
 <p>Terminal agents (Claude Code, Codex, Antigravity, OpenCode and others), one command:</p>
-<div class="cmdline"><code>npx skills add <span class="nw">geragarazagh/text-to-speech -g</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
+<div class="cmdline"><code>npx skills add <span class="nw">geragarazagh/offline-tts -g</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
 <p>Gemini CLI, as an extension:</p>
-<div class="cmdline"><code><span class="nw">gemini</span> <span class="nw">extensions</span> <span class="nw">install</span> <span class="nw">https://github.com/</span><wbr><span class="nw">geragarazagh/</span><wbr><span class="nw">text-to-speech</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
+<div class="cmdline"><code><span class="nw">gemini</span> <span class="nw">extensions</span> <span class="nw">install</span> <span class="nw">https://github.com/</span><wbr><span class="nw">geragarazagh/</span><wbr><span class="nw">offline-tts</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
 <p>On a Mac the skill uses the TTS app (Apple Silicon, macOS 13 or newer), which carries the command that reaches the Siri voices:</p>
 <div class="cmdline"><code><span class="nw">brew</span> <span class="nw">install</span> <span class="nw">geragarazagh/tap/tts</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
 <p>On Linux it uses Piper in a virtual environment of its own; on Windows the built-in voices need nothing. When something is missing, the assistant names the install command and waits.</p>
@@ -42,13 +42,13 @@
 <p>Any other agent that runs commands: copy the text of the skill below and paste it into its instructions or as the first message.</p>
 <p>The macOS licence allows its system voices, Siri voices included, for personal, non-commercial use only; recordings of them are not for publishing.</p>
 <div class="cmdline text"><pre>---
-name: text-to-speech
+name: offline-tts
 description: &quot;Reads a text aloud into an audio file (mp3, m4a or wav) with the computer&#x27;s own voices, offline: Siri voices on a Mac, Piper or system voices on Linux and Windows, numbers and dates read right. Use when someone wants a text, article, file or chat answer turned into speech to listen to later.&quot;
 license: MIT
 compatibility: &quot;Needs an assistant that runs commands on the person&#x27;s computer (a terminal agent). Best on macOS 13 or newer; Linux through Piper or espeak-ng; Windows through its built-in voices. Chat apps have no voices in their sandbox.&quot;
 ---
 
-# Text to speech
+# Offline TTS
 
 Turns a text into an audio file on the person&#x27;s computer with voices that
 are already there or installed once, offline. Answer in the language of the
@@ -77,7 +77,7 @@ listed the voices (step 2 below), with the default for each:
 
 A reply such as «ok» or «go» takes the defaults. Keep the answers for the
 rest of the conversation and do not ask again. If the agent keeps files,
-offer once to save the answers in `~/.config/text-to-speech.txt` (plain
+offer once to save the answers in `~/.config/offline-tts.txt` (plain
 lines such as `voice: Voice 2`) and read that file before asking next time.
 
 ## Every file

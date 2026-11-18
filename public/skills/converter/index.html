@@ -7,43 +7,43 @@
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<title>Convert: a skill for AI assistants that converts files</title>
+<title>Converter: a skill for AI assistants that converts files</title>
 <meta name="description" content="A skill for large language models that converts files: video, audio, photos, PDF, documents, e-books, archives, subtitles, text encodings.">
-<meta property="og:title" content="Convert: a skill for AI assistants">
+<meta property="og:title" content="Converter: a skill for AI assistants">
 <meta property="og:description" content="A skill for large language models that converts files: video, audio, photos, PDF, documents, e-books, archives, subtitles, text encodings.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://geragaraza.com/skills/convert/">
+<meta property="og:url" content="https://geragaraza.com/skills/converter/">
 <meta property="og:image" content="https://geragaraza.com/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="canonical" href="https://geragaraza.com/skills/convert/"><!-- nosemgrep: missing-integrity (the page's own address, not a file it loads) -->
+<link rel="canonical" href="https://geragaraza.com/skills/converter/"><!-- nosemgrep: missing-integrity (the page's own address, not a file it loads) -->
 <link rel="stylesheet" href="/assets/site.css">
 <link rel="stylesheet" href="/assets/blog.css">
 <script src="/assets/copy.js" defer></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareSourceCode","name":"convert","description":"A skill for large language models that converts files: video, audio, photos, PDF, documents, e-books, archives, subtitles, text encodings.","codeRepository":"https://github.com/geragarazagh/convert","license":"https://opensource.org/licenses/MIT","url":"https://geragaraza.com/skills/convert/","author":{"@type":"Person","name":"Herman Harazha","url":"https://geragaraza.com/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareSourceCode","name":"converter","description":"A skill for large language models that converts files: video, audio, photos, PDF, documents, e-books, archives, subtitles, text encodings.","codeRepository":"https://github.com/geragarazagh/converter","license":"https://opensource.org/licenses/MIT","url":"https://geragaraza.com/skills/converter/","author":{"@type":"Person","name":"Herman Harazha","url":"https://geragaraza.com/"}}</script>
 </head>
 <body>
 <main>
 <p class="up"><a href="/">Herman Harazha</a> / <a href="/skills/">Skills</a></p>
 <article>
-<h1>Convert</h1>
-<p>Code and description: <a class="t" href="https://github.com/geragarazagh/convert">github.com/<wbr>geragarazagh/<wbr>convert</a></p>
+<h1>Converter</h1>
+<p>Code and description: <a class="t" href="https://github.com/geragarazagh/converter">github.com/<wbr>geragarazagh/<wbr>converter</a></p>
 <h2>Install</h2>
 <p>Terminal agents (Claude Code, Codex, Antigravity, OpenCode and others), one command:</p>
-<div class="cmdline"><code>npx skills add <span class="nw">geragarazagh/convert -g</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
+<div class="cmdline"><code>npx skills add <span class="nw">geragarazagh/converter -g</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
 <p>Gemini CLI, as an extension:</p>
-<div class="cmdline"><code><span class="nw">gemini</span> <span class="nw">extensions</span> <span class="nw">install</span> <span class="nw">https://github.com/</span><wbr><span class="nw">geragarazagh/</span><wbr><span class="nw">convert</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
-<p>Claude, ChatGPT: download convert.zip from the <a class="t" href="https://github.com/geragarazagh/convert/releases/latest">releases page</a> and upload it where the app keeps skills. The path in each app is in the README. In the Gemini app a skill with files does not work: Gemini CLI or Antigravity is needed there.</p>
+<div class="cmdline"><code><span class="nw">gemini</span> <span class="nw">extensions</span> <span class="nw">install</span> <span class="nw">https://github.com/</span><wbr><span class="nw">geragarazagh/</span><wbr><span class="nw">converter</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
+<p>Claude, ChatGPT: download converter.zip from the <a class="t" href="https://github.com/geragarazagh/converter/releases/latest">releases page</a> and upload it where the app keeps skills. The path in each app is in the README. In the Gemini app a skill with files does not work: Gemini CLI or Antigravity is needed there.</p>
 <p>Any other chat: copy the text of the skill below and paste it into the instructions or as the first message.</p>
 <div class="cmdline text"><pre>---
-name: convert
+name: converter
 description: &quot;Converts a file into another format, size or form and checks the result: video and audio (play on a phone or TV, compress to a size, cut, join, GIF, extract sound), photos (HEIC to JPEG), PDF (merge, split, compress, OCR to searchable), DjVu, Word, Excel and PowerPoint to PDF, e-books, archives, subtitles, garbled letters and wrong text encodings, JSON, YAML, CSV. Use whenever a file has to become another file or be fixed.&quot;
 license: MIT
 compatibility: &quot;Needs an assistant that can run commands: a terminal agent on the person&#x27;s computer, or a chat app with code execution for uploaded files. Uses ffmpeg, ImageMagick, LibreOffice, pandoc and similar tools where installed.&quot;
 ---
 
-# Convert
+# Converter
 
 Answer in the language of the person&#x27;s message (a request in Russian gets
 the whole answer in Russian), briefly. When the request
@@ -62,7 +62,7 @@ video decisions; everything else is one command from the lists below.
 
 `scripts/av.py` lives in this skill&#x27;s own folder, the folder that holds this
 file, not in the person&#x27;s folder. Call it by its full path, for example
-`python3 /path/to/convert/scripts/av.py info video.mkv`; below it is written
+`python3 /path/to/converter/scripts/av.py info video.mkv`; below it is written
 short as `av.py`. It needs Python 3 and ffmpeg. Some copies of this skill
 come without the script (directories that accept text only): then do the
 same with the ffprobe and ffmpeg commands in «Video without av.py».
@@ -76,7 +76,7 @@ same with the ffprobe and ffmpeg commands in «Video without av.py».
   save it.
 
 Ask only when the request leaves the file or the target unclear (a bare
-«/convert», «make it better»): one short question, in the person&#x27;s language.
+«/converter», «make it better»): one short question, in the person&#x27;s language.
 Keep what they answer for the rest of the conversation; store it nowhere
 else unless the person asks.
 
@@ -292,8 +292,9 @@ The same decisions by hand, for a copy of the skill without the script.
 - Two different programs are called `yq`. The commands here are for
   mikefarah&#x27;s v4; Debian&#x27;s `yq` package is the other one.
 - OCR has no models for old spelling (pre-1918 Russian, for example): expect
-  noise and say so.</pre><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
-<p>Checked on 12 November 2026: version 0.1.2 on Claude Haiku 5.5 in Claude Code, nine real tasks, each twice, as a plain request and through /convert. The result was right all 18 times, the originals untouched. In the Claude app the skill made a real JPEG of the same size as the original from a HEIC photo.</p>
+  noise and say so.
+</pre><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
+<p>Checked on 12 November 2026: version 0.1.2 on Claude Haiku 5.5 in Claude Code, nine real tasks, each twice, as a plain request and through /convert (the skill&#x27;s name until 0.2.0). The result was right all 18 times, the originals untouched. In the Claude app the skill made a real JPEG of the same size as the original from a HEIC photo.</p>
 </article>
 </main>
 </body>
