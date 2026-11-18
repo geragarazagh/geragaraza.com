@@ -1,22 +1,62 @@
-/* Fully on its own page: a screen in the site's one-pixel frame, a Preview window on it showing Minard's map of 1812 (the
-   README pictures' scene), and Fully's double-click on its title bar (fill.js). The screen keeps a MacBook's 1728 x 1117,
-   the desktop is the page's own white or black (his wallpapers in the pictures). The window is drawn at a larger scale than
-   a real one would be on such a screen (its title bar 52/1000 of the screen's width, never under 28 px, so it can be hit by
-   a finger on a phone); inside it, every size is the real window's in the unit b/52, b the title bar's height, measured on
-   the README pictures (macOS 27.2, 2x): title bar 52, buttons 14 across at 23 apart, the first centre 25.75 in, corners
-   15; the window 1002 x 582 at first (58 % of the screen's width), content 530 tall. Colours from the same pictures:
-   light window #fff all through with only a shadow and a rim to set it off; dark title bar #242424 with a hairline,
-   content #1c1c1c, rim #333. */
+/* Fully on its own page: a Mac's display with its menu bar, a Preview window on it showing Minard's map of 1812 (the
+   README pictures' scene), and Fully's double-click on its title bar (fill.js).
+   The display (his word 2026-11-18, a screen recording of this block): any Apple display, so neither a notch nor a keyboard,
+   but a MacBook's lid as Apple draws it, measured on Apple's own front picture of the 14-inch MacBook Pro (the picture is
+   1:1 with the screen's 3024 pixels; the 3020 seen, q below is one of them): an aluminium rim 8 q, black glass 48 q over the
+   screen and 49 q at its sides, 35 q under it and then the hinge's darker band 56 q, the lid's top corners 97 q round and its
+   bottom ones near square, the screen's top corners 36 q and its bottom ones square. The screen keeps his MacBook's
+   1728 x 1117 points; the desktop is the page's own white or black (his wallpapers in the pictures).
+   The menu bar is his own (his capture of 2026-11-18, macOS 27, 3456 pixels wide, read in pixels): transparent, ink in the
+   desktop's opposite colour, the Apple menu, Finder in bold, File, Edit, View, Go, Window, Help in SF 13 regular (the browser's
+   SF at 13 pt matches every word's width to the pixel), at the right Control Center and the clock (SF 13 regular with tabular
+   figures, as macOS sets it, so it never jitters), the visitor's own day and time, ticking (fill.js). No battery, recording or microphone light: a page knows none of them, and a desktop Mac has no
+   battery. u is one pixel of his capture drawn larger than the screen's true share (1329 of them across the screen, not 3456),
+   so that the whole bar fits on a computer and the text is not dust; the window shares the unit (its title bar 52 u, as the
+   README pictures measure it), so the two keep macOS's proportion everywhere. The title bar is never under 28 px on a touch
+   screen (a finger must hit it) and 22 px with a mouse; where that makes the bar too wide for the screen, fill.js leaves out
+   what macOS leaves out when its menu bar is full: the last menus first, then Control Center. */
 /* A double tap on the block never zooms the page (a page zoom would be a frame no Mac shows); scrolling and pinching stay. */
 .fl{margin:var(--l) 0 0;container-type:inline-size;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;touch-action:manipulation}
-.fl .scr{--b:max(28px,5.2cqw);position:relative;aspect-ratio:1728/1117;overflow:hidden;border:var(--px) solid;
-  border-radius:calc(var(--b)*15/52);background:var(--bg);color:inherit}
-@supports not (width:1cqw){.fl .scr{--b:max(28px,2.6vw)}}
-@media (max-width:899px){@supports not (width:1cqw){.fl .scr{--b:max(28px,4.9vw)}}}
-/* Before fill.js runs (and without it) the window stands where the script puts it: centred, 58 % wide. */
-.fl .win{position:absolute;left:21%;width:58%;top:calc((100cqw*1117/1728 - var(--b) - 58cqw*530/1002)/2);
-  height:calc(var(--b) + 58cqw*530/1002)}
-/* .win is the frame fill.js moves; .pane draws the window inside it. */
+/* --c is 1 % of the display's width; q one pixel of Apple's picture (the screen is 3020 q of the lid's 3134); u one pixel of his
+   menu bar capture, 1329 across the screen. Without container units the column's width stands in for the block's. */
+.fl .dsp{--c:1cqw;--q:calc(var(--c)*100/3134);--m:28px;--u:max(calc(var(--m)/52),calc(var(--c)*100*3020/3134/1329));--b:calc(var(--u)*52);
+  position:relative;padding:calc(var(--q)*56) calc(var(--q)*57) calc(var(--q)*99);border-radius:calc(var(--q)*97) calc(var(--q)*97) calc(var(--q)*6) calc(var(--q)*6);
+  background:#a3a4a6;box-shadow:inset 0 0 0 calc(var(--q)*2) #d6d7d9}
+/* A mouse needs no finger's title bar: on a computer the menu bar is never cut. */
+@media (pointer:fine){.fl .dsp{--m:22px}}
+@supports not (width:1cqw){.fl .dsp{--c:.5vw}}
+@media (max-width:899px){@supports not (width:1cqw){.fl .dsp{--c:calc(1vw - .32px)}}}
+/* The glass inside the rim, and the hinge's band at its foot. */
+.fl .dsp::before{content:"";position:absolute;inset:calc(var(--q)*8);border-radius:calc(var(--q)*89) calc(var(--q)*89) 0 0;background:#070607;
+  box-shadow:0 0 0 calc(var(--q)*1) #303032}
+.fl .dsp::after{content:"";position:absolute;left:calc(var(--q)*8);right:calc(var(--q)*8);bottom:calc(var(--q)*8);height:calc(var(--q)*56);background:#262626}
+.fl .scr{position:relative;z-index:1;aspect-ratio:1728/1117;overflow:hidden;border-radius:calc(var(--q)*36) calc(var(--q)*36) 0 0;background:var(--bg);color:var(--fg)}
+/* The menu bar: 64 u (his visible frame starts 32 points down), every place read from his capture. */
+.fl .mb{position:absolute;z-index:2;left:0;right:0;top:0;height:calc(var(--u)*64);display:flex;justify-content:space-between;
+  font:400 calc(var(--u)*26)/1 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;white-space:nowrap;pointer-events:none}
+.fl .ml,.fl .mr{display:flex;align-items:center}
+.fl .ml{padding-left:calc(var(--u)*41);gap:calc(var(--u)*40)}
+.fl .ap{flex:none;width:calc(var(--u)*26);height:calc(var(--u)*32);margin:calc(var(--u)*-2) 0 0;fill:currentColor}
+.fl .ml b{font-weight:700}
+.fl .ml b,.fl .ml span{position:relative;top:var(--u)}
+.fl .mb [hidden]{display:none}
+.fl .dt[hidden]+.tm{margin-left:0}
+/* The status items are drawn at 90 % (his capture: alpha 229 where the menus have 255). */
+.fl .mr{padding-right:calc(var(--u)*41);visibility:hidden;opacity:.9}
+.fl .mr.on{visibility:visible}
+.fl .cc{flex:none;width:calc(var(--u)*26.6);height:calc(var(--u)*27);margin:calc(var(--u)*2) calc(var(--u)*44) 0 0;fill:currentColor}
+.fl .ck{font-variant-numeric:tabular-nums}
+.fl .tm{margin-left:calc(var(--u)*14)}
+/* Before fill.js runs (and without it) the window stands where the script puts it: 58 % of the screen wide, centred in what
+   the menu bar leaves (the screen is 3020/3134 of the display, 1117/1728 as tall; the content keeps the map's 1002 x 530). */
+.fl .win{position:absolute;left:21%;width:58%;
+  top:calc(var(--u)*64 + (var(--c)*100*3020/3134*1117/1728 - var(--u)*64 - var(--b) - var(--c)*58*3020/3134*530/1002)/2);
+  height:calc(var(--b) + var(--c)*58*3020/3134*530/1002)}
+/* .win is the frame fill.js moves; .pane draws the window inside it. Every size inside it is the real window's in the unit b/52,
+   b the title bar's height, measured on the README pictures (macOS 27.2, 2x): title bar 52, buttons 14 across at 23 apart, the
+   first centre 25.75 in, corners 15; the window 1002 x 582 at first (58 % of the screen's width), content 530 tall. Colours from
+   the same pictures: light window #fff all through with only a shadow and a rim to set it off; dark title bar #242424 with a
+   hairline, content #1c1c1c, rim #333. */
 .fl .pane{position:absolute;inset:0;border-radius:calc(var(--b)*15/52);overflow:hidden;background:#fff;
   box-shadow:0 0 0 var(--px) rgba(0,0,0,.3),0 calc(var(--b)*10/52) calc(var(--b)*30/52) rgba(0,0,0,.3)}
 /* The edges and corners that resize the window are found by fill.js (measured zones, a mouse only), not drawn. */

@@ -5,7 +5,7 @@
 //   no modifier key held; a double-click on the window buttons or on the map (a control, page content) does nothing.
 // - The title bar drags the window, filled or not, and the window keeps its size: the point of the app (macOS's own Fill
 //   tile shrinks back to the old size the moment it is dragged). A window dragged aside fills again on the next
-//   double-click; there is no restore, as in the app. The title bar never goes above the screen's top, as on a Mac.
+//   double-click; there is no restore, as in the app. The title bar never goes up into the menu bar, as on a Mac.
 // - The edges and corners resize the window with a mouse or a trackpad, where and as macOS 27.2 does it for Preview's
 //   window (his wish 2026-11-17 ~17:15; measured that evening in a clone of pxl-27, pointer moved in 1 pt steps, the
 //   system cursor read back, and press-drags): bands 3 pt inside every edge and 2 pt (left, bottom) or 4 pt (right,
@@ -15,10 +15,35 @@
 //   points while the window is drawn smaller: they are where a real pointer finds an edge, not part of the picture.
 //   On a touch screen there is no resizing: a finger anywhere but the title bar scrolls the page (his rule
 //   2026-11-17 ~17:30, scrolling and resizing never confused).
+// - The screen has a menu bar (since 2026-11-18), so the filled frame is the screen under it, as macOS's visible frame, and the
+//   title bar never goes up into it. Its clock shows the visitor's own day and time in his menu bar's form («Wed 18 Nov
+//   1:47:53 PM», English names whatever the browser's language, so it reads the same everywhere) and ticks each second.
+//   What does not fit beside the clock is left out as macOS leaves it out of a full menu bar: the menus from the last one on,
+//   then Control Center; on the narrowest phones the date too, the time stays.
 // - Nothing plays by itself and nothing asks for a key. A reload brings the first window back.
 (() => {
   const root = document.getElementById('fl'); if (!root) return;
-  const scr = root.querySelector('.scr'), win = scr.querySelector('.win'), bar = win.querySelector('.bar');
+  const scr = root.querySelector('.scr'), win = scr.querySelector('.win'), bar = win.querySelector('.bar'), mb = scr.querySelector('.mb');
+  const ml = mb.querySelector('.ml'), mr = mb.querySelector('.mr'), dt = mr.querySelector('.dt'), tm = mr.querySelector('.tm');
+  const WD = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], MO = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const two = (n) => String(n).padStart(2, '0');
+  // Each second at its turn (a little after it, so a timer that fires early still shows the new second).
+  (function tick() {
+    const d = new Date(), h = d.getHours();
+    dt.textContent = `${WD[d.getDay()]} ${d.getDate()} ${MO[d.getMonth()]}`;
+    tm.textContent = `${h % 12 || 12}:${two(d.getMinutes())}:${two(d.getSeconds())}\u202F${h < 12 ? 'AM' : 'PM'}`;
+    if (!mr.classList.contains('on')) { mr.classList.add('on'); fit(); }
+    setTimeout(tick, 1010 - d.getMilliseconds());
+  })();
+  // What fits: everything, then out one by one while the menus would come closer than 40 u to the status items.
+  function fit() {
+    const out = [...ml.children].slice(2).reverse().concat(mr.querySelector('.cc'), dt);
+    out.forEach((e) => e.removeAttribute('hidden'));   // an attribute, since an <svg> has no hidden property
+    const room = () => mr.getBoundingClientRect().left - ml.getBoundingClientRect().left - ml.scrollWidth;
+    const gap = mb.getBoundingClientRect().height * 40 / 64;
+    for (const e of out) { if (room() >= gap) break; e.setAttribute('hidden', ''); }
+  }
+  if (document.fonts) document.fonts.ready.then(fit);
   const CURSOR = { n: 'ns-resize', s: 'ns-resize', e: 'ew-resize', w: 'ew-resize', nw: 'nwse-resize', se: 'nwse-resize', ne: 'nesw-resize', sw: 'nesw-resize' };
   // Measured zones (points). u counts inward from the vertical edge, v from the horizontal one; 0 is the first point inside,
   // -1 the first outside. A corner is a list of rows v = -3 … 15, each [first u, last u] that shows the corner's cursor.
@@ -60,10 +85,12 @@
   const INTERVAL = 500;
   // The first frame is the stylesheet's (centred, 58 % wide) and is read only when first needed: WebKit may run a deferred
   // script before the stylesheet applies (the site's lesson of 2026-11-10), and a frame read then would be the unstyled one.
-  let W = 0, H = 0, f = null;
+  let W = 0, H = 0, M = 0, f = null;   // M: the menu bar's height
+  const full = () => ({ x: 0, y: M, w: W, h: H - M });
+  const isFull = (r) => r.x === 0 && r.y === M && r.w === W && r.h === H - M;
   const now = () => {
     if (!f) {
-      W = scr.clientWidth; H = scr.clientHeight;
+      W = scr.clientWidth; H = scr.clientHeight; M = mb.getBoundingClientRect().height;
       const o = scr.getBoundingClientRect(), r = win.getBoundingClientRect();
       put({ x: r.left - o.left - scr.clientLeft, y: r.top - o.top - scr.clientTop, w: r.width, h: r.height }); first = f;
     }
@@ -72,11 +99,12 @@
   // Frames in whole points of the page, as the app sets whole points (.integral): the window's edges then lie on the same
   // grid as the pointer (WebKit reports it in whole points), so a zone counted in points is the same in every browser.
   function put(r) {
-    // The filled frame is the screen itself, exactly, wherever the screen lies on the page.
-    if (r.x === 0 && r.y === 0 && r.w === W && r.h === H) f = { ...r };
+    // The filled frame is the screen under the menu bar, exactly, wherever the screen lies on the page.
+    if (isFull(r)) f = { ...r };
     else {
       const o = scr.getBoundingClientRect(), ox = o.left + scr.clientLeft, oy = o.top + scr.clientTop;
       f = { x: Math.round(ox + r.x) - ox, y: Math.round(oy + r.y) - oy, w: Math.round(r.w), h: Math.round(r.h) };
+      if (f.y < M && r.y >= M) f.y = M;   // the menu bar's edge need not lie on the grid: nothing goes up into it
     }
     const { x, y } = f;
     const s = win.style; s.left = x + 'px'; s.top = y + 'px'; s.width = f.w + 'px'; s.height = f.h + 'px';
@@ -84,15 +112,16 @@
   let anim = 0;   // the running fill's number, 0 when none
   // A new width (a turned phone, a resized window) scales the frame with the screen, so a filled window stays filled.
   new ResizeObserver(() => requestAnimationFrame(() => {
+    fit();
     const w = scr.clientWidth, h = scr.clientHeight;
     if (!f || !w || !h || (w === W && h === H)) return;   // untouched, the stylesheet keeps it in place
-    const kx = w / W, ky = h / H, full = f.x === 0 && f.y === 0 && f.w === W && f.h === H; W = w; H = h;
-    if (!anim) put(full ? { x: 0, y: 0, w, h } : { x: f.x * kx, y: f.y * ky, w: f.w * kx, h: f.h * ky });
+    const kx = w / W, ky = h / H, was = isFull(f); W = w; H = h; M = mb.getBoundingClientRect().height;
+    if (!anim) put(was ? full() : { x: f.x * kx, y: f.y * ky, w: f.w * kx, h: f.h * ky });
   })).observe(scr);
 
-  // The fill: the whole screen (it has no menu bar or Dock: its visible frame is all of it).
+  // The fill: the screen's visible frame, all of it under the menu bar (it has no Dock).
   function fill() {
-    const a = now(), b = { x: 0, y: 0, w: W, h: H };
+    const a = now(), b = full();
     if (Math.max(Math.abs(a.x), Math.abs(a.y), Math.abs(a.w - b.w), Math.abs(a.h - b.h)) < .5) return;   // already filled: stays as it is
     if (still.matches) { put(b); return; }
     const t0 = performance.now(), id = ++anim;
@@ -176,16 +205,16 @@
     if (!drag.moved && Math.hypot(dx, dy) < (drag.touch ? 6 : 3)) return;
     drag.moved = true; last = null;   // a press that became a drag starts no double-click
     const b = bar.offsetHeight, keep = b * 2, g = drag.f0;
-    put({ x: Math.min(W - keep, Math.max(keep - g.w, g.x + dx)), y: Math.min(H - b, Math.max(0, g.y + dy)), w: g.w, h: g.h });
+    put({ x: Math.min(W - keep, Math.max(keep - g.w, g.x + dx)), y: Math.min(H - b, Math.max(M, g.y + dy)), w: g.w, h: g.h });
   });
   // The moved edges follow the pointer; the opposite ones stay. Smallest: Preview's, as a share of the first frame. Largest:
-  // the screen.
+  // the screen under the menu bar.
   function resize(p) {
     const g = size.f0, k = size.e, dx = p.x - size.p.x, dy = p.y - size.p.y, mw = first.w * 708 / 1002, mh = first.h * 224 / 582;
     let l = g.x, t = g.y, r = g.x + g.w, btm = g.y + g.h;
     if (k.includes('w')) l = Math.max(Math.min(0, l), Math.min(r - mw, g.x + dx));
     if (k.includes('e')) r = Math.min(Math.max(W, r), Math.max(l + mw, r + dx));
-    if (k.includes('n')) t = Math.max(0, Math.min(btm - mh, g.y + dy));
+    if (k.includes('n')) t = Math.max(M, Math.min(btm - mh, g.y + dy));
     if (k.includes('s')) btm = Math.min(Math.max(H, btm), Math.max(t + mh, btm + dy));
     put({ x: l, y: t, w: r - l, h: btm - t });
   }
