@@ -8,7 +8,7 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <title>Privacy: skills for AI assistants</title>
-<meta name="description" content="The agent skills by Herman Harazha collect no data: no servers, accounts, analytics or telemetry. They run inside the assistant a person chose, on the files that person names.">
+<meta name="description" content="The agent skills by Herman Harazha collect no personal data: no servers, accounts, analytics or telemetry. What each skill sends over the network, and to whom.">
 <meta property="og:title" content="Privacy: skills for AI assistants">
 <meta property="og:description" content="The agent skills by Herman Harazha collect no data: no servers, accounts, analytics or telemetry.">
 <meta property="og:type" content="website">
@@ -25,11 +25,19 @@
 <p class="up"><a href="/">Herman Harazha</a> / <a href="/skills/">Skills</a></p>
 <article>
 <h1>Privacy: skills for AI assistants</h1>
-<p class="date"><time datetime="2026-11-11">Updated November 11, 2026</time></p>
-<p>Applies to the skills for AI assistants that Herman Harazha publishes on GitHub: <a href="https://github.com/geragarazagh/convert">convert</a>.</p>
-<p>The skills collect and store no personal data. They have no servers, no accounts, no analytics and no telemetry.</p>
-<p>A skill is a text file of instructions and small scripts. It runs inside the assistant a person chose, on the files that person names. The scripts send nothing over the network.</p>
-<p>Original files are not changed. Results are saved where the person said.</p>
+<p class="date"><time datetime="2026-11-18">Updated November 18, 2026</time></p>
+<p>Applies to the skills for AI assistants that Herman Harazha publishes on GitHub: <a href="https://github.com/geragarazagh/convert">convert</a>, <a href="https://github.com/geragarazagh/youtube-download">youtube-download</a>, <a href="https://github.com/geragarazagh/text-to-speech">text-to-speech</a>, <a href="https://github.com/geragarazagh/audiobook">audiobook</a> and <a href="https://github.com/geragarazagh/mac-clean">mac-clean</a>.</p>
+<p>The skills collect, store and share no personal data. They have no servers, no accounts, no analytics and no telemetry, and nothing reaches Herman Harazha.</p>
+<p>A skill is a text file of instructions, in some skills with a small script. It runs inside the assistant a person chose, on that person's computer or in the assistant's sandbox, on the files and links that person gives.</p>
+<p>What goes over the network:</p>
+<ul>
+<li>convert and audiobook: nothing.</li>
+<li>text-to-speech: nothing; the voices work offline. A Piper voice is downloaded once from Hugging Face when the person installs it.</li>
+<li>youtube-download: yt-dlp requests the page and the media of the link the person gives from that site, as a browser does. Only after the person's yes, the cookies of their browser go to that site, to reach a video they can watch when signed in. When the person asks to cut sponsor segments, the video's ID goes to the SponsorBlock service (sponsor.ajay.app).</li>
+<li>mac-clean: the checks for updates contact Homebrew, the App Store and Apple's software update service, as those tools always do. What it finds on the Mac stays on the Mac and in the conversation.</li>
+<li>Any skill: a missing tool (ffmpeg, yt-dlp, Piper and the like) is downloaded from its own source, such as Homebrew, PyPI or winget: on the person's computer only after their yes, in a chat app's throwaway sandbox without asking.</li>
+</ul>
+<p>convert, audiobook, text-to-speech and youtube-download never change the person's original files; results are saved where the person said. mac-clean deletes only what its plan lists, and asks first about anything a person might want. The only file a skill keeps is a list of the person's own answers on their computer, when they ask for one (text-to-speech: ~/.config/text-to-speech.txt; mac-clean: ~/.config/mac-clean/answers.json).</p>
 <p>What happens to the conversation itself is governed by the privacy policy of the company that runs the assistant.</p>
 <p>Questions: <a href="mailto:geragaraza@gmail.com">geragaraza@gmail.com</a> or the Issues of the skill's repository.</p>
 </article>
