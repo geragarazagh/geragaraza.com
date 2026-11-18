@@ -1,0 +1,42 @@
+/* Fully on its own page: a screen in the site's one-pixel frame, a Preview window on it showing Minard's map of 1812 (the
+   README pictures' scene), and Fully's double-click on its title bar (fill.js). The screen keeps a MacBook's 1728 x 1117,
+   the desktop is the page's own white or black (his wallpapers in the pictures). The window is drawn at a larger scale than
+   a real one would be on such a screen (its title bar 52/1000 of the screen's width, never under 28 px, so it can be hit by
+   a finger on a phone); inside it, every size is the real window's in the unit b/52, b the title bar's height, measured on
+   the README pictures (macOS 27.2, 2x): title bar 52, buttons 14 across at 23 apart, the first centre 25.75 in, corners
+   15; the window 1002 x 582 at first (58 % of the screen's width), content 530 tall. Colours from the same pictures:
+   light window #fff all through with only a shadow and a rim to set it off; dark title bar #242424 with a hairline,
+   content #1c1c1c, rim #333. */
+/* A double tap on the block never zooms the page (a page zoom would be a frame no Mac shows); scrolling and pinching stay. */
+.fl{margin:var(--l) 0 0;container-type:inline-size;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;touch-action:manipulation}
+.fl .scr{--b:max(28px,5.2cqw);position:relative;aspect-ratio:1728/1117;overflow:hidden;border:var(--px) solid;
+  border-radius:calc(var(--b)*15/52);background:var(--bg);color:inherit}
+@supports not (width:1cqw){.fl .scr{--b:max(28px,2.6vw)}}
+@media (max-width:899px){@supports not (width:1cqw){.fl .scr{--b:max(28px,4.9vw)}}}
+/* Before fill.js runs (and without it) the window stands where the script puts it: centred, 58 % wide. */
+.fl .win{position:absolute;left:21%;width:58%;top:calc((100cqw*1117/1728 - var(--b) - 58cqw*530/1002)/2);
+  height:calc(var(--b) + 58cqw*530/1002)}
+/* .win is the frame fill.js moves; .pane draws the window inside it. */
+.fl .pane{position:absolute;inset:0;border-radius:calc(var(--b)*15/52);overflow:hidden;background:#fff;
+  box-shadow:0 0 0 var(--px) rgba(0,0,0,.3),0 calc(var(--b)*10/52) calc(var(--b)*30/52) rgba(0,0,0,.3)}
+/* The edges and corners that resize the window are found by fill.js (measured zones, a mouse only), not drawn. */
+.fl .bar{position:absolute;left:0;right:0;top:0;height:var(--b);touch-action:none;cursor:default}
+.fl .tl{position:absolute;top:calc(var(--b)*(26 - 7)/52);width:calc(var(--b)*14/52);height:calc(var(--b)*14/52);border-radius:50%;
+  box-shadow:inset 0 0 0 calc(var(--b)*.5/52) rgba(0,0,0,.18)}
+.fl .tl.r{left:calc(var(--b)*(25.75 - 7)/52);background:linear-gradient(#fc6d64,#fb7d74 50%,#f68e85)}
+.fl .tl.y{left:calc(var(--b)*(48.75 - 7)/52);background:linear-gradient(#fcba33,#ffc73b 50%,#ffd34a)}
+.fl .tl.g{left:calc(var(--b)*(71.75 - 7)/52);background:linear-gradient(#60cd29,#81d75c 50%,#9edf80)}
+.fl .ttl{position:absolute;left:calc(var(--b)*92/52);right:calc(var(--b)*16/52);top:0;height:var(--b);display:flex;align-items:center;
+  font:700 max(10px,calc(var(--b)*13/52))/1 system-ui,-apple-system,sans-serif;color:rgba(0,0,0,.85);white-space:nowrap;overflow:hidden}
+.fl .ttl span{overflow:hidden;text-overflow:ellipsis}
+.fl .doc{position:absolute;left:0;right:0;top:var(--b);bottom:0;background:#fff}
+.fl .doc img{display:block;width:100%;height:100%;object-fit:contain;-webkit-user-drag:none;pointer-events:none}
+@media (prefers-color-scheme:dark){
+  .fl .pane{background:#242424;box-shadow:0 0 0 var(--px) #333,0 calc(var(--b)*10/52) calc(var(--b)*30/52) rgba(0,0,0,.5)}
+  .fl .bar{box-shadow:inset 0 calc(-1*var(--px)) #2c2c2c}
+  .fl .doc{background:#1c1c1c}
+  .fl .ttl{color:rgba(255,255,255,.85)}
+  .fl .tl.r{background:#f45b50}
+  .fl .tl.y{background:linear-gradient(#fab500,#febd00 50%,#fecd2a)}
+  .fl .tl.g{background:linear-gradient(#48c624,#26c000 50%,#4dc336)}
+}
