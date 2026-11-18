@@ -37,3 +37,17 @@ code{font:inherit;overflow-wrap:anywhere}
 .get .dev~.dev{margin-top:calc(var(--l)/4)}
 .get .two{display:flex;flex-direction:column;line-height:1.15}
 .get .sub{font-size:.62em;font-weight:500;opacity:.62}
+/* Samples and their sources (his word 2026-11-18; gen.py, refs): under every live block, before layer 2, a line per sample
+   naming it, then the notes, plain text as Wikipedia gives references (his pick Б, 2026-11-18): no frame, numbered marks
+   after the lines, one numbered list. L/2 under the block: it belongs to the block, not to layer 2. The lines .32 L like
+   layer 2, the notes .28 L; the links underlined, as everywhere in running text. TTS's passages add to it (voices.css). */
+.refs{margin:calc(var(--l)/2) 0 0;padding:0;max-width:34em}
+.refs p,.refs ol{margin:0}
+.refs .cap{font-size:calc(var(--l)*.32);line-height:1.4;text-wrap:pretty}
+.refs .cap+.cap{margin-top:calc(var(--l)/8)}
+.refs sup{font-size:.62em;line-height:0;vertical-align:.5em;font-weight:600}
+.refs sup a{display:inline;padding:6px 1px;margin:-6px 0}
+.refs .notes{margin-top:calc(var(--l)/2);padding:0 0 0 1.4em;list-style:decimal;font-size:calc(var(--l)*.28);line-height:1.4}
+.refs .notes li+li{margin-top:calc(var(--l)/10)}
+.refs .notes a{display:inline;text-decoration:underline 1px;text-underline-offset:.18em}
+.refs code{font:inherit}

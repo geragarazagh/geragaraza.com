@@ -15,10 +15,11 @@
 // anew at the new speed, never stretched, so the page has every passage spoken at every step (samples.json), made on the
 // author's Mac through the app's own pipeline (bench/siteclips). A new speed stops a sample, as in the app.
 //
-// The proof under the list (his pick Б, 2026-11-18; gen.py, LIVE['tts']): the same waveform button plays the app's own clip
-// of the Gagarin line (made by its tts command, Siri Voice 2, 1x, 9.3 s; the speed does not apply to it). One sound at a
-// time on the page, as in the app: a sample stops the clip and the clip stops a sample. Closing the list stops only a sample
-// of the list; Esc and a new speed stop either.
+// The passages under the list (gen.py, tts_refs; his word 2026-11-18: every sample the same way): the same waveform button
+// beside each passage plays its clip at 1x, named in the button's data-clip: for the app's three sample passages the list's
+// own clip of the language's first female voice, for the Gagarin line the app's tts command's clip (Siri Voice 2, 9.3 s).
+// The speed does not apply to them. One sound at a time on the page, as in the app: any button stops the sound before.
+// Closing the list stops only a sample of the list; Esc and a new speed stop any.
 
 const LANGS = [['en', 'English'], ['ru', 'Russian'], ['uk', 'Ukrainian']];
 const pick = document.querySelector('#voices .pick'), pop = document.getElementById('voice'), list = document.getElementById('voice-list');
@@ -28,7 +29,6 @@ const WAVE = '<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="5" wi
   '<rect x="9.5" y="4" width="2" height="8" rx="1"/><rect x="13" y="6" width="2" height="4" rx="1"/></svg>';
 const TICK = '<svg viewBox="0 0 100 100" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"><path d="M10 52l26 26 54-56"/></svg>';
 const LISTEN = 'Listen';
-const proof = document.querySelector('.proof .lb');
 let table = null, audio = null, playing = null, chosen = null;   // playing: the waveform button whose sound plays
 
 // The decimal sign as the app writes it in English: 1.0×.
@@ -87,7 +87,7 @@ list.addEventListener('click', (e) => {
   const b = e.target.closest('.lb');
   if (b) listen(b, `/assets/tts/${li.dataset.v}-${(+speed.value).toFixed(1)}.m4a`); else if (e.target.closest('.name')) choose(li);
 });
-proof?.addEventListener('click', () => listen(proof, '/assets/tts/gagarin.m4a'));
+for (const b of document.querySelectorAll('.refs .lb')) b.addEventListener('click', () => listen(b, b.dataset.clip));
 // A press anywhere outside the button and its list closes the list, as a click outside a menu does on the Mac.
 document.addEventListener('pointerdown', (e) => { if (!list.hidden && !pick.contains(e.target)) openList(false); });
 addEventListener('keydown', (e) => {
