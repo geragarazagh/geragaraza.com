@@ -1,5 +1,5 @@
-/* Text pages: the skill pages, and his own posts under /useful/ (Russian). The list: title in the size of the rows, date
-   under it in the small size.
+/* Text pages: the skill pages, and the list of links on /useful/. A list: title in the size of the rows, a date
+   (when there is one) under it in the small size.
    A post: title where every page has it, date under it, the text at the size of the rows, a reading line. */
 .posts{gap:calc(var(--l)/2)}
 .posts li{display:flex;flex-direction:column;gap:calc(var(--l)/12)}
