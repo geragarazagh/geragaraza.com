@@ -1,4 +1,4 @@
-// The site is in English (his decision 2026-11-15, dev/rules.md section 4): Russian appears only in his own blog posts.
+// The site is in English (his decision 2026-11-15, dev/rules.md section 4): Russian appears only in his own posts under /useful/.
 // From 2026-11-08 to 2026-11-15 every page also had Russian and Ukrainian versions at ?lang=ru and ?lang=uk, picked by
 // this Worker from Accept-Language or a switch at the bottom of the page; those addresses now answer with a permanent
 // redirect to the page itself, so old links and search results still land.
@@ -16,6 +16,9 @@ export default {
     if (url.searchParams.has('lang')) { url.searchParams.delete('lang'); moved = true; }
     // The convert skill's page was a blog post until 2026-11-15; the blog holds only his own posts since (dev/rules.md).
     if (url.pathname === '/blog/navyk-convert' || url.pathname.startsWith('/blog/navyk-convert/')) { url.pathname = '/skills/converter/'; moved = true; }
+    // The blog was removed on 2026-11-19 (his word: no blog, «полезности» from him instead, the Useful section): its
+    // addresses (the list, «Первая запись», the feed) answer with a permanent redirect to the home page.
+    else if (url.pathname === '/blog' || url.pathname.startsWith('/blog/')) { url.pathname = '/'; moved = true; }
     // The five skills were renamed on 2026-11-18 (0.2.0, his choice of names): their old page addresses keep working.
     const renamedSkills = { 'convert': 'converter', 'youtube-download': 'your-downloader', 'text-to-speech': 'offline-tts',
       'audiobook': 'mp3-to-m4b', 'mac-clean': 'macliner' };
@@ -24,9 +27,9 @@ export default {
     if (moved) return Response.redirect(url.toString(), 301);
 
     const response = await env.ASSETS.fetch(request);
-    // The blog's RSS feed (2026-11-16, made from the posts by publish-drafts/src/feed.py): the assets serve .xml as
-    // application/xml; readers and validators expect the feed's own type.
-    if (url.pathname === '/blog/feed.xml' && response.ok) {
+    // The RSS feed of his posts (the blog's from 2026-11-16, Useful's since 2026-11-19; made from the posts by
+    // publish-drafts/src/feed.py): the assets serve .xml as application/xml; readers and validators expect the feed's own type.
+    if (url.pathname === '/useful/feed.xml' && response.ok) {
       const feed = new Response(response.body, response);
       feed.headers.set('Content-Type', 'application/rss+xml; charset=utf-8');
       return feed;
@@ -35,11 +38,11 @@ export default {
 
     // The fonts the page draws with, fetched together with the stylesheet instead of after it, so the text appears in
     // Inter at once and doesn't jump from a fallback font. Cyrillic only where the page shows it from the start: the
-    // blog (his posts are in Russian) and Retyper's live block (its phrases are typed in Russian and Ukrainian).
-    const blog = url.pathname.startsWith('/blog/');
+    // Useful (his posts are in Russian) and Retyper's live block (its phrases are typed in Russian and Ukrainian).
+    const useful = url.pathname.startsWith('/useful/');
     const fonts = ['latin-500', 'latin-600']
-      .concat(blog || url.pathname.startsWith('/apps/retyper/') ? ['cyrillic-500'] : [])
-      .concat(blog ? ['cyrillic-600'] : []);
+      .concat(useful || url.pathname.startsWith('/apps/retyper/') ? ['cyrillic-500'] : [])
+      .concat(useful ? ['cyrillic-600'] : []);
     // The page's colour before anything else is drawn (his recording 2026-11-15 15:50: a white flash before the black
     // page in a new Safari window): the background on <html> itself and Safari's bar colour, in the first bytes of
     // <head>, so neither waits for site.css.
