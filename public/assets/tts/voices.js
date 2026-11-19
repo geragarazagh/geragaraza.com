@@ -15,11 +15,8 @@
 // anew at the new speed, never stretched, so the page has every passage spoken at every step (samples.json), made on the
 // author's Mac through the app's own pipeline (bench/siteclips). A new speed stops a sample, as in the app.
 //
-// The passages under the list (gen.py, tts_refs; his word 2026-11-18: every sample the same way): the same waveform button
-// beside each passage plays its clip at 1x, named in the button's data-clip: for the app's three sample passages the list's
-// own clip of the language's first female voice, for the Gagarin line the app's tts command's clip (Siri Voice 2, 9.3 s).
-// The speed does not apply to them. One sound at a time on the page, as in the app: any button stops the sound before.
-// Closing the list stops only a sample of the list; Esc and a new speed stop any.
+// Nothing stands under the toolbar: the four written passages with their own buttons went 2026-11-19 (his word: the page
+// ends with the system line and the voice block). One sound at a time; Esc and a new speed stop it.
 
 const LANGS = [['en', 'English'], ['ru', 'Russian'], ['uk', 'Ukrainian']];
 const pick = document.querySelector('#voices .pick'), pop = document.getElementById('voice'), list = document.getElementById('voice-list');
@@ -87,7 +84,6 @@ list.addEventListener('click', (e) => {
   const b = e.target.closest('.lb');
   if (b) listen(b, `/assets/tts/${li.dataset.v}-${(+speed.value).toFixed(1)}.m4a`); else if (e.target.closest('.name')) choose(li);
 });
-for (const b of document.querySelectorAll('.refs .lb')) b.addEventListener('click', () => listen(b, b.dataset.clip));
 // A press anywhere outside the button and its list closes the list, as a click outside a menu does on the Mac.
 document.addEventListener('pointerdown', (e) => { if (!list.hidden && !pick.contains(e.target)) openList(false); });
 addEventListener('keydown', (e) => {

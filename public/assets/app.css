@@ -12,6 +12,3 @@ h1+.lead{margin:calc(var(--l)/4) 0 0}
 .small{margin:var(--l) 0 0;font-size:calc(var(--l)*.32);line-height:1.35}
 /* Paths and commands have no spaces to wrap at: they may break anywhere rather than run past the screen's edge. */
 code{font:inherit;overflow-wrap:anywhere}
-/* TTS's samples sit in .refs (gen.py, tts_block; voices.css styles the passages): L/2 under the voice bar. */
-.refs{margin:calc(var(--l)/2) 0 0;padding:0;max-width:34em}
-.refs p{margin:0}
