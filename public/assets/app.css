@@ -1,4 +1,4 @@
-/* App pages: layer 1 (title, the lead, Download, GitHub, the system line), then layer 2 under its own label. No pictures. */
+/* App pages (since 2026-11-19 the top layer only, dev/rules.md section 1): icon and name, the lead, Download, the Homebrew command, GitHub, the system line, the live block. */
 /* The app's icon beside its name (his pick Б of three, 2026-11-13): two logo heights, so it is the largest thing in the title
    line, the important thing big. Since 2026-11-18 the site's own icon (his word: the macOS plates looked pasted in): no
    plate, the drawing alone, inline so it takes the page's colours. The plate it was drawn on is the whole 2 L box (macOS's
@@ -10,47 +10,8 @@
 .appicon svg{display:block;width:calc(var(--l)*2);height:calc(var(--l)*2);margin:0 calc(var(--l)*-2*var(--b,0)) 0 calc(var(--l)*-2*var(--a,0))}
 h1+.lead{margin:calc(var(--l)/4) 0 0}
 .small{margin:var(--l) 0 0;font-size:calc(var(--l)*.32);line-height:1.35}
-/* Layer 2: the full text for advanced users and language models, one step smaller than the rows, same column.
-   A line of one device pixel, the weight the apps give every line, opens it, so it reads as a block of its own. */
-.about{margin-top:var(--l);padding-top:calc(var(--l)/2);border-top:var(--px) solid;font-size:calc(var(--l)*.32);line-height:1.4}
-.about h2{margin:var(--l) 0 calc(var(--l)/4);font-size:calc(var(--l)*.46);font-weight:600;line-height:1.2}
-.about h2.label{margin-top:0}
-.about h3{margin:calc(var(--l)/2) 0 calc(var(--l)/8);font:inherit;font-weight:600}
-.about p{margin:calc(var(--l)/4) 0 0}
-.about h3+p{margin-top:0}
-.about ul{display:block;margin:calc(var(--l)/4) 0 0;padding-left:1.1em;list-style:disc}
-.about li+li{margin-top:calc(var(--l)/8)}
-/* The fact box that opens layer 2 (gen.py, facts): version, release date, size, system, permissions, licence, price. His pick Б
-   of three variants, 2026-11-18: rows with no frame, a line of one device pixel over the first row and under each, the label
-   in 600 and as narrow as its longest word, the value in the text's 500 across the rest of the column. */
-.about .facts{margin:calc(var(--l)/4) 0 0;border-collapse:collapse;width:100%}
-.about .facts tr{border-bottom:var(--px) solid currentColor}
-.about .facts tr:first-child{border-top:var(--px) solid currentColor}
-.about .facts th{width:1%;padding:5px 24px 5px 0;text-align:left;vertical-align:top;white-space:nowrap;font-weight:600}
-.about .facts td{padding:5px 0}
 /* Paths and commands have no spaces to wrap at: they may break anywhere rather than run past the screen's edge. */
 code{font:inherit;overflow-wrap:anywhere}
-/* The Homebrew line is a .cmdline block since 2026-11-11 (site.css), and so is every command of layer 2 since 2026-11-13,
-   L/4 under the sentence that leads to it, the step between paragraphs. Its words may break anywhere only if they must. */
-.about .cmdline{margin:calc(var(--l)/4) 0 0}
-.about .cmdline code{overflow-wrap:anywhere}
-/* The download block (2026-11-12, his pick A): a group per device, its name small above it; each row a label and, under it,
-   the source and size in a smaller, quieter line. The second group sits 1/2 L lower, the step layer 2 uses before a subheading. */
-.get .dev{font-size:calc(var(--l)*.28);line-height:1.2;opacity:.62}
-.get .dev~.dev{margin-top:calc(var(--l)/4)}
-.get .two{display:flex;flex-direction:column;line-height:1.15}
-.get .sub{font-size:.62em;font-weight:500;opacity:.62}
-/* Samples and their sources (his word 2026-11-18; gen.py, refs): under every live block, before layer 2, a line per sample
-   naming it, then the notes, plain text as Wikipedia gives references (his pick Б, 2026-11-18): no frame, numbered marks
-   after the lines, one numbered list. L/2 under the block: it belongs to the block, not to layer 2. The lines .32 L like
-   layer 2, the notes .28 L; the links underlined, as everywhere in running text. TTS's passages add to it (voices.css). */
+/* TTS's samples sit in .refs (gen.py, tts_block; voices.css styles the passages): L/2 under the voice bar. */
 .refs{margin:calc(var(--l)/2) 0 0;padding:0;max-width:34em}
-.refs p,.refs ol{margin:0}
-.refs .cap{font-size:calc(var(--l)*.32);line-height:1.4;text-wrap:pretty}
-.refs .cap+.cap{margin-top:calc(var(--l)/8)}
-.refs sup{font-size:.62em;line-height:0;vertical-align:.5em;font-weight:600}
-.refs sup a{display:inline;padding:6px 1px;margin:-6px 0}
-.refs .notes{margin-top:calc(var(--l)/2);padding:0 0 0 1.4em;list-style:decimal;font-size:calc(var(--l)*.28);line-height:1.4}
-.refs .notes li+li{margin-top:calc(var(--l)/10)}
-.refs .notes a{display:inline;text-decoration:underline 1px;text-underline-offset:.18em}
-.refs code{font:inherit}
+.refs p{margin:0}

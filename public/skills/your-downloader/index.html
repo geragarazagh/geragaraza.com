@@ -7,10 +7,10 @@
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<title>Your Downloader: a skill for AI assistants that runs yt-dlp</title>
-<meta name="description" content="A skill for large language models that runs yt-dlp: video that plays on any phone or TV, audio as m4a or mp3, subtitles, transcripts, comments, thumbnails, clips, playlists and channels from YouTube and about 1,700 other sites.">
+<title>Your Downloader: a skill for AI assistants</title>
+<meta name="description" content="Downloads video, audio, subtitles and comments from YouTube and other sites with yt-dlp.">
 <meta property="og:title" content="Your Downloader: a skill for AI assistants">
-<meta property="og:description" content="A skill for large language models that runs yt-dlp: video that plays on any phone or TV, audio as m4a or mp3, subtitles, transcripts, comments, thumbnails, clips, playlists and channels from YouTube and about 1,700 other sites.">
+<meta property="og:description" content="Downloads video, audio, subtitles and comments from YouTube and other sites with yt-dlp.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://geragaraza.com/skills/your-downloader/">
 <meta property="og:image" content="https://geragaraza.com/og.png">
@@ -21,7 +21,6 @@
 <link rel="stylesheet" href="/assets/site.css">
 <link rel="stylesheet" href="/assets/article.css">
 <script src="/assets/copy.js" defer></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareSourceCode","name":"your-downloader","description":"A skill for large language models that runs yt-dlp: video that plays on any phone or TV, audio as m4a or mp3, subtitles, transcripts, comments, thumbnails, clips, playlists and channels from YouTube and about 1,700 other sites.","codeRepository":"https://github.com/geragarazagh/your-downloader","license":"https://opensource.org/licenses/MIT","url":"https://geragaraza.com/skills/your-downloader/","author":{"@type":"Person","name":"Herman Harazha","url":"https://geragaraza.com/"}}</script>
 </head>
 <body>
 <main>
@@ -29,15 +28,16 @@
 <article>
 <h1>Your Downloader</h1>
 <p>Code and description: <a class="t" href="https://github.com/geragarazagh/your-downloader">github.com/<wbr>geragarazagh/<wbr>your-downloader</a></p>
-<p>Your Downloader is an agent skill (a text file of instructions that an AI assistant reads and follows) that runs yt-dlp on the computer for a pasted link and checks the result. It saves a video that plays on phones, TVs and QuickTime (H.264 and AAC in mp4), a smaller copy or 4K; the sound alone as m4a or mp3 with the cover; subtitles; a part of the video by time; the thumbnail; whole playlists and channels, numbered in a folder. A small script writes a video&#x27;s details, transcript and comments into one text file. YouTube first; the same commands work on about 1,700 other sites.</p>
+<p>Downloads video, audio, subtitles and comments from YouTube and other sites with yt-dlp.</p>
 <h2>Install</h2>
-<p>Terminal agents (Claude Code, Codex, Antigravity, OpenCode and others), one command:</p>
-<div class="cmdline"><code>npx skills add <span class="nw">geragarazagh/your-downloader -g</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
-<p>Gemini CLI, as an extension:</p>
+<p>Terminal agents:</p>
+<div class="cmdline"><code><span class="nw">npx</span> <span class="nw">skills</span> <span class="nw">add</span> <span class="nw">geragarazagh/</span><wbr><span class="nw">your-downloader -g</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
+<p>Claude Code:</p>
+<div class="cmdline"><code><span class="nw">claude</span> <span class="nw">plugin</span> <span class="nw">marketplace</span> <span class="nw">add</span> <span class="nw">geragarazagh/your-downloader</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
+<div class="cmdline"><code><span class="nw">claude</span> <span class="nw">plugin</span> <span class="nw">install</span> <span class="nw">your-downloader@</span><wbr><span class="nw">your-downloader</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
+<p>Gemini CLI:</p>
 <div class="cmdline"><code><span class="nw">gemini</span> <span class="nw">extensions</span> <span class="nw">install</span> <span class="nw">https://github.com/</span><wbr><span class="nw">geragarazagh/</span><wbr><span class="nw">your-downloader</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
-<p>The skill needs yt-dlp, ffmpeg and, for YouTube, the JavaScript runtime deno; Python 3.8 or newer for transcripts and comments. When one is missing, the assistant names the install command for the system and waits.</p>
-<p>Chat apps (Claude, ChatGPT, Gemini) cannot use it: their sandboxes cannot reach video sites.</p>
-<p>Any other agent that runs commands: copy the text of the skill below and paste it into its instructions or as the first message.</p>
+<p>Any other agent: paste the text below into its instructions.</p>
 <div class="cmdline text"><pre>---
 name: your-downloader
 description: &quot;Downloads from YouTube and 1,700 other sites with yt-dlp: video that plays on any phone or TV, audio as m4a or mp3, subtitles, transcripts, thumbnails, comments, clips, playlists and channels. Use when someone pastes a video link and wants to save it, its sound, its text or its comments.&quot;
@@ -326,7 +326,6 @@ them.
 - yt-dlp from Debian or Ubuntu `apt` is usually months old and fails on
   YouTube; use pip or the official program.
 </pre><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
-<p>Checked on 16 November 2026 on Claude Haiku 5.5 in a fresh Claude Code configuration: a video for an iPhone, its sound only, and a question about a video and its comments, each file checked by ffprobe; the skill started by itself for all three requests and for none of three near misses. On 17 November the latest stable yt-dlp, 2026.10.26, still downloaded from YouTube.</p>
 </article>
 </main>
 </body>

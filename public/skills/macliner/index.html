@@ -7,10 +7,10 @@
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<title>Macliner: a skill for AI assistants that cleans, updates and checks a Mac</title>
-<meta name="description" content="A skill for large language models that cleans, updates and checks a Mac with macOS&#x27;s own commands: a plan with sizes first, caches and leftovers deleted for real, a question before anything a person might want, then a second look to verify.">
+<title>Macliner: a skill for AI assistants</title>
+<meta name="description" content="Cleans, updates and checks a Mac.">
 <meta property="og:title" content="Macliner: a skill for AI assistants">
-<meta property="og:description" content="A skill for large language models that cleans, updates and checks a Mac with macOS&#x27;s own commands: a plan with sizes first, caches and leftovers deleted for real, a question before anything a person might want, then a second look to verify.">
+<meta property="og:description" content="Cleans, updates and checks a Mac.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://geragaraza.com/skills/macliner/">
 <meta property="og:image" content="https://geragaraza.com/og.png">
@@ -21,7 +21,6 @@
 <link rel="stylesheet" href="/assets/site.css">
 <link rel="stylesheet" href="/assets/article.css">
 <script src="/assets/copy.js" defer></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareSourceCode","name":"macliner","description":"A skill for large language models that cleans, updates and checks a Mac with macOS's own commands: a plan with sizes first, caches and leftovers deleted for real, a question before anything a person might want, then a second look to verify.","codeRepository":"https://github.com/geragarazagh/macliner","license":"https://opensource.org/licenses/MIT","url":"https://geragaraza.com/skills/macliner/","author":{"@type":"Person","name":"Herman Harazha","url":"https://geragaraza.com/"}}</script>
 </head>
 <body>
 <main>
@@ -29,16 +28,16 @@
 <article>
 <h1>Macliner</h1>
 <p>Code and description: <a class="t" href="https://github.com/geragarazagh/macliner">github.com/<wbr>geragarazagh/<wbr>macliner</a></p>
-<p>Macliner is an agent skill (a text file of instructions that an AI assistant reads and follows) that cleans, updates and checks a Mac in one run with macOS&#x27;s own commands. It measures first and shows a plan with sizes; deletes at once only what comes back by itself (app caches, logs, old Trash items, Homebrew downloads, leftovers of removed apps); asks before anything a person might want (developer caches, old downloads, large files, duplicates, apps not opened for six months, Safari data); installs Homebrew and App Store updates when asked; reports security settings, the battery and the disk; and measures again to verify. Settings that trade comfort for safety stay as macOS ships them unless the person asks. Documents, photos, mail, keys, virtual machines and AI models are never touched. Nothing keeps running afterwards and nothing is sent anywhere.</p>
+<p>Cleans, updates and checks a Mac.</p>
 <h2>Install</h2>
-<p>Terminal agents (Claude Code, Codex, Antigravity, OpenCode and others), one command:</p>
-<div class="cmdline"><code>npx skills add <span class="nw">geragarazagh/macliner -g</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
-<p>Gemini CLI, as an extension:</p>
+<p>Terminal agents:</p>
+<div class="cmdline"><code><span class="nw">npx</span> <span class="nw">skills</span> <span class="nw">add</span> <span class="nw">geragarazagh/</span><wbr><span class="nw">macliner -g</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
+<p>Claude Code:</p>
+<div class="cmdline"><code><span class="nw">claude</span> <span class="nw">plugin</span> <span class="nw">marketplace</span> <span class="nw">add</span> <span class="nw">geragarazagh/macliner</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
+<div class="cmdline"><code><span class="nw">claude</span> <span class="nw">plugin</span> <span class="nw">install</span> <span class="nw">macliner@</span><wbr><span class="nw">macliner</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
+<p>Gemini CLI:</p>
 <div class="cmdline"><code><span class="nw">gemini</span> <span class="nw">extensions</span> <span class="nw">install</span> <span class="nw">https://github.com/</span><wbr><span class="nw">geragarazagh/</span><wbr><span class="nw">macliner</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
-<p>The skill needs Python 3 from Apple&#x27;s command line tools, and uses Homebrew and mas when they are installed. When something is missing, the assistant names the install command and waits.</p>
-<p>With Full Disk Access for the terminal or the assistant&#x27;s app it also looks into Downloads, the Trash and Safari&#x27;s data; without it, it skips them and says so.</p>
-<p>Chat apps (Claude, ChatGPT, Gemini) cannot use it: they cannot reach the Mac.</p>
-<p>Any other agent that runs commands on a Mac: copy the text of the skill below and paste it into its instructions or as the first message.</p>
+<p>Any other agent: paste the text below into its instructions.</p>
 <div class="cmdline text"><pre>---
 name: macliner
 description: &quot;Cleans, updates and checks a Mac in one run: measures, shows a plan with sizes, deletes caches and leftovers for real, asks before anything a person might want, then verifies. Use when someone asks to clean up, free space on, speed up, update or check the security of their Mac.&quot;
@@ -289,7 +288,6 @@ do the same run by hand, read-only first:
 
 Name the command, wait for the person&#x27;s yes, then go on.
 </pre><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
-<p>Checked on 18 November 2026 on macOS 27.2.1 (Apple M3 Pro): the plan read-only on a real Mac in 31 seconds, every line compared with the command behind it; the deletions in a test home folder, where a file on the Desktop and a link into it were refused. Then in a test virtual machine with macOS 27.2 and a fresh user account: the plan, the deletions and the plan again; the freed sizes were the ones the plan named, the Desktop files stayed unchanged and no password was asked.</p>
 </article>
 </main>
 </body>

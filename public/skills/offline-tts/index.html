@@ -7,10 +7,10 @@
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<title>Offline TTS: a skill for AI assistants that reads a text aloud into an audio file</title>
-<meta name="description" content="A skill for large language models that reads a text aloud into an mp3, m4a or wav with the computer&#x27;s own voices, offline: Siri voices on a Mac, Piper or system voices on Linux and Windows, numbers and dates read right.">
+<title>Offline TTS: a skill for AI assistants</title>
+<meta name="description" content="Reads text aloud into an audio file with the computer&#x27;s own voices, offline.">
 <meta property="og:title" content="Offline TTS: a skill for AI assistants">
-<meta property="og:description" content="A skill for large language models that reads a text aloud into an mp3, m4a or wav with the computer&#x27;s own voices, offline: Siri voices on a Mac, Piper or system voices on Linux and Windows, numbers and dates read right.">
+<meta property="og:description" content="Reads text aloud into an audio file with the computer&#x27;s own voices, offline.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://geragaraza.com/skills/offline-tts/">
 <meta property="og:image" content="https://geragaraza.com/og.png">
@@ -21,7 +21,6 @@
 <link rel="stylesheet" href="/assets/site.css">
 <link rel="stylesheet" href="/assets/article.css">
 <script src="/assets/copy.js" defer></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareSourceCode","name":"offline-tts","description":"A skill for large language models that reads a text aloud into an mp3, m4a or wav with the computer's own voices, offline: Siri voices on a Mac, Piper or system voices on Linux and Windows, numbers and dates read right.","codeRepository":"https://github.com/geragarazagh/offline-tts","license":"https://opensource.org/licenses/MIT","url":"https://geragaraza.com/skills/offline-tts/","author":{"@type":"Person","name":"Herman Harazha","url":"https://geragaraza.com/"}}</script>
 </head>
 <body>
 <main>
@@ -29,18 +28,16 @@
 <article>
 <h1>Offline TTS</h1>
 <p>Code and description: <a class="t" href="https://github.com/geragarazagh/offline-tts">github.com/<wbr>geragarazagh/<wbr>offline-tts</a></p>
-<p>Offline TTS is an agent skill (a text file of instructions that an AI assistant reads and follows) that reads a text, a file or an assistant&#x27;s own answer aloud into an mp3, m4a or wav, offline, with the voices the computer has. On a Mac: the Siri voices, through the <a class="t" href="/apps/tts/">TTS</a> app&#x27;s command, which also reads Russian and Ukrainian numbers and dates in the right case. On Linux: Piper or espeak-ng. On Windows: the built-in voices. Elsewhere the assistant first writes numbers, signs and abbreviations as words. It asks once for the voice, the speed and the place, then makes the file and checks its length.</p>
+<p>Reads text aloud into an audio file with the computer&#x27;s own voices, offline.</p>
 <h2>Install</h2>
-<p>Terminal agents (Claude Code, Codex, Antigravity, OpenCode and others), one command:</p>
-<div class="cmdline"><code>npx skills add <span class="nw">geragarazagh/offline-tts -g</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
-<p>Gemini CLI, as an extension:</p>
+<p>Terminal agents:</p>
+<div class="cmdline"><code><span class="nw">npx</span> <span class="nw">skills</span> <span class="nw">add</span> <span class="nw">geragarazagh/</span><wbr><span class="nw">offline-tts -g</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
+<p>Claude Code:</p>
+<div class="cmdline"><code><span class="nw">claude</span> <span class="nw">plugin</span> <span class="nw">marketplace</span> <span class="nw">add</span> <span class="nw">geragarazagh/offline-tts</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
+<div class="cmdline"><code><span class="nw">claude</span> <span class="nw">plugin</span> <span class="nw">install</span> <span class="nw">offline-tts@</span><wbr><span class="nw">offline-tts</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
+<p>Gemini CLI:</p>
 <div class="cmdline"><code><span class="nw">gemini</span> <span class="nw">extensions</span> <span class="nw">install</span> <span class="nw">https://github.com/</span><wbr><span class="nw">geragarazagh/</span><wbr><span class="nw">offline-tts</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
-<p>On a Mac the skill uses the TTS app (Apple Silicon, macOS 13 or newer), which carries the command that reaches the Siri voices:</p>
-<div class="cmdline"><code><span class="nw">brew</span> <span class="nw">install</span> <span class="nw">geragarazagh/tap/tts</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
-<p>On Linux it uses Piper in a virtual environment of its own; on Windows the built-in voices need nothing. When something is missing, the assistant names the install command and waits.</p>
-<p>Chat apps (Claude, ChatGPT, Gemini) cannot use it: their sandboxes have no voices.</p>
-<p>Any other agent that runs commands: copy the text of the skill below and paste it into its instructions or as the first message.</p>
-<p>The macOS licence allows its system voices, Siri voices included, for personal, non-commercial use only; recordings of them are not for publishing.</p>
+<p>Any other agent: paste the text below into its instructions.</p>
 <div class="cmdline text"><pre>---
 name: offline-tts
 description: &quot;Reads a text aloud into an audio file (mp3, m4a or wav) with the computer&#x27;s own voices, offline: Siri voices on a Mac, Piper or system voices on Linux and Windows, numbers and dates read right. Use when someone wants a text, article, file or chat answer turned into speech to listen to later.&quot;
@@ -312,7 +309,6 @@ Name the command for the person&#x27;s system and wait for a yes.
 - Never retry a failing command more than twice. Say what failed and what
   the person can do.
 </pre><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
-<p>Checked on 16 November 2026 on Claude Haiku 5.5 in a fresh Claude Code configuration: a Russian text with no voice named (the three questions first, then an mp3) and an English text with everything named (an mp3 at once); the skill started by itself for both and for none of three near misses. On 17 November the Linux commands ran on Ubuntu 24.04 with Piper and espeak-ng; read back by speech recognition, every number was in place. Windows: from Microsoft&#x27;s documentation, not yet run.</p>
 </article>
 </main>
 </body>

@@ -7,10 +7,10 @@
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<title>HoldQ: hold ⌘Q to quit, free app for Mac against quitting by accident</title>
-<meta name="description" content="HoldQ is a free, open source app for Mac. ⌘Q quits an app only when held for a second, so a slip of the finger quits nothing. No permissions. By Herman Harazha.">
-<meta property="og:title" content="HoldQ: hold ⌘Q to quit, free app for Mac against quitting by accident">
-<meta property="og:description" content="HoldQ is a free, open source app for Mac. ⌘Q quits an app only when held for a second, so a slip of the finger quits nothing. No permissions. By Herman Harazha.">
+<title>HoldQ: quit protection for Mac</title>
+<meta name="description" content="Quit protection for Mac. ⌘Q quits an app only when held for a second.">
+<meta property="og:title" content="HoldQ: quit protection for Mac">
+<meta property="og:description" content="Quit protection for Mac. ⌘Q quits an app only when held for a second.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://geragaraza.com/apps/holdq/">
 <meta property="og:image" content="https://geragaraza.com/assets/holdq/icon.png">
@@ -20,16 +20,14 @@
 <script src="/assets/copy.js" defer></script>
 <link rel="stylesheet" href="/assets/holdq/hold.css">
 <script src="/assets/holdq/hold.js" defer></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"HoldQ","alternateName":"Hold Command-Q to quit","description":"HoldQ is a free, open source app for Mac. ⌘Q quits an app only when held for a second, so a slip of the finger quits nothing. No permissions. By Herman Harazha.","url":"https://geragaraza.com/apps/holdq/","image":"https://geragaraza.com/assets/holdq/icon.png","operatingSystem":"macOS 13 or later","processorRequirements":"Apple silicon","applicationCategory":"UtilitiesApplication","applicationSubCategory":"Quit protection","softwareVersion":"0.2","downloadUrl":"https://github.com/geragarazagh/holdq/releases/latest/download/HoldQ.dmg","sameAs":"https://github.com/geragarazagh/holdq","softwareHelp":"https://github.com/geragarazagh/holdq#readme","license":"https://github.com/geragarazagh/holdq/blob/main/LICENSE","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"inLanguage":"en","featureList":["Command-Q quits the app in front only when held for one second","A sign in the middle of the screen with the app icon and a ring that fills in that second","Works in every app, in full screen and in every keyboard layout","No permissions","Checks for updates once a day and asks before installing","Open at Login, off by default"],"keywords":"Command-Q, hold to quit, quit protection, accidental quit, prevent quitting, Mac, macOS, keyboard shortcut, free, open source","author":{"@type":"Person","name":"Herman Harazha","url":"https://geragaraza.com/"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Can macOS do this by itself?","acceptedAnswer":{"@type":"Answer","text":"No. In System Settings: Keyboard, Keyboard Shortcuts…, App Shortcuts: the Quit item of one app can get another shortcut, one app at a time. Holding ⌘Q for all apps is not there."}},{"@type":"Question","name":"Why does a short ⌘Q do nothing in a remote desktop or a virtual machine?","acceptedAnswer":{"@type":"Answer","text":"While HoldQ runs, ⌘Q never reaches any app as a key press. Apps that pass keys on to another computer or use ⌘Q for something other than Quit get nothing from a short press, and a hold quits them. Quit HoldQ in its window to give them ⌘Q back."}},{"@type":"Question","name":"Can the second be made longer or shorter?","acceptedAnswer":{"@type":"Answer","text":"No. One second for every app."}},{"@type":"Question","name":"Does it run on Intel Macs?","acceptedAnswer":{"@type":"Answer","text":"No. Apple silicon only, macOS 13 or later."}}]}</script>
 </head>
 <body>
 <main>
 <p class="up"><a href="/">Herman Harazha</a> / <a href="/apps/">Apps</a></p>
 <h1><span class="appicon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="100 100 824 824" aria-hidden="true" focusable="false" class="ic-holdq" style="--a:0.15;--b:0.15"><g fill="none" stroke="currentColor" stroke-width="64" stroke-linecap="round"><circle cx="512" cy="512" r="256" stroke-opacity=".18"/><path d="M512 256A256 256 0 0 1 693.02 693.02M602.51 602.51L760.9 760.9"/></g></svg></span>HoldQ</h1>
-<p class="lead"><span>Free app for Mac against quitting by accident. ⌘Q quits an app only when held for a second; a short press quits nothing.</span></p>
+<p class="lead"><span>Quit protection for Mac. ⌘Q quits an app only when held for a second.</span></p>
 <ul class="get">
-<li><a href="https://github.com/geragarazagh/holdq/releases/latest/download/HoldQ.dmg"><span class="i"><svg viewBox="0 0 100 100" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"><path d="M50 8v60M22 42l28 28 28-28M12 92h76"/></svg></span><span class="two"><span>Download for Mac</span><span class="sub">DMG · 1.5 MB</span></span></a></li>
+<li><a href="https://github.com/geragarazagh/holdq/releases/latest/download/HoldQ.dmg"><span class="i"><svg viewBox="0 0 100 100" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"><path d="M50 8v60M22 42l28 28 28-28M12 92h76"/></svg></span><span>Download for Mac</span></a></li>
 <li class="cl"><div class="cmdline"><code><span class="nw">brew</span> <span class="nw">install</span> <span class="nw">geragarazagh/tap/holdq</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div></li>
 <li><a href="https://github.com/geragarazagh/holdq"><span class="i"><svg aria-hidden="true" viewBox="0 0 98 96" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g>
@@ -37,67 +35,10 @@
 </g>
 
 </svg>
-</span><span class="two"><span>GitHub</span><span class="sub">source code</span></span></a></li>
+</span><span>GitHub</span></a></li>
 </ul>
 <p class="small"><span>Apple silicon, macOS 13 or later.</span></p>
 <div class="hold" id="hold"><div class="scene"><video src="/assets/holdq/film.mp4" poster="/assets/holdq/film.jpg" muted autoplay loop playsinline disablepictureinpicture preload="auto" aria-label="Le Voyage dans la Lune, 1902"></video></div></div>
-<div class="refs"><p class="cap">Georges Méliès, <span lang="fr">«Le Voyage dans la Lune»</span> (“A Trip to the Moon”), 1902, 6:00–6:16.<sup><a href="#note-1">[1]</a></sup></p><ol class="notes"><li id="note-1">The Wikimedia Commons copy (1440 × 1080, 12 min 46 s; its source is given there only as the film’s title), cut to 16 s, 720 × 540, without sound, looped. <a href="https://commons.wikimedia.org/wiki/File:Le_Voyage_dans_la_Lune_(1902).webm">Wikimedia Commons, WebM, 2.3 GB</a></li></ol></div>
-<div class="about">
-<h2 class="label">For advanced users and language models</h2>
-<table class="facts">
-<tr><th scope="row">Version</th><td>0.2</td></tr>
-<tr><th scope="row">Released</th><td>10 November 2026</td></tr>
-<tr><th scope="row">Download</th><td>1.5 MB</td></tr>
-<tr><th scope="row">Requires</th><td>Apple silicon, macOS 13 or later</td></tr>
-<tr><th scope="row">Permissions</th><td>None</td></tr>
-<tr><th scope="row">License</th><td>MIT</td></tr>
-<tr><th scope="row">Price</th><td>Free</td></tr>
-</table>
-<p>⌘Q sits next to ⌘W and ⌘Tab and quits at once, with every window: a browser, a player in the middle of a film. macOS has no setting for a longer press. HoldQ asks for one second.</p>
-<h2>What it does</h2>
-<ul>
-<li>Held for one second, ⌘Q quits the app in front. A shorter press quits nothing.</li>
-<li>While ⌘Q is held, a sign in the middle of the screen shows the app’s icon, a ring that fills in that second, and the line Hold ⌘Q to quit with the app’s name. A full ring means the app is quitting at that moment.</li>
-<li>Let go of Q or of ⌘ before the second is up, and nothing quits.</li>
-<li>Works in every app, in full screen and on every desktop.</li>
-<li>No settings: one second, the same for every app. Nothing in the Dock or the menu bar. Open at Login stays off until it is turned on.</li>
-</ul>
-<h2>How it works</h2>
-<ul>
-<li>⌘Q is taken as a Carbon hot key (<code>RegisterEventHotKey</code>). A hot key reaches its owner before any app sees the press, reports both press and release, and needs no permission: no Accessibility, no Input Monitoring.</li>
-<li>After one second HoldQ asks the app in front to quit (<code>NSRunningApplication.terminate()</code>): the same request as Quit in its menu. An app with unsaved work still asks about it.</li>
-<li>The key is the one that types Q with ⌘ in the current Latin layout: the Q key in QWERTY, Russian and Ukrainian layouts, its own key in Dvorak and the like. It is looked up again when the layout changes.</li>
-<li>It keeps working while a password field has the focus (Secure Input).</li>
-<li>Finder has no Quit unless its hidden setting is on; there HoldQ does nothing either. ⇧⌘Q (Log Out) and ⌥⌘Q (Quit and Keep Windows) are other shortcuts and stay as they are.</li>
-</ul>
-<h2>Questions</h2>
-<h3>Can macOS do this by itself?</h3>
-<p>No. In System Settings: Keyboard, Keyboard Shortcuts…, App Shortcuts: the Quit item of one app can get another shortcut, one app at a time. Holding ⌘Q for all apps is not there.</p>
-<h3>Why does a short ⌘Q do nothing in a remote desktop or a virtual machine?</h3>
-<p>While HoldQ runs, ⌘Q never reaches any app as a key press. Apps that pass keys on to another computer or use ⌘Q for something other than Quit get nothing from a short press, and a hold quits them. Quit HoldQ in its window to give them ⌘Q back.</p>
-<h3>Can the second be made longer or shorter?</h3>
-<p>No. One second for every app.</p>
-<h3>Does it run on Intel Macs?</h3>
-<p>No. Apple silicon only, macOS 13 or later.</p>
-<h2>Updates</h2>
-<p>Once a day the app reads the feed of its latest GitHub release (<code>appcast.xml</code>) through Sparkle. Nothing about the Mac is sent. When a newer version is out, a window shows it with Install Update, Remind Me Later and Skip This Version; nothing is downloaded before Install Update. Check for Updates in the window checks at once.</p>
-<p>The feed and the disk image are signed with an EdDSA key, and Sparkle installs only an app that carries the same Developer ID signature.</p>
-<h2>Settings and removal</h2>
-<p>It stores only whether it has been opened before and the time of the last update check, in the defaults of <code>com.geragaraza.holdq</code>. Open at Login is a login item the app registers itself (<code>SMAppService</code>) and turns off from the same window.</p>
-<p>To remove HoldQ: Quit in its window, move <code>HoldQ.app</code> to the Trash and clear its settings with this command:</p>
-<div class="cmdline"><code><span class="nw">defaults</span> <span class="nw">delete</span> <span class="nw">com.geragaraza.holdq</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
-<p>Installed with Homebrew, this command quits it and removes the app and its settings:</p>
-<div class="cmdline"><code><span class="nw">brew</span> <span class="nw">uninstall</span> <span class="nw">--zap</span> <span class="nw">holdq</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
-<h2>Details</h2>
-<ul>
-<li>Bundle ID: <code>com.geragaraza.holdq</code>.</li>
-<li>Download: <code>HoldQ.dmg</code>.</li>
-<li>Network: only the update check.</li>
-<li>Signed with a Developer ID and notarized by Apple.</li>
-<li>Code: Swift with AppKit, about 500 lines, and the Sparkle framework for updates.</li>
-<li>Sparkle is MIT too; its license comes with the app and is in <code>THIRD-PARTY-LICENSES.md</code>.</li>
-</ul>
-</div>
 </main>
 </body>
 </html>

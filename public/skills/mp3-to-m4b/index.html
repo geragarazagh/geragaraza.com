@@ -7,10 +7,10 @@
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<title>MP3 to M4B: a skill for AI assistants that makes an .m4b audiobook from mp3 files</title>
-<meta name="description" content="A skill for large language models that joins a folder of mp3 parts into one .m4b audiobook with chapters, cover and book tags that Apple Books, BookPlayer and other players read.">
+<title>MP3 to M4B: a skill for AI assistants</title>
+<meta name="description" content="Joins mp3 parts into one .m4b audiobook with chapters and cover.">
 <meta property="og:title" content="MP3 to M4B: a skill for AI assistants">
-<meta property="og:description" content="A skill for large language models that joins a folder of mp3 parts into one .m4b audiobook with chapters, cover and book tags that Apple Books, BookPlayer and other players read.">
+<meta property="og:description" content="Joins mp3 parts into one .m4b audiobook with chapters and cover.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://geragaraza.com/skills/mp3-to-m4b/">
 <meta property="og:image" content="https://geragaraza.com/og.png">
@@ -21,7 +21,6 @@
 <link rel="stylesheet" href="/assets/site.css">
 <link rel="stylesheet" href="/assets/article.css">
 <script src="/assets/copy.js" defer></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareSourceCode","name":"mp3-to-m4b","description":"A skill for large language models that joins a folder of mp3 parts into one .m4b audiobook with chapters, cover and book tags that Apple Books, BookPlayer and other players read.","codeRepository":"https://github.com/geragarazagh/mp3-to-m4b","license":"https://opensource.org/licenses/MIT","url":"https://geragaraza.com/skills/mp3-to-m4b/","author":{"@type":"Person","name":"Herman Harazha","url":"https://geragaraza.com/"}}</script>
 </head>
 <body>
 <main>
@@ -29,15 +28,16 @@
 <article>
 <h1>MP3 to M4B</h1>
 <p>Code and description: <a class="t" href="https://github.com/geragarazagh/mp3-to-m4b">github.com/<wbr>geragarazagh/<wbr>mp3-to-m4b</a></p>
-<p>MP3 to M4B is an agent skill (a text file of instructions that an AI assistant reads and follows) that joins a folder of audiobook parts (mp3, m4a, ogg, flac, wav and others) into one .m4b file with ffmpeg: the parts in the book&#x27;s order, one chapter per part named from the tags, the file names or a given list, the cover, title, author and narrator, marked as an audiobook. Apple Books, BookPlayer and most other players show the chapters and the cover. The sound is encoded once, never above the source&#x27;s bitrate, and the result is checked for the chapter track Apple&#x27;s players read.</p>
+<p>Joins mp3 parts into one .m4b audiobook with chapters and cover.</p>
 <h2>Install</h2>
-<p>Terminal agents (Claude Code, Codex, Antigravity, OpenCode and others), one command:</p>
-<div class="cmdline"><code>npx skills add <span class="nw">geragarazagh/mp3-to-m4b -g</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
-<p>Gemini CLI, as an extension:</p>
+<p>Terminal agents:</p>
+<div class="cmdline"><code><span class="nw">npx</span> <span class="nw">skills</span> <span class="nw">add</span> <span class="nw">geragarazagh/</span><wbr><span class="nw">mp3-to-m4b -g</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
+<p>Claude Code:</p>
+<div class="cmdline"><code><span class="nw">claude</span> <span class="nw">plugin</span> <span class="nw">marketplace</span> <span class="nw">add</span> <span class="nw">geragarazagh/mp3-to-m4b</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
+<div class="cmdline"><code><span class="nw">claude</span> <span class="nw">plugin</span> <span class="nw">install</span> <span class="nw">mp3-to-m4b@</span><wbr><span class="nw">mp3-to-m4b</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
+<p>Gemini CLI:</p>
 <div class="cmdline"><code><span class="nw">gemini</span> <span class="nw">extensions</span> <span class="nw">install</span> <span class="nw">https://github.com/</span><wbr><span class="nw">geragarazagh/</span><wbr><span class="nw">mp3-to-m4b</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
-<p>The skill needs ffmpeg, and Python 3 for its helper script; without Python it uses ffmpeg alone. When one is missing, the assistant names the install command and waits.</p>
-<p>Chat apps (Claude, ChatGPT, Gemini) can use it only when their sandbox has ffmpeg and the book fits the upload limit.</p>
-<p>Any other agent that runs commands: copy the text of the skill below and paste it into its instructions or as the first message.</p>
+<p>Any other agent: paste the text below into its instructions.</p>
 <div class="cmdline text"><pre>---
 name: mp3-to-m4b
 description: &quot;Joins a folder of audio files, such as the mp3 parts of an audiobook, into one .m4b with chapters, cover and book tags that Apple Books, BookPlayer and other players read. Use when someone wants to make an audiobook or m4b from mp3 files, merge audiobook parts, or add chapters and a cover.&quot;
@@ -241,7 +241,6 @@ use the script, which measures the decoded sound.
 Name the command, wait for the person&#x27;s yes, then go on. Install nothing
 else: the script uses only Python&#x27;s standard library.
 </pre><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
-<p>Checked on 16 November 2026 on Claude Haiku 5.5 in a fresh Claude Code configuration: LibriVox&#x27;s recording of «The Happy Prince and Other Tales», as five parts and cut into twelve, every chapter and the cover read back by Apple&#x27;s AVFoundation; the skill started by itself for both and for none of three near misses. On 17 November, by hand: a 10-hour book of 118 parts (118 chapters), stereo music kept stereo, and the same book built on Ubuntu 24.04 with its own ffmpeg.</p>
 </article>
 </main>
 </body>

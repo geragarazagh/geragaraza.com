@@ -7,10 +7,10 @@
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<title>#HEX: free color picker for Mac, eyedropper with a keyboard shortcut</title>
-<meta name="description" content="#HEX is a free, open source color picker for Mac. A keyboard shortcut opens the color sampler of macOS, a click on any pixel copies its HEX code, for example #EFEFEF. No permissions. By Herman Harazha.">
-<meta property="og:title" content="#HEX: free color picker for Mac, eyedropper with a keyboard shortcut">
-<meta property="og:description" content="#HEX is a free, open source color picker for Mac. A keyboard shortcut opens the color sampler of macOS, a click on any pixel copies its HEX code, for example #EFEFEF. No permissions. By Herman Harazha.">
+<title>#HEX: color picker for Mac</title>
+<meta name="description" content="Color picker for Mac. A click on any pixel of the screen copies its HEX code.">
+<meta property="og:title" content="#HEX: color picker for Mac">
+<meta property="og:description" content="Color picker for Mac. A click on any pixel of the screen copies its HEX code.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://geragaraza.com/apps/hex/">
 <meta property="og:image" content="https://geragaraza.com/assets/hex/icon.png">
@@ -20,16 +20,14 @@
 <script src="/assets/copy.js" defer></script>
 <link rel="stylesheet" href="/assets/hex/wheel.css">
 <script src="/assets/hex/wheel.js" defer></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"#HEX","alternateName":"HEX color picker","description":"#HEX is a free, open source color picker for Mac. A keyboard shortcut opens the color sampler of macOS, a click on any pixel copies its HEX code, for example #EFEFEF. No permissions. By Herman Harazha.","url":"https://geragaraza.com/apps/hex/","image":"https://geragaraza.com/assets/hex/icon.png","operatingSystem":"macOS 13 or later","processorRequirements":"Apple silicon","applicationCategory":"DesignApplication","applicationSubCategory":"Color picker","softwareVersion":"0.3","downloadUrl":"https://github.com/geragarazagh/hex/releases/latest/download/HEX.dmg","sameAs":"https://github.com/geragarazagh/hex","softwareHelp":"https://github.com/geragarazagh/hex#readme","license":"https://github.com/geragarazagh/hex/blob/main/LICENSE","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"inLanguage":"en","featureList":["System-wide keyboard shortcut for the color sampler of macOS","Copies any pixel of the screen as an upper-case HEX code","sRGB output","No permissions","Checks for updates once a day and asks before installing","Open at Login, off by default"],"keywords":"color picker, colour picker, eyedropper, Mac, macOS, HEX color, screen color picker, color sampler, keyboard shortcut, free, open source","author":{"@type":"Person","name":"Herman Harazha","url":"https://geragaraza.com/"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does macOS have a color picker?","acceptedAnswer":{"@type":"Answer","text":"Yes, and #HEX opens exactly that one. There is also Digital Color Meter in Utilities: it stays open as a window showing values under the pointer, and one is copied with Shift-Command-C. With #HEX it is a key and a click, and the code is already on the clipboard."}},{"@type":"Question","name":"Which color space is the code in?","acceptedAnswer":{"@type":"Answer","text":"sRGB, the space of web colors and, by default, of Figma and Photoshop documents. Colors outside sRGB are clamped."}},{"@type":"Question","name":"Why can a color picked in Safari differ by one from its CSS value?","acceptedAnswer":{"@type":"Answer","text":"WebKit paints pages into the display’s 8-bit P3 space, which merges about half of all sRGB colors with a neighbour. The screen itself then holds a color 1 off, rarely up to 5, and no picker can undo that. Colors drawn by Mac apps came back exact in a test of 48 of 48."}},{"@type":"Question","name":"Are other formats available: RGB, HSL, SwiftUI?","acceptedAnswer":{"@type":"Answer","text":"No. Only #RRGGBB."}},{"@type":"Question","name":"Does it run on Intel Macs?","acceptedAnswer":{"@type":"Answer","text":"No. Apple silicon only, macOS 13 or later."}}]}</script>
 </head>
 <body>
 <main>
 <p class="up"><a href="/">Herman Harazha</a> / <a href="/apps/">Apps</a></p>
 <h1><span class="appicon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="100 100 824 824" aria-hidden="true" focusable="false" class="ic-hex" style="--a:0.109;--b:0.109"><circle cx="512" cy="512" r="320" fill="#74F8EA" stroke="#9e9e9e" stroke-width="3.17"/><circle cx="512" cy="512" r="251.24" fill="#999"/><clipPath id="hx-grid"><circle cx="512" cy="512" r="235.37"/></clipPath><g clip-path="url(#hx-grid)"><g transform="translate(484.23 484.23) scale(55.5372)" stroke-width=".07"><rect x="-4" y="-4" width="1" height="1" fill="#F5EBE5" stroke="#000" stroke-opacity=".22"/><rect x="-3" y="-4" width="1" height="1" fill="#E3B79C" stroke="#000" stroke-opacity=".22"/><rect x="-2" y="-4" width="1" height="1" fill="#DC8055" stroke="#fff" stroke-opacity=".5"/><rect x="-1" y="-4" width="1" height="1" fill="#E46132" stroke="#fff" stroke-opacity=".5"/><rect x="0" y="-4" width="1" height="1" fill="#EB5A2A" stroke="#fff" stroke-opacity=".5"/><rect x="1" y="-4" width="1" height="1" fill="#DE592A" stroke="#fff" stroke-opacity=".5"/><rect x="2" y="-4" width="1" height="1" fill="#AE4C26" stroke="#fff" stroke-opacity=".5"/><rect x="3" y="-4" width="1" height="1" fill="#66301C" stroke="#fff" stroke-opacity=".5"/><rect x="4" y="-4" width="1" height="1" fill="#1E0F0A" stroke="#fff" stroke-opacity=".5"/><rect x="-4" y="-3" width="1" height="1" fill="#F6F6E7" stroke="#000" stroke-opacity=".22"/><rect x="-3" y="-3" width="1" height="1" fill="#E7E8A1" stroke="#000" stroke-opacity=".22"/><rect x="-2" y="-3" width="1" height="1" fill="#E4E764" stroke="#000" stroke-opacity=".22"/><rect x="-1" y="-3" width="1" height="1" fill="#ECEF51" stroke="#000" stroke-opacity=".22"/><rect x="0" y="-3" width="1" height="1" fill="#F5FA51" stroke="#000" stroke-opacity=".22"/><rect x="1" y="-3" width="1" height="1" fill="#E1E34B" stroke="#000" stroke-opacity=".22"/><rect x="2" y="-3" width="1" height="1" fill="#AEAE3C" stroke="#000" stroke-opacity=".22"/><rect x="3" y="-3" width="1" height="1" fill="#676525" stroke="#fff" stroke-opacity=".5"/><rect x="4" y="-3" width="1" height="1" fill="#1E1A0B" stroke="#fff" stroke-opacity=".5"/><rect x="-4" y="-2" width="1" height="1" fill="#EDF7E6" stroke="#000" stroke-opacity=".22"/><rect x="-3" y="-2" width="1" height="1" fill="#C0E9A0" stroke="#000" stroke-opacity=".22"/><rect x="-2" y="-2" width="1" height="1" fill="#97E662" stroke="#000" stroke-opacity=".22"/><rect x="-1" y="-2" width="1" height="1" fill="#86F14D" stroke="#000" stroke-opacity=".22"/><rect x="0" y="-2" width="1" height="1" fill="#84FA4C" stroke="#000" stroke-opacity=".22"/><rect x="1" y="-2" width="1" height="1" fill="#7FEB49" stroke="#000" stroke-opacity=".22"/><rect x="2" y="-2" width="1" height="1" fill="#67B73B" stroke="#000" stroke-opacity=".22"/><rect x="3" y="-2" width="1" height="1" fill="#3F6924" stroke="#fff" stroke-opacity=".5"/><rect x="4" y="-2" width="1" height="1" fill="#141B0A" stroke="#fff" stroke-opacity=".5"/><rect x="-4" y="-1" width="1" height="1" fill="#E8F6EB" stroke="#000" stroke-opacity=".22"/><rect x="-3" y="-1" width="1" height="1" fill="#AAE8B5" stroke="#000" stroke-opacity=".22"/><rect x="-2" y="-1" width="1" height="1" fill="#7BE681" stroke="#000" stroke-opacity=".22"/><rect x="-1" y="-1" width="1" height="1" fill="#72F066" stroke="#000" stroke-opacity=".22"/><rect x="0" y="-1" width="1" height="1" fill="#74F962" stroke="#000" stroke-opacity=".22"/><rect x="1" y="-1" width="1" height="1" fill="#6DEA5E" stroke="#000" stroke-opacity=".22"/><rect x="2" y="-1" width="1" height="1" fill="#56B64F" stroke="#000" stroke-opacity=".22"/><rect x="3" y="-1" width="1" height="1" fill="#336930" stroke="#fff" stroke-opacity=".5"/><rect x="4" y="-1" width="1" height="1" fill="#0F1B0F" stroke="#fff" stroke-opacity=".5"/><rect x="-4" y="0" width="1" height="1" fill="#E8F6F5" stroke="#000" stroke-opacity=".22"/><rect x="-3" y="0" width="1" height="1" fill="#AAE7E4" stroke="#000" stroke-opacity=".22"/><rect x="-2" y="0" width="1" height="1" fill="#7AE5DD" stroke="#000" stroke-opacity=".22"/><rect x="-1" y="0" width="1" height="1" fill="#71EEE3" stroke="#000" stroke-opacity=".22"/><rect x="0" y="0" width="1" height="1" fill="#74F8EA" stroke="#000" stroke-opacity=".22"/><rect x="1" y="0" width="1" height="1" fill="#6BE6D8" stroke="#000" stroke-opacity=".22"/><rect x="2" y="0" width="1" height="1" fill="#54B1A4" stroke="#000" stroke-opacity=".22"/><rect x="3" y="0" width="1" height="1" fill="#32675F" stroke="#fff" stroke-opacity=".5"/><rect x="4" y="0" width="1" height="1" fill="#0F1B19" stroke="#fff" stroke-opacity=".5"/><rect x="-4" y="1" width="1" height="1" fill="#E6EDF6" stroke="#000" stroke-opacity=".22"/><rect x="-3" y="1" width="1" height="1" fill="#9FBCE6" stroke="#000" stroke-opacity=".22"/><rect x="-2" y="1" width="1" height="1" fill="#5D88E2" stroke="#fff" stroke-opacity=".5"/><rect x="-1" y="1" width="1" height="1" fill="#346AEC" stroke="#fff" stroke-opacity=".5"/><rect x="0" y="1" width="1" height="1" fill="#2A64F4" stroke="#fff" stroke-opacity=".5"/><rect x="1" y="1" width="1" height="1" fill="#2C61E6" stroke="#fff" stroke-opacity=".5"/><rect x="2" y="1" width="1" height="1" fill="#2953B3" stroke="#fff" stroke-opacity=".5"/><rect x="3" y="1" width="1" height="1" fill="#1D3268" stroke="#fff" stroke-opacity=".5"/><rect x="4" y="1" width="1" height="1" fill="#0C0F1B" stroke="#fff" stroke-opacity=".5"/><rect x="-4" y="2" width="1" height="1" fill="#E9E5F6" stroke="#000" stroke-opacity=".22"/><rect x="-3" y="2" width="1" height="1" fill="#AC99E4" stroke="#000" stroke-opacity=".22"/><rect x="-2" y="2" width="1" height="1" fill="#6D4BE1" stroke="#fff" stroke-opacity=".5"/><rect x="-1" y="2" width="1" height="1" fill="#421AEA" stroke="#fff" stroke-opacity=".5"/><rect x="0" y="2" width="1" height="1" fill="#3407F4" stroke="#fff" stroke-opacity=".5"/><rect x="1" y="2" width="1" height="1" fill="#3710E5" stroke="#fff" stroke-opacity=".5"/><rect x="2" y="2" width="1" height="1" fill="#3618B2" stroke="#fff" stroke-opacity=".5"/><rect x="3" y="2" width="1" height="1" fill="#251667" stroke="#fff" stroke-opacity=".5"/><rect x="4" y="2" width="1" height="1" fill="#0E081B" stroke="#fff" stroke-opacity=".5"/><rect x="-4" y="3" width="1" height="1" fill="#F3E6F6" stroke="#000" stroke-opacity=".22"/><rect x="-3" y="3" width="1" height="1" fill="#DA9BE4" stroke="#000" stroke-opacity=".22"/><rect x="-2" y="3" width="1" height="1" fill="#CE53E1" stroke="#fff" stroke-opacity=".5"/><rect x="-1" y="3" width="1" height="1" fill="#D233E9" stroke="#fff" stroke-opacity=".5"/><rect x="0" y="3" width="1" height="1" fill="#D82FF4" stroke="#fff" stroke-opacity=".5"/><rect x="1" y="3" width="1" height="1" fill="#C82EE1" stroke="#fff" stroke-opacity=".5"/><rect x="2" y="3" width="1" height="1" fill="#9827AE" stroke="#fff" stroke-opacity=".5"/><rect x="3" y="3" width="1" height="1" fill="#591C65" stroke="#fff" stroke-opacity=".5"/><rect x="4" y="3" width="1" height="1" fill="#1A091B" stroke="#fff" stroke-opacity=".5"/><rect x="-4" y="4" width="1" height="1" fill="#F5E6ED" stroke="#000" stroke-opacity=".22"/><rect x="-3" y="4" width="1" height="1" fill="#DF9CBA" stroke="#000" stroke-opacity=".22"/><rect x="-2" y="4" width="1" height="1" fill="#D85586" stroke="#fff" stroke-opacity=".5"/><rect x="-1" y="4" width="1" height="1" fill="#E13669" stroke="#fff" stroke-opacity=".5"/><rect x="0" y="4" width="1" height="1" fill="#E93361" stroke="#fff" stroke-opacity=".5"/><rect x="1" y="4" width="1" height="1" fill="#DB325F" stroke="#fff" stroke-opacity=".5"/><rect x="2" y="4" width="1" height="1" fill="#AC2B51" stroke="#fff" stroke-opacity=".5"/><rect x="3" y="4" width="1" height="1" fill="#641D32" stroke="#fff" stroke-opacity=".5"/><rect x="4" y="4" width="1" height="1" fill="#1D0A0F" stroke="#fff" stroke-opacity=".5"/></g></g><rect x="476.3" y="476.3" width="71.4" height="71.4" rx="6.66" fill="none" stroke="#000" stroke-width="15.87"/></svg></span>#HEX</h1>
-<p class="lead"><span>Free color picker for Mac. A keyboard shortcut, a click on any point of the screen, and the code of its color is copied: <code>#EFEFEF</code>.</span></p>
+<p class="lead"><span>Color picker for Mac. A click on any pixel of the screen copies its HEX code.</span></p>
 <ul class="get">
-<li><a href="https://github.com/geragarazagh/hex/releases/latest/download/HEX.dmg"><span class="i"><svg viewBox="0 0 100 100" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"><path d="M50 8v60M22 42l28 28 28-28M12 92h76"/></svg></span><span class="two"><span>Download for Mac</span><span class="sub">DMG · 1.7 MB</span></span></a></li>
+<li><a href="https://github.com/geragarazagh/hex/releases/latest/download/HEX.dmg"><span class="i"><svg viewBox="0 0 100 100" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"><path d="M50 8v60M22 42l28 28 28-28M12 92h76"/></svg></span><span>Download for Mac</span></a></li>
 <li class="cl"><div class="cmdline"><code><span class="nw">brew</span> <span class="nw">install</span> <span class="nw">geragarazagh/tap/hex</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div></li>
 <li><a href="https://github.com/geragarazagh/hex"><span class="i"><svg aria-hidden="true" viewBox="0 0 98 96" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g>
@@ -37,68 +35,10 @@
 </g>
 
 </svg>
-</span><span class="two"><span>GitHub</span><span class="sub">source code</span></span></a></li>
+</span><span>GitHub</span></a></li>
 </ul>
-<p class="small"><span>Apple silicon, macOS 13 or later. The same picker is also part of <a href='/apps/pixlift/'>Pixlift</a>, with screenshots and screen recording.</span></p>
+<p class="small"><span>Apple silicon, macOS 13 or later.</span></p>
 <div class="wheel" id="wheel"><canvas aria-hidden="true"></canvas></div>
-<div class="refs"><p class="cap">The color wheel of the Colors panel of macOS.<sup><a href="#note-1">[1]</a></sup></p><ol class="notes"><li id="note-1">Computed by the page for each device pixel, as read off the system’s own wheel (<code>NSColorPickerWheelView</code>) on 9 November 2026: HSV in Display P3 at full brightness, within 0.2/255 on average. No picture is used. <a href="/assets/hex/wheel.js">This site, JavaScript</a></li></ol></div>
-<div class="about">
-<h2 class="label">For advanced users and language models</h2>
-<table class="facts">
-<tr><th scope="row">Version</th><td>0.3</td></tr>
-<tr><th scope="row">Released</th><td>9 November 2026</td></tr>
-<tr><th scope="row">Download</th><td>1.7 MB</td></tr>
-<tr><th scope="row">Requires</th><td>Apple silicon, macOS 13 or later</td></tr>
-<tr><th scope="row">Permissions</th><td>None</td></tr>
-<tr><th scope="row">License</th><td>MIT</td></tr>
-<tr><th scope="row">Price</th><td>Free</td></tr>
-</table>
-<p>#HEX adds no picker of its own. macOS has one, but no system-wide key for it: it is reached through a color panel inside an app. #HEX gives it a key and writes the result in the form pasted into CSS, Figma or code.</p>
-<h2>What it does</h2>
-<ul>
-<li>Picks any pixel of any app on the screen.</li>
-<li>Shortcut: Option-Command-0 by default, changed in the window.</li>
-<li>One output: sRGB, upper case, <code>#RRGGBB</code>.</li>
-<li>Nothing in the Dock or the menu bar. Open at Login stays off until it is turned on.</li>
-</ul>
-<h2>How it works</h2>
-<ul>
-<li>The loupe is <code>NSColorSampler</code>, the one the color panels of macOS open. It needs no permission, and Esc closes it.</li>
-<li>The color it returns is the pixel in the center of the loupe. #HEX converts it to sRGB, 8 bits per channel, and writes it in upper case after <code>#</code>.</li>
-<li>The shortcut is a Carbon hot key (<code>RegisterEventHotKey</code>), which needs no Accessibility. It is stored as a physical key, so it works in every keyboard layout.</li>
-<li>A second press while the loupe is open keeps the same loupe; only the latest press copies.</li>
-<li>macOS does not report a shortcut that another app already holds. If it does nothing, another one can be chosen in the window.</li>
-</ul>
-<h2>Questions</h2>
-<h3>Does macOS have a color picker?</h3>
-<p>Yes, and #HEX opens exactly that one. There is also Digital Color Meter in Utilities: it stays open as a window showing values under the pointer, and one is copied with Shift-Command-C. With #HEX it is a key and a click, and the code is already on the clipboard.</p>
-<h3>Which color space is the code in?</h3>
-<p>sRGB, the space of web colors and, by default, of Figma and Photoshop documents. Colors outside sRGB are clamped.</p>
-<h3>Why can a color picked in Safari differ by one from its CSS value?</h3>
-<p>WebKit paints pages into the display’s 8-bit P3 space, which merges about half of all sRGB colors with a neighbour. The screen itself then holds a color 1 off, rarely up to 5, and no picker can undo that. Colors drawn by Mac apps came back exact in a test of 48 of 48.</p>
-<h3>Are other formats available: RGB, HSL, SwiftUI?</h3>
-<p>No. Only <code>#RRGGBB</code>.</p>
-<h3>Does it run on Intel Macs?</h3>
-<p>No. Apple silicon only, macOS 13 or later.</p>
-<h2>Updates</h2>
-<p>Once a day the app reads the feed of its latest GitHub release (<code>appcast.xml</code>) through Sparkle. Nothing about the Mac is sent. When a newer version is out, a window shows it with Install Update, Remind Me Later and Skip This Version; nothing is downloaded before Install Update. Check for Updates in the window checks at once.</p>
-<p>The feed and the disk image are signed with an EdDSA key, and Sparkle installs only an app that carries the same Developer ID signature.</p>
-<h2>Settings and removal</h2>
-<p>It stores the shortcut and the time of the last update check in the defaults of <code>com.geragaraza.hex</code>. Open at Login is a login item the app registers itself (<code>SMAppService</code>) and turns off from the same window.</p>
-<p>To remove #HEX: Quit in its window, move <code>#HEX.app</code> to the Trash and clear its settings with this command:</p>
-<div class="cmdline"><code><span class="nw">defaults</span> <span class="nw">delete</span> <span class="nw">com.geragaraza.hex</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
-<p>Installed with Homebrew, this command quits it and removes the app and its settings:</p>
-<div class="cmdline"><code><span class="nw">brew</span> <span class="nw">uninstall</span> <span class="nw">--zap</span> <span class="nw">hex</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
-<h2>Details</h2>
-<ul>
-<li>Bundle ID: <code>com.geragaraza.hex</code>.</li>
-<li>Download: <code>HEX.dmg</code>.</li>
-<li>Network: only the update check.</li>
-<li>Signed with a Developer ID and notarized by Apple.</li>
-<li>Code: Swift with AppKit, about 500 lines, and the Sparkle framework for updates.</li>
-<li>Sparkle is MIT too; its license comes with the app and is in <code>THIRD-PARTY-LICENSES.md</code>.</li>
-</ul>
-</div>
 </main>
 <canvas id="loupe" aria-hidden="true"></canvas>
 </body>

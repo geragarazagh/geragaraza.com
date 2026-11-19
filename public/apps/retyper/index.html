@@ -7,10 +7,10 @@
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<title>Retyper: free keyboard layout fixer for Mac, wrong layout text retyped (ghbdtn → привет)</title>
-<meta name="description" content="Retyper is a free, open source app for Mac. A word typed in the wrong keyboard layout is retyped in the right one and the layout switches: by itself, by the language key or by its own key. English, Russian, Ukrainian. Nothing typed is stored or sent. By Herman Harazha.">
-<meta property="og:title" content="Retyper: free keyboard layout fixer for Mac, wrong layout text retyped (ghbdtn → привет)">
-<meta property="og:description" content="Retyper is a free, open source app for Mac. A word typed in the wrong keyboard layout is retyped in the right one and the layout switches: by itself, by the language key or by its own key. English, Russian, Ukrainian. Nothing typed is stored or sent. By Herman Harazha.">
+<title>Retyper: keyboard layout fixer for Mac</title>
+<meta name="description" content="Keyboard layout fixer for Mac. A word typed in the wrong layout is retyped in the right one: ghbdtn becomes привет.">
+<meta property="og:title" content="Retyper: keyboard layout fixer for Mac">
+<meta property="og:description" content="Keyboard layout fixer for Mac. A word typed in the wrong layout is retyped in the right one: ghbdtn becomes привет.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://geragaraza.com/apps/retyper/">
 <meta property="og:image" content="https://geragaraza.com/assets/retyper/icon.png">
@@ -20,16 +20,14 @@
 <script src="/assets/copy.js" defer></script>
 <link rel="stylesheet" href="/assets/retyper/key.css">
 <script src="/assets/retyper/key.js" defer></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Retyper","alternateName":"Keyboard layout fixer","description":"Retyper is a free, open source app for Mac. A word typed in the wrong keyboard layout is retyped in the right one and the layout switches: by itself, by the language key or by its own key. English, Russian, Ukrainian. Nothing typed is stored or sent. By Herman Harazha.","url":"https://geragaraza.com/apps/retyper/","image":"https://geragaraza.com/assets/retyper/icon.png","operatingSystem":"macOS 13 or later","processorRequirements":"Apple silicon","applicationCategory":"UtilitiesApplication","applicationSubCategory":"Keyboard layout switcher","softwareVersion":"0.2","downloadUrl":"https://github.com/geragarazagh/retyper/releases/latest/download/Retyper.dmg","sameAs":"https://github.com/geragarazagh/retyper","softwareHelp":"https://github.com/geragarazagh/retyper#readme","license":"https://github.com/geragarazagh/retyper/blob/main/LICENSE","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"inLanguage":"en","featureList":["A word typed in the wrong keyboard layout is retyped in the right one at the end of the word, and the layout switches","The language key of macOS retypes the last word in the layout it switches to","Its own key (Option twice by default) retypes the last word or the selected text in the other script; pressed again, in each other installed language in turn, then as typed","English, Russian and Ukrainian, Latin and Cyrillic both ways, Russian and Ukrainian between each other","Undo by switching again or by Command-Z; a word taken back is not fixed again","Nothing typed is stored, logged or sent; passwords are never seen","Checks for updates once a day and asks before installing","Open at Login, off by default"],"keywords":"keyboard layout switcher, wrong keyboard layout, layout fixer, ghbdtn, switch keyboard layout automatically, Russian keyboard, Ukrainian keyboard, input source, Mac, macOS, free, open source","author":{"@type":"Person","name":"Herman Harazha","url":"https://geragaraza.com/"},"permissions":"Accessibility"}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does anything typed leave the Mac?","acceptedAnswer":{"@type":"Answer","text":"No. Keys stay in memory for the length of a few words and are never written to disk, logged or sent. The only network call is the daily update check."}},{"@type":"Question","name":"Which layouts?","acceptedAnswer":{"@type":"Answer","text":"English, Russian and Ukrainian, in any installed layout of these languages (ABC, U.S., British, Dvorak, Russian, Russian – PC, Ukrainian – PC and others). Other languages have no word lists in the app yet."}},{"@type":"Question","name":"Can automatic fixing be turned off?","acceptedAnswer":{"@type":"Answer","text":"No. A word it should not touch is added to Exceptions, or taken back once by switching the layout again or by ⌘Z."}},{"@type":"Question","name":"Does it run on Intel Macs?","acceptedAnswer":{"@type":"Answer","text":"No. Apple silicon only, macOS 13 or later."}}]}</script>
 </head>
 <body>
 <main>
 <p class="up"><a href="/">Herman Harazha</a> / <a href="/apps/">Apps</a></p>
 <h1><span class="appicon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" aria-hidden="true" focusable="false" class="ic-retyper" style="--a:0;--b:0"><path fill="currentColor" fill-opacity=".4" fill-rule="evenodd" d="M685.8 0C709.5 0.8 758.5 1.6 786.1 4.8C813.7 8.1 831.7 12.9 851.4 19.3C871 25.8 888.3 33.8 904.3 43.4C920.2 53 934.4 64.1 947.2 76.8C959.9 89.6 971 103.8 980.6 119.7C990.2 135.7 998.2 153 1004.7 172.6C1011.1 192.3 1015.9 210.3 1019.2 237.9C1022.4 265.5 1023.2 314.5 1024 338.2L1024 685.8C1023.2 709.5 1022.4 758.5 1019.2 786.1C1015.9 813.7 1011.1 831.7 1004.7 851.4C998.2 871 990.2 888.3 980.6 904.3C971 920.2 959.9 934.4 947.2 947.2C934.4 959.9 920.2 971 904.3 980.6C888.3 990.2 871 998.2 851.4 1004.7C831.7 1011.1 813.7 1015.9 786.1 1019.2C758.5 1022.4 709.5 1023.2 685.8 1024L338.2 1024C314.5 1023.2 265.5 1022.4 237.9 1019.2C210.3 1015.9 192.3 1011.1 172.6 1004.7C153 998.2 135.7 990.2 119.7 980.6C103.8 971 89.6 959.9 76.8 947.2C64.1 934.4 53 920.2 43.4 904.3C33.8 888.3 25.8 871 19.3 851.4C12.9 831.7 8.1 813.7 4.8 786.1C1.6 758.5 0.8 709.5 0 685.8L0 338.2C0.8 314.5 1.6 265.5 4.8 237.9C8.1 210.3 12.9 192.3 19.3 172.6C25.8 153 33.8 135.7 43.4 119.7C53 103.8 64.1 89.6 76.8 76.8C89.6 64.1 103.8 53 119.7 43.4C135.7 33.8 153 25.8 172.6 19.3C192.3 12.9 210.3 8.1 237.9 4.8C265.5 1.6 314.5 0.8 338.2 0ZM674.9 32C697.2 32.8 743.1 33.5 769 36.5C794.8 39.6 811.7 44.1 830.1 50.1C848.6 56.1 864.8 63.7 879.7 72.7C894.7 81.6 908 92.1 920 104C931.9 116 942.4 129.3 951.3 144.3C960.3 159.2 967.9 175.4 973.9 193.9C979.9 212.3 984.4 229.2 987.5 255C990.5 280.9 991.2 326.8 992 349.1L992 674.9C991.2 697.2 990.5 743.1 987.5 769C984.4 794.8 979.9 811.7 973.9 830.1C967.9 848.6 960.3 864.8 951.3 879.7C942.4 894.7 931.9 908 920 920C908 931.9 894.7 942.4 879.7 951.3C864.8 960.3 848.6 967.9 830.1 973.9C811.7 979.9 794.8 984.4 769 987.5C743.1 990.5 697.2 991.2 674.9 992L349.1 992C326.8 991.2 280.9 990.5 255 987.5C229.2 984.4 212.3 979.9 193.9 973.9C175.4 967.9 159.2 960.3 144.3 951.3C129.3 942.4 116 931.9 104 920C92.1 908 81.6 894.7 72.7 879.7C63.7 864.8 56.1 848.6 50.1 830.1C44.1 811.7 39.6 794.8 36.5 769C33.5 743.1 32.8 697.2 32 674.9L32 349.1C32.8 326.8 33.5 280.9 36.5 255C39.6 229.2 44.1 212.3 50.1 193.9C56.1 175.4 63.7 159.2 72.7 144.3C81.6 129.3 92.1 116 104 104C116 92.1 129.3 81.6 144.3 72.7C159.2 63.7 175.4 56.1 193.9 50.1C212.3 44.1 229.2 39.6 255 36.5C280.9 33.5 326.8 32.8 349.1 32Z"/><g transform="matrix(1 0 0 -1 0 1024)"><path fill="currentColor" d="M516.21 384Q490.28 384 469.33 393.01Q448.39 402.03 433.53 419.03Q418.68 436.02 410.70 459.89Q402.71 483.76 402.71 513.29L402.71 513.46Q402.71 552.26 416.71 580.59Q430.70 608.92 456.20 624.46Q481.70 640 516.21 640Q544.71 640 565.57 629.96Q586.43 619.91 599.82 602.66Q613.22 585.40 618.88 563.42L619.74 560.16L587.29 560.16L586.60 562.05Q578.02 585.57 560.16 598.54Q542.30 611.50 516.21 611.50Q490.80 611.50 472.42 599.74Q454.05 587.98 444.18 566Q434.31 544.02 434.31 513.46L434.31 513.29Q434.31 489.94 439.97 471.31Q445.64 452.68 456.37 439.54Q467.10 426.41 482.21 419.46Q497.32 412.50 516.21 412.50Q538.18 412.50 554.92 421.34Q571.66 430.19 581.02 445.98Q590.38 461.78 590.38 482.55L590.38 487.02L520.50 487.02L520.50 514.15L621.29 514.15L621.29 490.62Q621.29 465.56 614.16 445.81Q607.03 426.07 593.47 412.24Q579.91 398.42 560.42 391.21Q540.93 384 516.21 384ZM916.48 107.52L892.85 107.52L892.85 275.69L791.50 275.69L791.50 107.52L767.87 107.52L767.87 296.96L916.48 296.96Z"/></g></svg></span>Retyper</h1>
-<p class="lead"><span>Free app for Mac. A word typed in the wrong keyboard layout is retyped in the right one, and the layout switches: <code>ghbdtn</code> becomes <code>привет</code>. Nothing typed leaves the Mac.</span></p>
+<p class="lead"><span>Keyboard layout fixer for Mac. A word typed in the wrong layout is retyped in the right one: ghbdtn becomes привет.</span></p>
 <ul class="get">
-<li><a href="https://github.com/geragarazagh/retyper/releases/latest/download/Retyper.dmg"><span class="i"><svg viewBox="0 0 100 100" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"><path d="M50 8v60M22 42l28 28 28-28M12 92h76"/></svg></span><span class="two"><span>Download for Mac</span><span class="sub">DMG · 3.3 MB</span></span></a></li>
+<li><a href="https://github.com/geragarazagh/retyper/releases/latest/download/Retyper.dmg"><span class="i"><svg viewBox="0 0 100 100" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"><path d="M50 8v60M22 42l28 28 28-28M12 92h76"/></svg></span><span>Download for Mac</span></a></li>
 <li class="cl"><div class="cmdline"><code><span class="nw">brew</span> <span class="nw">install</span> <span class="nw">geragarazagh/tap/retyper</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div></li>
 <li><a href="https://github.com/geragarazagh/retyper"><span class="i"><svg aria-hidden="true" viewBox="0 0 98 96" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g>
@@ -37,78 +35,10 @@
 </g>
 
 </svg>
-</span><span class="two"><span>GitHub</span><span class="sub">source code</span></span></a></li>
+</span><span>GitHub</span></a></li>
 </ul>
 <p class="small"><span>Apple silicon, macOS 13 or later.</span></p>
 <div class="sk" id="sk" aria-hidden="true"><div class="doc"><div class="txt"></div><span class="src"></span></div></div>
-<div class="refs"><p class="cap">Four phrases typed on the wrong keyboard layout and retyped by the app.<sup><a href="#note-1">[1]</a></sup></p><ol class="notes"><li id="note-1">Written for this page; no outside source. Each was typed in Retyper 0.1.1 on macOS 26.6.2, in a test machine, on 12 November 2026, and the page plays what the app typed.</li></ol></div>
-<div class="about">
-<h2 class="label">For advanced users and language models</h2>
-<table class="facts">
-<tr><th scope="row">Version</th><td>0.2</td></tr>
-<tr><th scope="row">Released</th><td>17 November 2026</td></tr>
-<tr><th scope="row">Download</th><td>3.3 MB</td></tr>
-<tr><th scope="row">Requires</th><td>Apple silicon, macOS 13 or later</td></tr>
-<tr><th scope="row">Permissions</th><td>Accessibility</td></tr>
-<tr><th scope="row">License</th><td>MIT</td></tr>
-<tr><th scope="row">Price</th><td>Free</td></tr>
-</table>
-<p>macOS can switch the layout per document or with Caps Lock, but a word already typed in the wrong layout stays as it is: it has to be deleted, the layout switched, the word typed again. Retyper retypes it. The word follows the layout: the app switches it when it is sure, or the person does, with any key macOS uses for it.</p>
-<h2>What it does</h2>
-<ul>
-<li>At the end of a word (Space, Return, Tab) a word typed in the wrong layout is retyped in the right one, and the layout switches. A word that proves a run wrong fixes up to three words before it in that run: <code>d 2022 ujle</code> becomes <code>в 2022 году</code>.</li>
-<li>Latin ↔ Cyrillic in both directions, and Russian ↔ Ukrainian where the letters differ. Which Cyrillic a Latin word becomes is decided per word; on a tie, the Cyrillic layout used last.</li>
-<li>The language key: right after a word, switching the input source in any way (a key, the Globe key, Caps Lock, the menu bar) retypes that word in the new layout, unless the word reads right as typed. One letter and then the key: always, so <code>н</code> becomes <code>y</code>.</li>
-<li>Retype, its own key (Option pressed twice by default; a shortcut with ⌘, ⌥ or ⌃, an F key, or another modifier pressed twice can be set): with text selected, the selection of any length is retyped in the other script; without, the last word. Pressed again with nothing else done in between, it retypes the same keys in the next installed language, one step per language (English, Russian, Ukrainian; a language in which the text reads the same is skipped), and after the last it brings back the text as typed; with two layouts it switches between them. Right after an automatic fix it goes on from the language the fix chose. The layout follows the text at each step. It has no detector: what it is asked to retype, it retypes.</li>
-<li>Undo: ⌘Z right after an automatic fix, or switching the layout again after a close call (<code>yt</code> → <code>не</code>). A clear fix (<code>ghbdtn</code> → <code>привет</code>) stays when the layout is switched, so the next word can be typed in the other language. A word taken back is remembered in Exceptions and not fixed automatically again.</li>
-<li>Left alone: addresses with <code>://</code>, e-mail, command line flags, words with digits, <code>_</code>, <code>=</code>, <code>$</code> or <code>#</code>, Latin camelCase; paths and file names unless the other reading is a known word. A one-letter word is never fixed alone; a word of one or two letters is fixed only when a word after it in the same run confirms it.</li>
-<li>Works in every app, terminals and code editors included, with no list of apps. Nothing in the Dock or the menu bar.</li>
-</ul>
-<h2>How it works</h2>
-<ul>
-<li>A session event tap sees key presses. Kept in memory only: the last 80 keys as key codes with Shift and Caps Lock, cleared by a click, an arrow, an app change, a password field or a terminal asking for a password. The text is read back through the installed layouts (<code>UCKeyTranslate</code>), so any installed layout is read as macOS reads it, with no layout tables in the app.</li>
-<li>Each reading of a word gets a score from a word list and character trigrams of its language (100,000 words per language, from wordfreq). The word is retyped only when another reading wins by a set margin and is an ordinary word. Per word end this takes about 50 microseconds on an M3 Pro.</li>
-<li>Retyping: Backspaces, then the new text posted as key events, then <code>TISSelectInputSource</code>. Keys typed meanwhile wait and arrive in order. The clipboard is not used for this.</li>
-<li>Selected text is read and replaced through Accessibility. Electron and Chromium apps are asked to build their Accessibility tree when Retype finds no text in them, and the request is taken back when the app leaves the front. Where an app gives no text through Accessibility, Retype copies the selection with ⌘C and then puts the clipboard back item by item, marked so that clipboard history apps skip it; such an app may still keep the copy itself. Nothing is copied while the clipboard holds a password from a password manager. Where the new text has to be typed over the selection, a selection of several lines is left alone: its line breaks would be typed as Return.</li>
-<li>While a password field has the focus (Secure Input), macOS gives the app no keys at all. Most terminals don’t turn Secure Input on when they ask for a password, so the app checks the terminal in front itself: while it waits for a password with the input hidden, as sudo and ssh ask, keys are neither kept nor changed. In a terminal a word ending in Return or Tab is changed only while the shell itself edits the command line: with sudo, ssh, tmux or any other program in front, where a password prompt may not be seen, it stays as typed.</li>
-</ul>
-<h2>Measured</h2>
-<p>On a test set the detector was not tuned on (Wikipedia text, real dictation, commands, slang, brands, URLs and paths replayed through the real layout tables):</p>
-<ul>
-<li>Russian typed on the Latin layout: 95.2 % of words fixed automatically; Ukrainian: 94.2 %; English typed on Russian or Ukrainian: 96.5 % and 96.8 %; Ukrainian typed on Russian: 89.7 %; Russian typed on Ukrainian: 83.2 %.</li>
-<li>Words typed right and changed anyway: 10 of 97,283 (0.01 %).</li>
-<li>Not tested with a physical key: the Globe key and Caps Lock as the language key (macOS handles them below the events a program can send). They change the input source the same way as ⌥Space and the menu, which were tested.</li>
-</ul>
-<h2>Questions</h2>
-<h3>Does anything typed leave the Mac?</h3>
-<p>No. Keys stay in memory for the length of a few words and are never written to disk, logged or sent. The only network call is the daily update check.</p>
-<h3>Which layouts?</h3>
-<p>English, Russian and Ukrainian, in any installed layout of these languages (ABC, U.S., British, Dvorak, Russian, Russian – PC, Ukrainian – PC and others). Other languages have no word lists in the app yet.</p>
-<h3>Can automatic fixing be turned off?</h3>
-<p>No. A word it should not touch is added to Exceptions, or taken back once by switching the layout again or by ⌘Z.</p>
-<h3>Does it run on Intel Macs?</h3>
-<p>No. Apple silicon only, macOS 13 or later.</p>
-<h2>Updates</h2>
-<p>Once a day the app reads the feed of its latest GitHub release (<code>appcast.xml</code>) through Sparkle. Nothing about the Mac is sent. When a newer version is out, a window shows it with Install Update, Remind Me Later and Skip This Version; nothing is downloaded before Install Update. Check for Updates in the window checks at once.</p>
-<p>0.1 was called SourceKey. Updated through Check for Updates, it keeps its file name, <code>SourceKey.app</code>; the app inside is Retyper.</p>
-<p>The feed and the disk image are signed with an EdDSA key, and Sparkle installs only an app that carries the same Developer ID signature.</p>
-<h2>Settings and removal</h2>
-<p>Exceptions are one plain text file, a word per line: <code>~/Library/Application Support/Retyper/Exceptions.txt</code>, made when the first word is added. The Retype key, whether the app has been opened before and the time of the last update check are in the defaults of <code>com.geragaraza.sourcekey</code>. Open at Login is a login item the app registers itself (<code>SMAppService</code>) and turns off from the same window.</p>
-<p>To remove Retyper: Quit in its window, move <code>Retyper.app</code> to the Trash, delete the folder <code>~/Library/Application Support/Retyper</code> and clear its settings with this command:</p>
-<div class="cmdline"><code><span class="nw">defaults</span> <span class="nw">delete</span> <span class="nw">com.geragaraza.sourcekey</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
-<p>Installed with Homebrew, this command quits it and removes the app, its settings and Exceptions:</p>
-<div class="cmdline"><code><span class="nw">brew</span> <span class="nw">uninstall</span> <span class="nw">--zap</span> <span class="nw">retyper</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
-<p>Either way, its Accessibility entry is removed in System Settings, Privacy & Security.</p>
-<h2>Details</h2>
-<ul>
-<li>Bundle ID: <code>com.geragaraza.sourcekey</code>, kept from the first name, SourceKey (0.1), so an update keeps the Accessibility permission.</li>
-<li>Download: <code>Retyper.dmg</code>.</li>
-<li>Permissions: Accessibility (on macOS 27: Device Control and Data Access). Network: only the update check.</li>
-<li>Signed with a Developer ID and notarized by Apple.</li>
-<li>Code: Swift with AppKit, about 1,700 lines, and the Sparkle framework for updates.</li>
-<li>Sparkle is MIT too. The word lists are derived from wordfreq and are CC BY-SA 4.0. Both licenses come with the app and are in <code>THIRD-PARTY-LICENSES.md</code>.</li>
-</ul>
-</div>
 </main>
 </body>
 </html>

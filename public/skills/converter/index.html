@@ -7,10 +7,10 @@
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<title>Converter: a skill for AI assistants that converts files</title>
-<meta name="description" content="A skill for large language models that converts files: video, audio, photos, PDF, documents, e-books, archives, subtitles, text encodings.">
+<title>Converter: a skill for AI assistants</title>
+<meta name="description" content="Converts files between formats: video, audio, images, PDF, documents, e-books, archives.">
 <meta property="og:title" content="Converter: a skill for AI assistants">
-<meta property="og:description" content="A skill for large language models that converts files: video, audio, photos, PDF, documents, e-books, archives, subtitles, text encodings.">
+<meta property="og:description" content="Converts files between formats: video, audio, images, PDF, documents, e-books, archives.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://geragaraza.com/skills/converter/">
 <meta property="og:image" content="https://geragaraza.com/og.png">
@@ -21,7 +21,6 @@
 <link rel="stylesheet" href="/assets/site.css">
 <link rel="stylesheet" href="/assets/article.css">
 <script src="/assets/copy.js" defer></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareSourceCode","name":"converter","description":"A skill for large language models that converts files: video, audio, photos, PDF, documents, e-books, archives, subtitles, text encodings.","codeRepository":"https://github.com/geragarazagh/converter","license":"https://opensource.org/licenses/MIT","url":"https://geragaraza.com/skills/converter/","author":{"@type":"Person","name":"Herman Harazha","url":"https://geragaraza.com/"}}</script>
 </head>
 <body>
 <main>
@@ -29,13 +28,17 @@
 <article>
 <h1>Converter</h1>
 <p>Code and description: <a class="t" href="https://github.com/geragarazagh/converter">github.com/<wbr>geragarazagh/<wbr>converter</a></p>
+<p>Converts files between formats: video, audio, images, PDF, documents, e-books, archives.</p>
 <h2>Install</h2>
-<p>Terminal agents (Claude Code, Codex, Antigravity, OpenCode and others), one command:</p>
-<div class="cmdline"><code>npx skills add <span class="nw">geragarazagh/converter -g</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
-<p>Gemini CLI, as an extension:</p>
+<p>Terminal agents:</p>
+<div class="cmdline"><code><span class="nw">npx</span> <span class="nw">skills</span> <span class="nw">add</span> <span class="nw">geragarazagh/</span><wbr><span class="nw">converter -g</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
+<p>Claude Code:</p>
+<div class="cmdline"><code><span class="nw">claude</span> <span class="nw">plugin</span> <span class="nw">marketplace</span> <span class="nw">add</span> <span class="nw">geragarazagh/converter</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
+<div class="cmdline"><code><span class="nw">claude</span> <span class="nw">plugin</span> <span class="nw">install</span> <span class="nw">converter@</span><wbr><span class="nw">converter</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
+<p>Gemini CLI:</p>
 <div class="cmdline"><code><span class="nw">gemini</span> <span class="nw">extensions</span> <span class="nw">install</span> <span class="nw">https://github.com/</span><wbr><span class="nw">geragarazagh/</span><wbr><span class="nw">converter</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
-<p>Claude, ChatGPT: download converter.zip from the <a class="t" href="https://github.com/geragarazagh/converter/releases/latest">releases page</a> and upload it where the app keeps skills. The path in each app is in the README. In the Gemini app a skill with files does not work: Gemini CLI or Antigravity is needed there.</p>
-<p>Any other chat: copy the text of the skill below and paste it into the instructions or as the first message.</p>
+<p>Claude and ChatGPT apps: upload converter.zip from the <a class="t" href="https://github.com/geragarazagh/converter/releases/latest">latest release</a>.</p>
+<p>Any other agent: paste the text below into its instructions.</p>
 <div class="cmdline text"><pre>---
 name: converter
 description: &quot;Converts a file into another format, size or form and checks the result: video and audio (play on a phone or TV, compress to a size, cut, join, GIF, extract sound), photos (HEIC to JPEG), PDF (merge, split, compress, OCR to searchable), DjVu, Word, Excel and PowerPoint to PDF, e-books, archives, subtitles, garbled letters and wrong text encodings, JSON, YAML, CSV. Use whenever a file has to become another file or be fixed.&quot;
@@ -294,7 +297,6 @@ The same decisions by hand, for a copy of the skill without the script.
 - OCR has no models for old spelling (pre-1918 Russian, for example): expect
   noise and say so.
 </pre><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
-<p>Checked on 12 November 2026: version 0.1.2 on Claude Haiku 5.5 in Claude Code, nine real tasks, each twice, as a plain request and through /convert (the skill&#x27;s name until 0.2.0). The result was right all 18 times, the originals untouched. In the Claude app the skill made a real JPEG of the same size as the original from a HEIC photo.</p>
 </article>
 </main>
 </body>
