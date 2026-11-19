@@ -32,9 +32,8 @@ export default {
     // The page's colour before anything else is drawn (his recording 2026-11-15 15:50: a white flash before the black
     // page in a new Safari window): the background on <html> itself and Safari's bar colour, in the first bytes of
     // <head>, so neither waits for site.css.
-    const first = '<style>html{background:#fff}@media (prefers-color-scheme:dark){html{background:#000}}</style>\n' +
-      '<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">\n' +
-      '<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">\n';
+    // Black only since 2026-11-19 (no light theme).
+    const first = '<style>html{background:#000}</style>\n<meta name="theme-color" content="#000000">\n';
     // The site's own files named in the page carry this deployment's id (?v=…): public/_headers lets a browser keep
     // /assets/* for an hour without asking again (until 2026-11-15 every visit asked for each file again
     // and the link icons came after the text), and a new deployment changes every address, so a page never meets the

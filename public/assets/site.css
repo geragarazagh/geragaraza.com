@@ -1,16 +1,16 @@
 /* The whole site's look, one file (rebuilt 2026-11-19 by Claude (Opus 5.5), his pick А after Hacker News: «как же тут всё
    просто… до какого-то безумия»). No icons, no live blocks, no fonts of our own: plain text links on the left, the device's
-   own font (his word: on a Mac and an iPhone San Francisco, elsewhere whatever that machine has), black on white or white
-   on black as the device asks. The home rows are the addresses themselves (t.me/geragaraza), so nothing needs a logo. */
+   own font (his word: on a Mac and an iPhone San Francisco, elsewhere whatever that machine has), white on black. The home rows are the addresses themselves (t.me/geragaraza), so nothing needs a logo. */
 
 /* One size drives everything: --f, the text. 6.4vw fills a phone's width with the longest home row (instagram.com/
    geragaraza) without wrapping; 4.4vh keeps the home page (title, 11 rows, two group gaps) on one screen of a phone and a
    computer, so nobody has to scroll; 38px is where a computer stops growing; 22px is the floor. Measured 2026-11-19:
    iPhone 393 x 759 and Mac 1512 x 860, both fit. */
-:root{color-scheme:light dark;--bg:#fff;--fg:#000;--dim:#6b6b6b;--f:max(22px,min(6.4vw,38px,4.4vh))}
+:root{color-scheme:dark;--bg:#000;--fg:#fff;--dim:#8e8e8e;--f:max(22px,min(6.4vw,38px,4.4vh))}
 @supports (height:1svh){:root{--f:max(22px,min(6.4vw,38px,4.4svh))}}
-/* --dim: the one secondary colour (the system line, dates), 5.3:1 on white and 6.6:1 on black. */
-@media (prefers-color-scheme:dark){:root{--bg:#000;--fg:#fff;--dim:#8e8e8e}}
+/* Black only since 2026-11-19 ~14:30 (his word: no light theme, brand colours as the brands made them). Grey was
+   measured against black: Apple's #1C1C1E, Google's #1F1F1F, macOS window #1E1E1E all dim every brand colour by a fifth
+   (Pinterest 4.4:1 on black, 3.4-3.6 on those greys), and the brands draw their marks for black. --dim: 6.6:1. */
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--fg);font:400 var(--f)/1.2 -apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;-webkit-text-size-adjust:100%}
 /* On the left, as Hacker News: the phone's 16 px edge; on a computer 4 % of the window in from the left. */
@@ -24,24 +24,16 @@ a:focus-visible{outline:3px solid currentColor;outline-offset:4px;border-radius:
 ul{list-style:none;margin:calc(var(--f)*.9) 0 0;padding:0}
 ul+ul{margin-top:calc(var(--f)*.75)}
 li>a{display:inline-block;padding:max(.12em,calc((44px - 1.2em)/2)) 0}
-/* Colour on the home rows (his word 2026-11-19 ~14:05): each social in its brand's own colour, Apps four macOS system
-   colours (red, yellow, green, blue: different apps for different tastes), Skills two letters each for Claude, ChatGPT and
-   Gemini in that order, Useful yellow (a light bulb). The name, Threads and GitHub stay the text colour: their brands are
-   black and white. Every colour keeps at least 3:1 against its page (WCAG's level for text from 24 px; the rows are
-   25-38 px). Where a brand's main colour falls under that on white, its own darker official shade is used in the light
-   theme: Telegram's gradient end #229ED9 for #2AABEE, and for the system colours Apple's «Increased contrast (light)»
-   values from the HIG (yellow #A16A00 reads as ochre: real yellow on white is 1.5:1). Sources and measured ratios:
-   dev/site.md, «Home page». */
-:root{--gm:#FC413D;--tg:#229ED9;--pin:#E60023;--yt:#FF0033;--tt:#08A6A1;--ig:linear-gradient(90deg,#E35D29,#EA425B,#EA33B0,#DC35E6,#571DF5);
-  --red:#E9152D;--yellow:#A16A00;--green:#008932;--blue:#1E6EF4;--claude:#D97757;--gpt:#10A37F;--gemini:#4285F4}
-@media (prefers-color-scheme:dark){:root{--tg:#2AABEE;--tt:#25F4EE;--ig:linear-gradient(90deg,#F8D548,#E35D29,#EA425B,#EA33B0,#DC35E6);
-  --red:#FF4245;--yellow:#FFD600;--green:#30D158;--blue:#0091FF}}
+/* Colour on the home rows (his word 2026-11-19 ~14:05, ~14:30): each social in its brand's own colour, unchanged; Apps
+   four macOS system colours (red, yellow, green, blue: different apps for different tastes, Apple's dark values from the
+   HIG); Skills two letters each for Claude, ChatGPT and Gemini in that order; Useful yellow (a light bulb). The name,
+   Threads and GitHub stay white: their brands are black and white. Sources: dev/site.md, «Home page».
+   Instagram's mark is a gradient, not one colour: its stops are measured from Meta's own logo (IG brand asset pack
+   2023, the 2022 gradient: yellow at the bottom through orange, red, pink and magenta to violet at the top), laid left
+   to right as the logo runs bottom to top. */
+:root{--gm:#FC413D;--tg:#2AABEE;--pin:#E60023;--yt:#FF0033;--tt:#25F4EE;--ig:linear-gradient(90deg,#F8D548,#E35D29,#EA425B,#EA33B0,#DC35E6,#571DF5);
+  --red:#FF4245;--yellow:#FFD600;--green:#30D158;--blue:#0091FF;--claude:#D97757;--gpt:#10A37F;--gemini:#4285F4}
 .gm{color:var(--gm)}.tg{color:var(--tg)}.pin{color:var(--pin)}.yt{color:var(--yt)}.tt{color:var(--tt)}
-/* Instagram's mark is a gradient, not one colour. Its stops are measured from Meta's own logo (IG brand asset pack 2023,
-   the 2022 gradient: yellow at the bottom through orange, red, pink and magenta to violet at the top), laid left to right
-   as the logo runs bottom to top. Yellow (1.4:1) only on black, violet (2.9:1 on black) only on white.
-   TikTok in its cyan (his word 2026-11-19 ~14:20): #25F4EE on black; on white it is 1.4:1, so there the same hue darkened
-   to 3:1, #08A6A1 (not an official TikTok value: TikTok publishes no darker cyan). */
 .ig{background:var(--ig);-webkit-background-clip:text;background-clip:text;color:transparent}
 .apps span:nth-child(1){color:var(--red)}.apps span:nth-child(2){color:var(--yellow)}.apps span:nth-child(3){color:var(--green)}.apps span:nth-child(4){color:var(--blue)}
 .skills span:nth-child(-n+2){color:var(--claude)}.skills span:nth-child(n+3):nth-child(-n+4){color:var(--gpt)}.skills span:nth-child(n+5){color:var(--gemini)}
