@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<channel>
+<title>Useful, by Herman Harazha</title>
+<link>https://geragaraza.com/useful/</link>
+<atom:link href="https://geragaraza.com/useful/feed.xml" rel="self" type="application/rss+xml"/>
+<description>Useful things by Herman Harazha (Герман Гаража), in Russian.</description>
+<language>ru</language>
+<lastBuildDate>Thu, 19 Nov 2026 00:00:00 +0200</lastBuildDate>
+<item>
+<title>Ленточный бот в Телеграме</title>
+<link>https://geragaraza.com/useful/lentochnyy-bot-v-telegrame/</link>
+<guid isPermaLink="true">https://geragaraza.com/useful/lentochnyy-bot-v-telegrame/</guid>
+<pubDate>Thu, 19 Nov 2026 00:00:00 +0200</pubDate>
+<dc:creator>Herman Harazha</dc:creator>
+<description>&lt;p&gt;&lt;a href="https://t.me/FeedChannelsBot"&gt;t.me/FeedChannelsBot&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Этот бот позволяет сгруппировать публикации из нескольких каналов в одну хронологическую ленту.&lt;/p&gt;</description>
+</item>
+</channel>
+</rss>
