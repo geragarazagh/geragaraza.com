@@ -3,11 +3,11 @@
    own font (his word: on a Mac and an iPhone San Francisco, elsewhere whatever that machine has), white on black. The home rows are the addresses themselves (t.me/geragaraza), so nothing needs a logo. */
 
 /* One size drives everything: --f, the text. 6.4vw fills a phone's width with the longest home row (instagram.com/
-   geragaraza) without wrapping; 4.4vh keeps the home page (title, 11 rows, two group gaps) on one screen of a phone and a
+   geragaraza) without wrapping; 3.85vh keeps the home page (title, 13 rows, four group gaps; 4.4 until the blog came back 2026-11-19) on one screen of a phone and a
    computer, so nobody has to scroll; 38px is where a computer stops growing; 22px is the floor. Measured 2026-11-19:
    iPhone 393 x 759 and Mac 1512 x 860, both fit. */
-:root{color-scheme:dark;--bg:#000;--fg:#fff;--dim:#8e8e8e;--f:max(22px,min(6.4vw,38px,4.4vh))}
-@supports (height:1svh){:root{--f:max(22px,min(6.4vw,38px,4.4svh))}}
+:root{color-scheme:dark;--bg:#000;--fg:#fff;--dim:#8e8e8e;--f:max(22px,min(6.4vw,38px,3.85vh))}
+@supports (height:1svh){:root{--f:max(22px,min(6.4vw,38px,3.85svh))}}
 /* Black only since 2026-11-19 ~14:30 (his word: no light theme, brand colours as the brands made them). Grey was
    measured against black: Apple's #1C1C1E, Google's #1F1F1F, macOS window #1E1E1E all dim every brand colour by a fifth
    (Pinterest 4.4:1 on black, 3.4-3.6 on those greys), and the brands draw their marks for black. --dim: 6.6:1. */
@@ -32,12 +32,16 @@ li>a{display:inline-block;padding:max(.12em,calc((44px - 1.2em)/2)) 0}
    2023, the 2022 gradient: yellow at the bottom through orange, red, pink and magenta to violet at the top), laid left
    to right as the logo runs bottom to top. */
 :root{--gm:#FC413D;--tg:#2AABEE;--pin:#E60023;--yt:#FF0033;--tt:#25F4EE;--ig:linear-gradient(90deg,#F8D548,#E35D29,#EA425B,#EA33B0,#DC35E6,#571DF5);
-  --red:#FF4245;--yellow:#FFD600;--green:#30D158;--blue:#0091FF;--claude:#D97757;--gpt:#10A37F;--gemini:#4285F4}
+  --red:#FF4245;--orange:#FF9230;--yellow:#FFD600;--green:#30D158;--blue:#0091FF;--claude:#D97757;--gpt:#10A37F;--gemini:#4285F4}
 .gm{color:var(--gm)}.tg{color:var(--tg)}.pin{color:var(--pin)}.yt{color:var(--yt)}.tt{color:var(--tt)}
 .ig{background:var(--ig);-webkit-background-clip:text;background-clip:text;color:transparent}
 .apps span:nth-child(1){color:var(--red)}.apps span:nth-child(2){color:var(--yellow)}.apps span:nth-child(3){color:var(--green)}.apps span:nth-child(4){color:var(--blue)}
 .skills span:nth-child(-n+2){color:var(--claude)}.skills span:nth-child(n+3):nth-child(-n+4){color:var(--gpt)}.skills span:nth-child(n+5){color:var(--gemini)}
 .useful{color:var(--yellow)}
+/* Blog in macOS orange (the HIG dark value): like Useful, a section of the site, not a brand. */
+.blog{color:var(--orange)}
+/* Blog list: the title, its day under it, small and dim. */
+.posts time{display:block}
 /* The way back: the pages above this one, small, over the title. */
 .up{margin:0 0 calc(var(--f)*.3);font-size:calc(var(--f)*.7)}
 .up a{display:inline-block;padding:10px 0;margin:-10px 0}

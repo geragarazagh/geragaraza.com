@@ -16,9 +16,11 @@ export default {
     if (url.searchParams.has('lang')) { url.searchParams.delete('lang'); moved = true; }
     // The convert skill's page was a blog post until 2026-11-15; the blog holds only his own posts since (dev/rules.md).
     if (url.pathname === '/blog/navyk-convert' || url.pathname.startsWith('/blog/navyk-convert/')) { url.pathname = '/skills/converter/'; moved = true; }
-    // The blog was removed on 2026-11-19 (his word: no blog; Useful, a list of links, instead): its addresses (the
-    // list, «Первая запись», the feed) answer with a permanent redirect to Useful.
-    else if (url.pathname === '/blog' || url.pathname.startsWith('/blog/')) { url.pathname = '/useful/'; moved = true; }
+    // The blog was off from the morning of 2026-11-19 to 17:15 the same day (his word that evening: the blog is back,
+    // Useful stays a list of links). Its old test post «Первая запись» and feed lead to the blog; the wallpaper post
+    // moved from Useful into it, files included.
+    else if (url.pathname.startsWith('/blog/pervaya-zapis') || url.pathname.startsWith('/blog/feed')) { url.pathname = '/blog/'; moved = true; }
+    else if (url.pathname.startsWith('/useful/wallpapers')) { url.pathname = url.pathname.replace('/useful/wallpapers', '/blog/wallpapers'); moved = true; }
     // The five skills were renamed on 2026-11-18 (0.2.0, his choice of names): their old page addresses keep working.
     const renamedSkills = { 'convert': 'converter', 'youtube-download': 'your-downloader', 'text-to-speech': 'offline-tts',
       'audiobook': 'mp3-to-m4b', 'mac-clean': 'macliner' };
