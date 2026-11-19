@@ -29,11 +29,6 @@ export default {
     const response = await env.ASSETS.fetch(request);
     if (!response.headers.get('content-type')?.includes('text/html')) return response;
 
-    // The fonts the page draws with, fetched together with the stylesheet instead of after it, so the text appears in
-    // Inter at once and doesn't jump from a fallback font. Cyrillic only where the page shows it from the start:
-    // Retyper's live block (its phrases are typed in Russian and Ukrainian). Until 2026-11-19 also the blog's Russian posts.
-    const fonts = ['latin-500', 'latin-600']
-      .concat(url.pathname.startsWith('/apps/retyper/') ? ['cyrillic-500'] : []);
     // The page's colour before anything else is drawn (his recording 2026-11-15 15:50: a white flash before the black
     // page in a new Safari window): the background on <html> itself and Safari's bar colour, in the first bytes of
     // <head>, so neither waits for site.css.
@@ -41,11 +36,11 @@ export default {
       '<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">\n' +
       '<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">\n';
     // The site's own files named in the page carry this deployment's id (?v=…): public/_headers lets a browser keep
-    // /assets/* and /icons/* for an hour without asking again (until 2026-11-15 every visit asked for each file again
+    // /assets/* for an hour without asking again (until 2026-11-15 every visit asked for each file again
     // and the link icons came after the text), and a new deployment changes every address, so a page never meets the
     // files of an older one. Files a script fetches by itself keep their bare address and are at most an hour old.
     const v = env.CF_VERSION_METADATA?.id;
-    const own = /^\/(assets|icons)\//;
+    const own = /^\/assets\//;
     const stamp = (u) => (v && own.test(u) && !u.includes('?') ? `${u}?v=${v}` : u);
     const versioned = (attr) => ({
       element(e) {
@@ -58,8 +53,6 @@ export default {
       .on('head', {
         element(e) {
           e.prepend(first, { html: true });
-          const links = fonts.map((f) => `<link rel="preload" href="/fonts/inter-${f}.woff2" as="font" type="font/woff2" crossorigin>`);
-          e.append(links.join('\n') + '\n', { html: true });
         },
       })
       // A skip link first in every page (2026-11-16): a keyboard reaches the page's text without passing the path line;
@@ -74,17 +67,15 @@ export default {
       .on('video[poster]', versioned('poster'))
       .transform(response);
 
-    // The page differs from the stored file by the preload lines, so the file's ETag no longer fits.
+    // The page differs from the stored file by the lines written in above, so the file's ETag no longer fits.
     const out = new Response(rewritten.body, rewritten);
     out.headers.delete('ETag');
     // Security headers (2026-11-12, Mozilla Observatory in release.md «Security scanners»): every script, style, font,
     // picture and sound is the site's own, so a page loads nothing from elsewhere and no other site may frame it.
-    // 'unsafe-inline' for styles only: the home page keeps one <style> for its logo in the dark theme, and every page the
-    // first-paint background above. blob: for pictures
-    // only: Pixlift's live block makes its captures in the page and shows them from memory (2026-11-14); data: for the
-    // Instagram logo inlined in the home page (its gradient is Meta's own raster, 2026-11-15).
+    // 'unsafe-inline' for styles only: every page's first-paint background above. Since the plain redesign (2026-11-19)
+    // no page has pictures, sound or video of its own beyond the site icon, so blob:, data: and media went.
     out.headers.set('Content-Security-Policy', "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; " +
-      "img-src 'self' blob: data:; media-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'");
+      "img-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'");
     out.headers.set('X-Frame-Options', 'DENY');
     out.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
     return out;

@@ -1,10 +1,4 @@
-# Inter never changes under the same name: browsers may keep the fonts for a year without asking again.
-/fonts/*
-  Cache-Control: public, max-age=31536000, immutable
-
 # The site's own files: kept an hour without asking again. Pages name them with the deployment's id (src/worker.js),
 # so a new deployment is fetched at once; a file a script fetches by itself is at most an hour old.
 /assets/*
-  Cache-Control: public, max-age=3600
-/icons/*
   Cache-Control: public, max-age=3600

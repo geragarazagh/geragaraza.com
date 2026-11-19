@@ -1,5 +1,0 @@
-/* The page follows the system line, one L below it. As wide as the column, but never taller than the window less L
-   above and below, so a whole-page selection is one drag without scrolling. 2400 x 3730 is the scan's own ratio. */
-.page{position:relative;margin:var(--l) 0 0;width:min(100%,calc((100vh - var(--l)*2)*2400/3730));-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
-@supports (height:1svh){.page{width:min(100%,calc((100svh - var(--l)*2)*2400/3730))}}
-.page img{display:block;width:100%;height:auto;cursor:none;-webkit-user-drag:none;-webkit-tap-highlight-color:transparent}
