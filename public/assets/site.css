@@ -12,11 +12,11 @@
 /* --dim: the one secondary colour (the system line, dates), 5.3:1 on white and 6.6:1 on black. */
 @media (prefers-color-scheme:dark){:root{--bg:#000;--fg:#fff;--dim:#8e8e8e}}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font:500 var(--f)/1.2 -apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:400 var(--f)/1.2 -apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;-webkit-text-size-adjust:100%}
 /* On the left, as Hacker News: the phone's 16 px edge; on a computer 4 % of the window in from the left. */
 main{padding:calc(var(--f)*1.2) 16px calc(var(--f)*1.5)}
 @media (min-width:900px){main{padding-left:max(16px,4vw)}}
-h1{margin:0;font-weight:600;font-size:calc(var(--f)*1.45);line-height:1.15;letter-spacing:-.01em}
+h1{margin:0;font-weight:400;font-size:calc(var(--f)*1.45);line-height:1.15;letter-spacing:-.01em}
 a{color:inherit;text-decoration:none}
 a:focus-visible{outline:3px solid currentColor;outline-offset:4px;border-radius:6px}
 /* Rows: a list per group, a gap between groups. Each row's link is at least 44 px tall (the smallest comfortable tap), and
@@ -24,6 +24,24 @@ a:focus-visible{outline:3px solid currentColor;outline-offset:4px;border-radius:
 ul{list-style:none;margin:calc(var(--f)*.9) 0 0;padding:0}
 ul+ul{margin-top:calc(var(--f)*.75)}
 li>a{display:inline-block;padding:max(.12em,calc((44px - 1.2em)/2)) 0}
+/* Colour on the home rows (his word 2026-11-19 ~14:05): each social in its brand's own colour, Apps four macOS system
+   colours (red, yellow, green, blue: different apps for different tastes), Skills two letters each for Claude, ChatGPT and
+   Gemini in that order, Useful yellow (a light bulb). The name, Threads and GitHub stay the text colour: their brands are
+   black and white. Every colour keeps at least 3:1 against its page (WCAG's level for text from 24 px; the rows are
+   25-38 px). Where a brand's main colour falls under that on white, its own darker official shade is used in the light
+   theme: Telegram's gradient end #229ED9 for #2AABEE, and for the system colours Apple's «Increased contrast (light)»
+   values from the HIG (yellow #A16A00 reads as ochre: real yellow on white is 1.5:1). Sources and measured ratios:
+   dev/site.md, «Home page». */
+:root{--gm:#FC413D;--tg:#229ED9;--pin:#E60023;--yt:#FF0033;--tt:#FE2C55;--ig:linear-gradient(90deg,#FF0069,#D300C5,#7638FA);
+  --red:#E9152D;--yellow:#A16A00;--green:#008932;--blue:#1E6EF4;--claude:#D97757;--gpt:#10A37F;--gemini:#4285F4}
+@media (prefers-color-scheme:dark){:root{--tg:#2AABEE;--ig:linear-gradient(90deg,#FFD600,#FF7A00,#FF0069,#D300C5,#7638FA);
+  --red:#FF4245;--yellow:#FFD600;--green:#30D158;--blue:#0091FF}}
+.gm{color:var(--gm)}.tg{color:var(--tg)}.pin{color:var(--pin)}.yt{color:var(--yt)}.tt{color:var(--tt)}
+/* Instagram's mark is a gradient, not one colour: the 2022 brand gradient across the text (yellow and orange only on black). */
+.ig{background:var(--ig);-webkit-background-clip:text;background-clip:text;color:transparent}
+.apps span:nth-child(1){color:var(--red)}.apps span:nth-child(2){color:var(--yellow)}.apps span:nth-child(3){color:var(--green)}.apps span:nth-child(4){color:var(--blue)}
+.skills span:nth-child(-n+2){color:var(--claude)}.skills span:nth-child(n+3):nth-child(-n+4){color:var(--gpt)}.skills span:nth-child(n+5){color:var(--gemini)}
+.useful{color:var(--yellow)}
 /* The way back: the pages above this one, small, over the title. */
 .up{margin:0 0 calc(var(--f)*.3);font-size:calc(var(--f)*.7)}
 .up a{display:inline-block;padding:10px 0;margin:-10px 0}
@@ -53,9 +71,10 @@ li .cmdline{margin:0}
 /* Text pages (skill pages, the privacy statements): paragraphs at the rows' size, a part's title in bold, links inside a
    sentence underlined, since there the address is not the whole line. */
 article>p{margin:calc(var(--f)*.6) 0 0;line-height:1.35;max-width:34em}
-article h2{margin:calc(var(--f)*1.2) 0 0;font-size:inherit;font-weight:600}
+article h2{margin:calc(var(--f)*1.2) 0 0;font-size:inherit;font-weight:400}
 article p:not(.repo) a{text-decoration:underline;text-underline-offset:.15em;text-decoration-thickness:.06em}
 .date{font-size:calc(var(--f)*.7);color:var(--dim)}
 /* Skip to the page's text: the first thing the Tab key reaches (src/worker.js puts it in), out of sight until it has focus. */
 .skip{position:absolute;z-index:30;top:8px;left:16px;padding:10px 12px;background:var(--bg);font-size:calc(var(--f)*.7)}
 .skip:not(:focus){clip-path:inset(50%);width:1px;height:1px;overflow:hidden;white-space:nowrap;padding:0}
+.ig:focus-visible{outline-color:var(--fg)}
