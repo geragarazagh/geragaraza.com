@@ -32,14 +32,12 @@ li>a{display:inline-block;padding:max(.12em,calc((44px - 1.2em)/2)) 0}
    2023, the 2022 gradient: yellow at the bottom through orange, red, pink and magenta to violet at the top), laid left
    to right as the logo runs bottom to top. */
 :root{--gm:#FC413D;--tg:#2AABEE;--pin:#E60023;--yt:#FF0033;--tt:#25F4EE;--ig:linear-gradient(90deg,#F8D548,#E35D29,#EA425B,#EA33B0,#DC35E6,#571DF5);
-  --red:#FF4245;--orange:#FF9230;--yellow:#FFD600;--green:#30D158;--blue:#0091FF;--claude:#D97757;--gpt:#10A37F;--gemini:#4285F4}
+  --red:#FF4245;--yellow:#FFD600;--green:#30D158;--blue:#0091FF;--claude:#D97757;--gpt:#10A37F;--gemini:#4285F4}
 .gm{color:var(--gm)}.tg{color:var(--tg)}.pin{color:var(--pin)}.yt{color:var(--yt)}.tt{color:var(--tt)}
 .ig{background:var(--ig);-webkit-background-clip:text;background-clip:text;color:transparent}
 .apps span:nth-child(1){color:var(--red)}.apps span:nth-child(2){color:var(--yellow)}.apps span:nth-child(3){color:var(--green)}.apps span:nth-child(4){color:var(--blue)}
 .skills span:nth-child(-n+2){color:var(--claude)}.skills span:nth-child(n+3):nth-child(-n+4){color:var(--gpt)}.skills span:nth-child(n+5){color:var(--gemini)}
 .useful{color:var(--yellow)}
-/* Blog in macOS orange (the HIG dark value): like Useful, a section of the site, not a brand. */
-.blog{color:var(--orange)}
 /* Blog list: the title, its day under it, small and dim. */
 .posts time{display:block}
 /* The way back: the pages above this one, small, over the title. */
