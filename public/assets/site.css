@@ -74,10 +74,14 @@ li .cmdline{margin:0}
 .cmdline.text .copy{align-self:flex-start;height:44px}
 .cmdline pre{flex:1;min-width:0;margin:0;padding:12px 0;max-height:50vh;overflow:auto;font:400 12px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace;white-space:pre-wrap}
 /* Text pages (skill pages, the privacy statements): paragraphs at the rows' size, a part's title in bold, links inside a
-   sentence underlined, since there the address is not the whole line. */
+   sentence underlined. */
 article>p{margin:calc(var(--f)*.6) 0 0;line-height:1.35;max-width:34em}
 article h2{margin:calc(var(--f)*1.2) 0 0;font-size:inherit;font-weight:400}
-article p:not(.repo) a{text-decoration:underline;text-underline-offset:.15em;text-decoration-thickness:.06em}
+article p a{text-decoration:underline;text-underline-offset:.15em;text-decoration-thickness:.06em}
+/* An address written out as the link's text is underlined on every page, as on the home page: the repo line of a skill
+   page above (p.repo) and of an app page here (his recording 2026-11-21 08:51). «Download for Mac» is a link but not an
+   address, so it stays plain. */
+li>a[href^="https://github.com/"]:not([href*="/releases/"]){text-decoration:underline;text-underline-offset:.15em;text-decoration-thickness:.06em}
 .date{font-size:calc(var(--f)*.7);color:var(--dim)}
 /* Skip to the page's text: the first thing the Tab key reaches (src/worker.js puts it in), out of sight until it has focus. */
 .skip{position:absolute;z-index:30;top:8px;left:16px;padding:10px 12px;background:var(--bg);font-size:calc(var(--f)*.7)}
