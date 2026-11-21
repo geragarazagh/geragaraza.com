@@ -34,7 +34,14 @@ li>a{display:inline-block;padding:max(.12em,calc((44px - 1.2em)/2)) 0}
 :root{--gm:#FC413D;--tg:#2AABEE;--pin:#E60023;--yt:#FF0033;--tt:#25F4EE;--ig:linear-gradient(90deg,#F8D548,#E35D29,#EA425B,#EA33B0,#DC35E6,#571DF5);
   --red:#FF4245;--yellow:#FFD600;--green:#30D158;--blue:#0091FF;--claude:#D97757;--gpt:#10A37F;--gemini:#4285F4}
 .gm{color:var(--gm)}.tg{color:var(--tg)}.pin{color:var(--pin)}.yt{color:var(--yt)}.tt{color:var(--tt)}
-.ig{background:var(--ig);-webkit-background-clip:text;background-clip:text;color:transparent}
+/* Underlined (his word 2026-11-21): the home page's addresses that lead out (mail, Telegram, the socials, GitHub), so they
+   read as links at a glance; the site's own sections (Blog, Apps, Skills, Useful) stay plain. Same line as in a text's
+   sentence. Instagram's text is a clipped gradient with no colour of its own, so its line is a second gradient layer,
+   1/16 em high, along the bottom of the text's span. */
+.home a[href^="https:"],.home a[href^="mailto:"]{text-decoration:underline;text-underline-offset:.15em;text-decoration-thickness:.06em}
+.ig span{background:var(--ig),var(--ig);-webkit-background-clip:text,border-box;background-clip:text,border-box;
+  background-size:100% 100%,100% .06em;background-position:0 0,0 100%;background-repeat:no-repeat;color:transparent}
+.home a.ig{text-decoration:none}
 .apps span:nth-child(1){color:var(--red)}.apps span:nth-child(2){color:var(--yellow)}.apps span:nth-child(3){color:var(--green)}.apps span:nth-child(4){color:var(--blue)}
 .skills span:nth-child(-n+2){color:var(--claude)}.skills span:nth-child(n+3):nth-child(-n+4){color:var(--gpt)}.skills span:nth-child(n+5){color:var(--gemini)}
 .useful{color:var(--yellow)}
