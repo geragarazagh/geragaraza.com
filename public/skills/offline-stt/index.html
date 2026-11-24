@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>Offline STT: a skill for AI assistants</title>
+<meta name="description" content="Turns audio or video into text or subtitles offline with local speech models, and keeps a dictation dictionary accurate.">
+<meta property="og:title" content="Offline STT: a skill for AI assistants">
+<meta property="og:description" content="Turns audio or video into text or subtitles offline with local speech models, and keeps a dictation dictionary accurate.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://geragaraza.com/skills/offline-stt/">
+<meta property="og:image" content="https://geragaraza.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://geragaraza.com/skills/offline-stt/"><!-- nosemgrep: missing-integrity (the page's own address, not a file it loads) -->
+<link rel="stylesheet" href="/assets/site.css">
+<script src="/assets/copy.js" defer></script>
+</head>
+<body>
+<main>
+<p class="up"><a href="/">Herman Harazha</a> / <a href="/skills/">Skills</a></p>
+<article>
+<h1>Offline STT</h1>
+<p>Turns audio or video into text or subtitles offline with local speech models, and keeps a dictation dictionary accurate.</p>
+<p class="repo"><a href="https://github.com/geragarazagh/offline-stt">github.com/<wbr>geragarazagh/<wbr>offline-stt</a></p>
+<h2>Install</h2>
+<p>Terminal agents:</p>
+<div class="cmdline"><code><span class="nw">npx</span> <span class="nw">skills</span> <span class="nw">add</span> <span class="nw">geragarazagh/</span><wbr><span class="nw">offline-stt -g</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
+<p>Claude Code:</p>
+<div class="cmdline"><code><span class="nw">claude</span> <span class="nw">plugin</span> <span class="nw">marketplace</span> <span class="nw">add</span> <span class="nw">geragarazagh/offline-stt</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
+<div class="cmdline"><code><span class="nw">claude</span> <span class="nw">plugin</span> <span class="nw">install</span> <span class="nw">offline-stt@</span><wbr><span class="nw">offline-stt</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
+<p>Gemini CLI:</p>
+<div class="cmdline"><code><span class="nw">gemini</span> <span class="nw">extensions</span> <span class="nw">install</span> <span class="nw">https://github.com/</span><wbr><span class="nw">geragarazagh/</span><wbr><span class="nw">offline-stt</span></code><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
+<p>Any other agent: paste the text below into its instructions.</p>
+<div class="cmdline text"><pre>---
+name: offline-stt
+description: &quot;Turns audio or video into text or subtitles offline with local speech models, and keeps a dictation dictionary accurate. Use when someone wants to transcribe a recording, make .srt subtitles, search past dictations, or fix recurring dictation mishearings.&quot;
+license: MIT
+compatibility: &quot;Needs an assistant that runs commands on the person&#x27;s computer (a terminal agent). Best on macOS 13 or newer with STT (stt-cli); works on macOS, Linux and Windows through whisper.cpp (whisper-cli) or faster-whisper. Chat sandboxes have no local audio models.&quot;
+---
+
+# Offline STT
+
+Turns audio or video files into plain text or `.srt` subtitles offline on the
+person&#x27;s computer, and keeps a speech-to-text dictionary and dictation history
+up to date. Answer in the language of the person&#x27;s message, briefly.
+
+Transcription happens only by running a local speech recognition tool on the
+person&#x27;s computer. If you cannot run commands here, say in one sentence that
+this skill needs an assistant that runs commands on the person&#x27;s computer, and
+stop. Never invent, guess, or paraphrase a transcript from a file name or
+context, and never claim a file was written unless you verified it exists and
+is non-empty.
+
+## Before the first job
+
+A clear request runs at once without questions. Ask together, once, only when a
+choice is genuinely missing:
+
+1. Output: plain text in the reply, a `.txt` file beside the media, or `.srt`
+   subtitles. Default: plain text in the reply for short clips (under ~3
+   minutes), or `.txt` beside the source file for longer recordings.
+2. Language: automatic detection, or a specific ISO code (`en`, `ru`, `uk`,
+   `de`…). Default: automatic.
+
+Never overwrite an existing file: if `Name.txt` exists, write `Name (2).txt`.
+
+## Engines
+
+Find the best engine installed on this computer once per conversation, in this
+order:
+
+### 1. macOS with `STT` / `stt-cli` (best)
+
+`STT` is a free open-source macOS dictation and transcription app (MIT,
+github.com/geragarazagh/stt) running Whisper, Parakeet, and Qwen locally via
+`transcribe.cpp` with Silero VAD and iCloud-synced dictionary.
+
+Find it in this order, using the first that exits 0 (`--help`, not `--version`:
+STT 0.5-0.10 know only `--help`, and before 0.9 an unknown flag opens a second
+copy of the app):
+
+```sh
+stt-cli --help
+/Applications/STT.app/Contents/MacOS/STT --help
+```
+
+Below, `STT` stands for the full path that worked. If its help does not list
+`--status`, this STT is older than 0.11: transcription, `--add-word` and
+`--add-pair` work, the other commands below do not. Tell the person once that
+STT&#x27;s menu has Check for Updates (or `brew upgrade --cask stt` when installed
+with Homebrew), and use what works meanwhile.
+
+- **Check status** (active model, downloaded models, language, dictionary and
+  history counts, running state):
+  ```sh
+  STT --status
+  STT --status --json
+  ```
+  If `model: none`, tell the person to pick and download a model once in STT&#x27;s
+  Settings window, and stop.
+- **Transcribe files** (uses the model, language, and dictionary set in STT):
+  ```sh
+  STT &quot;INPUT.m4a&quot;
+  STT --srt &quot;INPUT.mp4&quot;
+  ```
+  Capture stdout to a `.txt` or `.srt` file when saving beside the source.
+- **Maintain the dictation dictionary** (updates the running app live and syncs
+  to other devices via iCloud; if STT is not running, start it in the
+  background with `open -g -a STT --args --background`):
+  ```sh
+  STT --list-words
+  STT --list-pairs
+  STT --add-word &quot;ExactName&quot;
+  STT --add-pair &quot;misheard form&quot; &quot;ExactName&quot;
+  STT --remove-word &quot;OldName&quot;
+  STT --remove-pair &quot;old misheard form&quot;
+  ```
+- **Search or read dictation history**:
+  ```sh
+  STT --history 20
+  STT --history 50 --search &quot;keyword&quot; --json
+  ```
+- **Toggle live microphone dictation**:
+  ```sh
+  STT --toggle
+  ```
+  Requires Microphone permission for the terminal or host app running the
+  command.
+
+#### Keeping the dictionary clean
+
+- **Words (`--add-word`)** feed Whisper&#x27;s initial prompt and Qwen&#x27;s vocabulary.
+  Keep personal words concise (roughly 10–30 high-frequency names or terms);
+  stuffing hundreds of words dilutes Whisper&#x27;s prompt. Parakeet ignores the
+  word list and uses replacement pairs only.
+- **Replacement pairs (`--add-pair HEARD WRITTEN`)** run after recognition on
+  every model. Cyrillic heard forms automatically match Russian and Ukrainian
+  case endings (adding `гитхаб → GitHub` also fixes `гитхаба`, `гитхабу`).
+- Never add a heard form that is also an ordinary word in the person&#x27;s language
+  (for example `тему` or `сигнал`), or it will corrupt normal sentences.
+- Check `--list-words` or `--list-pairs` before adding so you do not duplicate
+  existing rules. When you notice a recurring unambiguous dictation slip in the
+  person&#x27;s messages, offer or apply the pair once; ask first if the heard form
+  could be an ordinary word.
+
+### 2. macOS without `STT`, Linux, or Windows: `whisper-cli` (`whisper.cpp`)
+
+Check whether `whisper-cli` is installed:
+
+```sh
+whisper-cli --help
+```
+
+Look for an existing GGUF/GGML Whisper model in `~/Library/Application Support/STT/models/`,
+`~/.local/share/whisper/`, or `~/.cache/whisper/`. Never download a large model
+without the person&#x27;s yes.
+
+- Convert non-WAV inputs (or any format `whisper-cli` cannot decode directly)
+  to 16 kHz mono WAV in a temporary folder first:
+  ```sh
+  ffmpeg -y -i &quot;INPUT.m4a&quot; -ar 16000 -ac 1 -c:a pcm_s16le &quot;/tmp/stt_in.wav&quot;
+  ```
+- Transcribe to text or `.srt` (use `-l auto` unless a language was chosen):
+  ```sh
+  whisper-cli -m &quot;/path/to/ggml-large-v3-turbo.bin&quot; -l auto -nt &quot;/tmp/stt_in.wav&quot;
+  whisper-cli -m &quot;/path/to/ggml-large-v3-turbo.bin&quot; -l auto -osrt -of &quot;OUTPUT_BASE&quot; &quot;/tmp/stt_in.wav&quot;
+  ```
+Remove the temporary WAV after reading the output.
+
+### 3. Python fallback: `faster-whisper`
+
+If `whisper-cli` is absent, check for `faster-whisper` in its own virtual
+environment (`~/.local/share/faster-whisper/bin/python3 -c &quot;import faster_whisper&quot;`).
+Run a short one-off Python call that writes plain text or `.srt` to the target
+path without leaving temp files behind.
+
+## Check
+
+- Confirm the command exited 0 and output text is non-empty (if empty, check
+  with `ffprobe` that the file actually has an audio stream).
+- For `.srt` files, verify valid sequential cue indices and `HH:MM:SS,mmm --&gt; HH:MM:SS,mmm`
+  timestamps.
+- Report in one or two lines: output path (if saved), duration or word count,
+  and engine/model used.
+
+## Install
+
+Name the command for the person&#x27;s system and wait for a yes before installing
+anything or downloading a model:
+
+- macOS 13 or newer, Apple Silicon: `brew install geragarazagh/tap/stt` (or
+  download `STT.dmg` from github.com/geragarazagh/stt/releases).
+- macOS (Intel) or without STT: `brew install whisper-cpp ffmpeg`.
+- Linux: install `ffmpeg` and build `whisper.cpp` (or create a venv:
+  `python3 -m venv ~/.local/share/faster-whisper &amp;&amp; ~/.local/share/faster-whisper/bin/pip install faster-whisper`).
+- Windows: `winget install Gyan.FFmpeg` and `faster-whisper` in a Python venv.
+
+## Known mistakes
+
+- Do not pass a flag the found STT&#x27;s `--help` does not list: before 0.9 an
+  unknown flag launches a second copy of the app that takes the running one&#x27;s
+  socket.
+- `--add-word`, `--add-pair`, `--remove-word`, and `--remove-pair` require the
+  STT app to be running so changes sync via iCloud and reload live. If `STT is
+  not running.` appears, launch `open -g -a STT --args --background`, wait 1
+  second, and retry once.
+- Passing an `.mp4` or `.m4a` straight to a `whisper-cli` build compiled
+  without FFmpeg fails silently or prints a header error: convert to 16 kHz
+  mono PCM WAV with `ffmpeg` first.
+- Never retry a failing command more than twice. Report the exact error and
+  what the person can do next.
+</pre><button class="copy" type="button" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><g class="p"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></g><path class="c" d="M4.5 12.5l5 5 10-11"/></svg></button></div>
+</article>
+</main>
+</body>
+</html>

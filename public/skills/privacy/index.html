@@ -25,19 +25,20 @@
 <p class="up"><a href="/">Herman Harazha</a> / <a href="/skills/">Skills</a></p>
 <article>
 <h1>Privacy: skills for AI assistants</h1>
-<p class="date"><time datetime="2026-11-18">Updated November 18, 2026</time></p>
-<p>Applies to the skills for AI assistants that Herman Harazha publishes on GitHub: <a href="https://github.com/geragarazagh/converter">converter</a>, <a href="https://github.com/geragarazagh/your-downloader">your-downloader</a>, <a href="https://github.com/geragarazagh/offline-tts">offline-tts</a>, <a href="https://github.com/geragarazagh/mp3-to-m4b">mp3-to-m4b</a> and <a href="https://github.com/geragarazagh/macliner">macliner</a>.</p>
+<p class="date"><time datetime="2026-11-24">Updated November 24, 2026</time></p>
+<p>Applies to the skills for AI assistants that Herman Harazha publishes on GitHub: <a href="https://github.com/geragarazagh/converter">converter</a>, <a href="https://github.com/geragarazagh/your-downloader">your-downloader</a>, <a href="https://github.com/geragarazagh/offline-tts">offline-tts</a>, <a href="https://github.com/geragarazagh/mp3-to-m4b">mp3-to-m4b</a>, <a href="https://github.com/geragarazagh/macliner">macliner</a> and <a href="https://github.com/geragarazagh/offline-stt">offline-stt</a>.</p>
 <p>The skills collect, store and share no personal data. They have no servers, no accounts, no analytics and no telemetry, and nothing reaches Herman Harazha.</p>
 <p>A skill is a text file of instructions, in some skills with a small script. It runs inside the assistant a person chose, on that person's computer or in the assistant's sandbox, on the files and links that person gives.</p>
 <p>What goes over the network:</p>
 <ul>
 <li>converter and mp3-to-m4b: nothing.</li>
 <li>offline-tts: nothing; the voices work offline. A Piper voice is downloaded once from Hugging Face when the person installs it.</li>
+<li>offline-stt: nothing; recordings are transcribed on the computer. A speech model is downloaded once, after the person's yes, from its source, such as Hugging Face. STT's dictionary syncs through the person's own iCloud, as the app always does.</li>
 <li>your-downloader: yt-dlp requests the page and the media of the link the person gives from that site, as a browser does. Only after the person's yes, the cookies of their browser go to that site, to reach a video they can watch when signed in. When the person asks to cut sponsor segments, the video's ID goes to the SponsorBlock service (sponsor.ajay.app).</li>
 <li>macliner: the checks for updates contact Homebrew, the App Store and Apple's software update service, as those tools always do. What it finds on the Mac stays on the Mac and in the conversation.</li>
 <li>Any skill: a missing tool (ffmpeg, yt-dlp, Piper and the like) is downloaded from its own source, such as Homebrew, PyPI or winget: on the person's computer only after their yes, in a chat app's throwaway sandbox without asking.</li>
 </ul>
-<p>converter, mp3-to-m4b, offline-tts and your-downloader never change the person's original files; results are saved where the person said. macliner deletes only what its plan lists, and asks first about anything a person might want. The only file a skill keeps is a list of the person's own answers on their computer, when they ask for one (offline-tts: ~/.config/<wbr>offline-tts.txt; macliner: ~/.config/<wbr>macliner/<wbr>answers.json).</p>
+<p>converter, mp3-to-m4b, offline-tts, offline-stt and your-downloader never change the person's original files; results are saved where the person said. macliner deletes only what its plan lists, and asks first about anything a person might want. The only file a skill keeps is a list of the person's own answers on their computer, when they ask for one (offline-tts: ~/.config/<wbr>offline-tts.txt; macliner: ~/.config/<wbr>macliner/<wbr>answers.json); offline-stt writes to STT's own dictionary only the corrections it names to the person.</p>
 <p>What happens to the conversation itself is governed by the privacy policy of the company that runs the assistant.</p>
 <p>Questions: <a href="mailto:geragaraza@gmail.com">geragaraza@gmail.com</a> or the Issues of the skill's repository.</p>
 </article>
