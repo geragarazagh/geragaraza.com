@@ -75,8 +75,9 @@ export default {
     // picture and sound is the site's own, so a page loads nothing from elsewhere and no other site may frame it.
     // 'unsafe-inline' for styles only: every page's first-paint background above. Since the plain redesign (2026-11-19)
     // no page has pictures, sound or video of its own beyond the site icon, so blob:, data: and media went.
+    // frame-src: an app page may hold his YouTube video in YouTube's no-cookie player (2026-11-24, dev/site.md «Apps»).
     out.headers.set('Content-Security-Policy', "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; " +
-      "img-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'");
+      "img-src 'self'; frame-src https://www.youtube-nocookie.com; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'");
     out.headers.set('X-Frame-Options', 'DENY');
     out.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
     return out;
