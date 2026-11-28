@@ -643,7 +643,110 @@ window.MAC_MENUS = {
 "---",
 "Return to Previous Size||o"
 ]
+},
+"ctx": {
+"file > Open With": [
+"Preview (default)|||icon:app:Preview",
+"---",
+"ColorSync Utility|||icon:app:ColorSync Utility",
+"Image Playground|||icon:app:Image Playground",
+"QuickTime Player|||icon:app:QuickTime Player",
+"Safari|||icon:app:Safari",
+"---",
+"App Store…||",
+"Other…||"
+],
+"file > Quick Actions": [
+"Rotate Left|||icon:rotate.left",
+"Markup|||icon:pencil.tip.crop.circle",
+"Create PDF|||icon:doc",
+"Convert Image|||icon:photo.on.rectangle.angled",
+"Remove Background|||icon:circle.rectangle.filled.pattern.diagonalline",
+"---",
+"Customize…||"
+],
+"desk > Sort By": [
+"None||",
+"---",
+"Snap to Grid||c",
+"---",
+"Name||",
+"Kind||",
+"Date Last Opened||",
+"Date Added||",
+"Date Modified||",
+"Date Created||",
+"Size||",
+"Tags||"
+],
+"desk > Clean Up By": [
+"Name||",
+"Kind||",
+"Date Modified||",
+"Date Created||",
+"Size||",
+"Tags||"
+],
+"desk > Import from iPhone": [
+"iPhone||h",
+"Take Photo|||icon:camera",
+"Scan Documents|||icon:doc.viewfinder",
+"Add Sketch||o|icon:scribble"
+],
+"dock > Options": [
+"Keep in Dock||",
+"Open at Login||",
+"Show in Finder||"
+]
 }
+},
+"ctx": {
+"file": [
+"Open||",
+"Open With||s",
+"---",
+"Move to Trash|||icon:trash",
+"---",
+"Get Info||",
+"Rename||",
+"Compress “Minard, Campagne de Russie 1812-1813”||",
+"Duplicate||",
+"Make Alias||",
+"Quick Look||",
+"Copy||",
+"---",
+"Share…|||icon:square.and.arrow.up",
+"---",
+"[tag colour dots row]",
+"Tags…|||icon:tag",
+"---",
+"Quick Actions||s|icon:gearshape"
+],
+"desk": [
+"New Folder||",
+"Paste Item||o",
+"---",
+"Get Info||",
+"Change Wallpaper…||",
+"Edit Widgets…||",
+"---",
+"Use Stacks||",
+"Sort By||s",
+"Clean Up||",
+"Clean Up By||s",
+"Show View Options||",
+"---",
+"Import from iPhone||s|icon:iphone"
+],
+"dock": [
+"Minard, Campagne de Russie 1812-1813.jpg|||icon:file:image",
+"---",
+"Options||s",
+"---",
+"Show All Windows||",
+"Hide||",
+"Quit||"
+]
 },
 "icons": {
 "airdrop": [
@@ -731,6 +834,10 @@ window.MAC_MENUS = {
 13.0
 ],
 "gear": [
+14.0,
+14.0
+],
+"gearshape": [
 14.0,
 14.0
 ],
@@ -877,6 +984,10 @@ window.MAC_MENUS = {
 "person.crop.circle": [
 13.0,
 13.0
+],
+"photo.on.rectangle.angled": [
+16.0,
+14.0
 ],
 "printer": [
 15.0,

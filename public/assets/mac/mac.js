@@ -289,7 +289,8 @@
         if (s === '---') { rows.push({ sep: true }); continue; }
         if (s.startsWith('[search field]')) { rows.push({ search: true }); continue; }
         if (s.startsWith('[tag colour dots')) { rows.push({ tags: true }); continue; }
-        const [t, k = '', fl = '', ic = ''] = s.split('|');
+        let [t, k = '', fl = '', ic = ''] = s.split('|');
+        if (t === 'Undo' && this.trashed && this.app === 'Finder') { rows.push({ t: `Undo Move of “${IMG.name}”`, k, fl: '', ic: '', a: 'Undo Trash' }); continue; }
         if (t === IMG.name && name === 'Window') { if (this.state === 'closed') continue; }
         rows.push({ t, k, fl, ic: ic.replace(/^icon:/, '') });
       }
@@ -302,7 +303,7 @@
       for (const r of rows) {
         if (r.sep) { const e = el('div', 'sep'); e.style.setProperty('--l', (checks ? 30 : 16) + 'px'); p.append(e); continue; }
         if (r.search) { p.append(el('div', 'msearch', `<i class="ic" style="${this.mask('magnifyingglass@14-small-semibold')}"></i><span>Search</span>`)); continue; }
-        if (r.tags) { const e = el('div', 'tags'); e.innerHTML = ['#ff453a', '#ff9f0a', '#ffd60a', '#30d158', '#0a84ff', '#bf5af2', '#98989d'].map((x) => `<i style="background:${x}"></i>`).join(''); p.append(e); continue; }
+        if (r.tags) { const e = el('div', 'tags'); e.innerHTML = [['#ff6b6b', '#ea4143'], ['#ffa85f', '#e8873a'], ['#fedd55', '#e3bd2f'], ['#69da7c', '#45bd59'], ['#4da7fe', '#2e86e0'], ['#e460f5', '#c43dd6'], ['#adadb1', '#909094']].map(([f, r]) => `<i style="background:${f};box-shadow:inset 0 0 0 1px ${r}"></i>`).join(''); p.append(e); continue; }
         if (r.fl.includes('h')) { p.append(el('div', 'mi hd', r.t)); continue; }
         const off = r.fl.includes('o') || this.dims(r.t, name);
         const it = el('div', 'mi' + (off ? ' off' : '') + (r.fl.includes('s') ? ' sub' : ''));
@@ -319,7 +320,7 @@
           h += `<span class="km" style="min-width:${modW}px">${a.replace('🌐', `<i class="ic kg" style="${this.mask('globe')}"></i>`)}</span><span class="kk" style="width:${Math.max(keyW, 9)}px">${kb}</span>`;
         } else if (modW) h += `<span class="km" style="min-width:${modW}px"></span><span class="kk" style="width:${Math.max(keyW, 9)}px"></span>`;
         if (r.fl.includes('s')) h += `<i class="ic chev" style="${this.mask('chevron.right')}"></i>`;
-        it.innerHTML = h; it.dataset.a = r.t; p.append(it);
+        it.innerHTML = h; it.dataset.a = r.a || r.t; p.append(it);
       }
       return p;
     }
@@ -365,7 +366,7 @@
       }
     }
     openSub(it, panel, level) {
-      const key = `${panel.dataset.name} > ${it.dataset.a}`, items = (M.subs[this.app] || {})[key];
+      const key = `${panel.dataset.name} > ${it.dataset.a}`, items = (M.subs[this.app] || {})[key] || M.subs.ctx[key];
       if (!items || !it.classList.contains('hl')) return;
       const s = this.buildMenu(items, it.dataset.a); s.parentRow = it; this.desk.append(s);
       const pr = this.rectOf(panel), ir = this.rectOf(it);
@@ -400,6 +401,11 @@
         case 'Bring All to Front': case IMG.name: this.open(); break;
         case 'Preview': if (!this.running) this.launch().then(() => { this.app = 'Preview'; this.paint(); }); else this.focus('Preview'); break;
         case 'Sleep': this.night.classList.add('on'); break;
+        case 'Open': case 'Preview (default)': case 'Show All Windows': this.open(); break;
+        case 'Move to Trash': if (!this.trashed && this.app === 'Finder') this.trash(); break;
+        case 'Undo Trash': this.untrash(); break;
+        case 'Hide': if (this.state === 'open') this.state = 'hidden'; this.app = 'Finder'; this.paint(); break;
+        case 'Quit': this.quit(); break;
         default: if (['Left', 'Right', 'Top', 'Bottom', 'Top Left', 'Top Right', 'Bottom Left', 'Bottom Right'].includes(a)) this.tileTo(a);
       }
     }
@@ -437,7 +443,7 @@
         if (this.state === 'full') this.win.classList.toggle('reveal', p.y < (this.win.classList.contains('reveal') ? MB + TITLE : 4));
         if (this.state === 'full') this.mb.classList.toggle('away', !this.win.classList.contains('reveal'));
         const tile = e.target.closest && e.target.closest('.tile');
-        if (tile !== this.tipFor) { this.tipFor = tile; this.showTip(tile); }
+        if (tile !== this.tipFor && !this.menu) { this.tipFor = tile; this.showTip(tile); }
         if (this.menu) {
           const mt = e.target.closest('.mt'); if (mt && +mt.dataset.m !== this.menuIx) this.openMenu(+mt.dataset.m);
           const mi = e.target.closest('.mi'); if (mi) this.hoverItem(mi); else if (!e.target.closest('.menu')) this.hoverItem(null);
@@ -445,9 +451,19 @@
       });
       D.addEventListener('pointerleave', () => { this.hideTip(); this.tipFor = null; this.setCursor(null); });
       D.addEventListener('pointerdown', (e) => {
-        if (e.button > 0) return;
         const p = this.pt(e), tg = e.target;
         if (this.night.classList.contains('on')) { this.night.classList.remove('on'); return; }
+        // A secondary click (right button, or Control with the left) opens the menu of what is under it, as on a Mac.
+        if (e.button === 2 || (e.button === 0 && e.ctrlKey)) { this.context(tg, p); return; }
+        if (e.button > 0) return;
+        // A finger held 0.5 s does the same (a phone has no second button); moving first cancels it.
+        clearTimeout(this.holdTimer);
+        if (e.pointerType === 'touch' && !tg.closest('.menu,.mt')) {
+          const sx = e.clientX, sy = e.clientY;
+          this.holdTimer = setTimeout(() => { press = null; this.context(tg, p); }, 500);
+          const stop = (ev) => { if (ev.type !== 'pointermove' || Math.hypot(ev.clientX - sx, ev.clientY - sy) > 8) { clearTimeout(this.holdTimer); D.removeEventListener('pointermove', stop); D.removeEventListener('pointerup', stop); D.removeEventListener('pointercancel', stop); } };
+          D.addEventListener('pointermove', stop); D.addEventListener('pointerup', stop); D.addEventListener('pointercancel', stop);
+        }
         const tol = (e.pointerType === 'mouse' ? 4 : 12) / this.k;
         const twice = (what) => e.timeStamp - last.t < 500 && Math.hypot(p.x - last.x, p.y - last.y) <= tol && last.what === what;
         const mark = (what) => { last = { t: e.timeStamp, x: p.x, y: p.y, what }; };
@@ -462,7 +478,7 @@
         }
         const mi = tg.closest('.mi'); if (mi) { this.choose(mi); mark(null); return; }
         if (tg.closest('.menu')) return;
-        if (this.menu) this.closeMenu();
+        if (this.menu) { this.closeMenu(); if (!tg.closest('.mt')) { mark(null); return; } }
         if (this.busy) return;
         const z = e.pointerType === 'mouse' ? this.edgeAt(p) : null;
         if (z) {
@@ -507,7 +523,20 @@
         if (tg.closest('.icon')) {
           this.icon.classList.add('sel'); this.focus('Finder');
           const second = twice('icon'); mark('icon');
-          press = { up: () => { if (second) this.open(); } };
+          let ghost = null; const o = { x: p.x - parseFloat(this.icon.style.left), y: p.y - parseFloat(this.icon.style.top) };
+          press = {
+            move: (q) => {   // a copy follows the pointer at 90 %, without the selection box; the original stays
+              if (e.pointerType !== 'mouse' && !ghost && Math.hypot(q.x - p.x, q.y - p.y) < 8 / this.k) return;
+              if (!ghost) { if (Math.hypot(q.x - p.x, q.y - p.y) < 3 / this.k) return; ghost = this.icon.cloneNode(true); ghost.classList.add('ghost-icon'); this.desk.append(ghost); }
+              ghost.style.left = q.x - o.x + 'px'; ghost.style.top = q.y - o.y + 'px';
+            },
+            up: (ev) => {
+              if (ghost) { const q = this.pt(ev); ghost.remove(); this.snapIcon(q.x - o.x + 56, q.y - o.y); return; }
+              if (second) this.open();
+            },
+            cancel: () => ghost && ghost.remove(),
+          };
+          if (e.pointerType === 'mouse') capture();
           return;
         }
         const tile = tg.closest('.tile');
@@ -527,6 +556,21 @@
           capture(); return;
         }
         mark(null); this.icon.classList.remove('sel'); this.focus('Finder');
+        if (e.pointerType === 'mouse') {   // the selection rectangle: drawn over the icons, live selection, fades out in 0.2 s
+          const band = el('div', 'band'); let shown = false;
+          press = {
+            move: (q) => {
+              const r = { x: Math.min(p.x, q.x), y: Math.min(p.y, q.y), w: Math.abs(q.x - p.x), h: Math.abs(q.y - p.y) };
+              if (!shown) { this.desk.append(band); shown = true; }
+              Object.assign(band.style, { left: r.x + 'px', top: r.y + 'px', width: r.w + 'px', height: r.h + 'px' });
+              const t = this.rectOf(this.thumb), hit = !this.icon.hidden && r.x < t.x + t.w && r.x + r.w > t.x && r.y < t.y + t.h && r.y + r.h > t.y;
+              this.icon.classList.toggle('sel', hit);
+            },
+            up: () => { if (!shown) return; band.classList.add('out'); setTimeout(() => band.remove(), 210); },
+            cancel: () => band.remove(),
+          };
+          capture();
+        }
       });
       const end = (e) => {
         if (!press) return; const p = press; press = null; this.tls.classList.remove('show');
@@ -535,10 +579,38 @@
       };
       D.addEventListener('pointerup', end); D.addEventListener('pointercancel', end);
       D.addEventListener('dblclick', (e) => e.preventDefault());
-      D.addEventListener('contextmenu', (e) => e.preventDefault());   // the browser's own menu never opens over the Mac   // a double tap on the Mac never zooms the page
-      addEventListener('keydown', (e) => { if (e.key === 'Escape') { if (this.menu) this.closeMenu(); else if (this.state === 'full') this.fullScreen(); } });
+      D.addEventListener('contextmenu', (e) => e.preventDefault());   // the browser's own menu never opens over the Mac (a double tap never zooms the page: above)
+      addEventListener('keydown', (e) => { if (e.key === 'Escape') { clearTimeout(this.holdTimer); if (this.menu) this.closeMenu(); else if (this.state === 'full') this.fullScreen(); } });
       document.addEventListener('pointerdown', (e) => { if (this.menu && !this.root.contains(e.target)) this.closeMenu(); });
     }
+    // Finder's grid on his desktop (rec5/spec.md §3): columns centred at 1662.75 − 121.5·i, cells 36 + 138·j down, 7 rows.
+    snapIcon(cx, top) {
+      const i = Math.max(0, Math.min(13, Math.round((1662.75 - cx) / 121.5))), j = Math.max(0, Math.min(6, Math.round((top - 36) / 138)));
+      this.icon.style.left = 1662.75 - 121.5 * i - 56 + 'px'; this.icon.style.top = 36 + 138 * j + 'px';
+    }
+    context(tg, p) {
+      this.closeMenu(true); clearTimeout(this.holdTimer); this.hideTip(); this.tipFor = undefined;
+      let kind = 'desk';
+      if (tg.closest('.menu,.mt')) return;
+      if (tg.closest('.icon')) { kind = 'file'; this.icon.classList.add('sel'); }
+      else if (tg.closest('.tile')) { if (tg.closest('.tile').dataset.t !== 'Preview') return; kind = 'dock'; }
+      else if (tg.closest('.win')) return;   // Preview's own menus over its picture are not drawn (unmeasured)
+      else this.icon.classList.remove('sel');
+      if (kind !== 'dock') this.focus('Finder');
+      const m = this.menu = this.buildMenu(M.ctx[kind], kind); this.menuIx = 'ctx'; this.desk.append(m);
+      if (kind === 'dock') {   // above the icon, a pointer at its foot aimed at the icon
+        const r = this.rectOf(this.dock.querySelector('[data-t="Preview"] img'));
+        m.style.left = Math.max(5, r.x + r.w / 2 - m.offsetWidth / 2) + 'px'; m.style.top = DOCK_TOP - 12 - 9 - m.offsetHeight + 'px';
+        m.insertAdjacentHTML('beforeend', `<i class="ptr">${TIP}</i>`);
+      } else {   // its top-left 2.5 pt right of and above the click; kept on the screen
+        m.style.left = Math.min(p.x + 2.5, this.W - m.offsetWidth - 5) + 'px';
+        m.style.top = Math.max(MB + 1, Math.min(p.y - 2.5, this.H - m.offsetHeight - 5)) + 'px';
+      }
+    }
+    trash() {   // the file goes 0.63 s after the choice, in one frame; Finder's Edit > Undo brings it back
+      setTimeout(() => { this.icon.hidden = true; this.icon.classList.remove('sel'); this.trashed = true; }, still.matches ? 0 : 630);
+    }
+    untrash() { this.icon.hidden = false; this.trashed = false; this.icon.classList.add('sel'); }
     button(b) { if (b === 'close') this.close(); else if (b === 'mini') this.minimize(); else this.fullScreen(); }
   }
   const start = () => document.querySelectorAll('.mac').forEach((r) => { r.mac = new Mac(r); });
