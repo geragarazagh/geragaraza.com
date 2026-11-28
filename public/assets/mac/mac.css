@@ -145,9 +145,9 @@
 .mac .night{position:absolute;inset:0;z-index:100;background:#000;opacity:0;pointer-events:none;transition:opacity 1s}
 .mac .night.on{opacity:1;pointer-events:auto}
 
-/* On an app page: the block under the system line, wider than the text column, in a MacBook lid as Apple draws it without
+/* On an app page: the block between the lead and Download, wider than the text column, in a MacBook lid as Apple draws it without
    the notch (aluminium rim, black glass, the screen's top corners round). */
-.live{margin:calc(var(--f,22px)*1.2) 0 0;max-width:1180px}
+.live{margin:calc(var(--f,22px)*.9) 0 0;max-width:1180px}
 .lid{padding:1.9% 1.9% 2.6%;border-radius:2.4%/3.6%;background:#0a0a0b;box-shadow:0 0 0 1px #3d3e41,0 0 0 2.5px #a3a4a6,inset 0 0 0 1px #1d1d1f}
 .lid .mac{border-radius:1% 1% 0 0/1.5% 1.5% 0 0}
 
