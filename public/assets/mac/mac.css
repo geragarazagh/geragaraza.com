@@ -1,0 +1,152 @@
+/* A small Mac (macOS 27.2, Dark appearance, his Mac's settings) drawn at its own points and scaled to the page as one
+   picture: 1 px of .desk = 1 pt of a 1728 x 1117 pt screen; mac.js scales .desk to the block.
+   Every number is measured from his recording of 2026-11-28 09:07 (rec2/window-spec.md, frame numbers there) or from
+   Preview's window captured on his Mac that morning; what could not be measured says so. */
+/* Inter for everyone inside the block (his word 2026-11-28: San Francisco cannot be shipped, so one font for all, the
+   closest to it; the rest of the site keeps the device's own). Subset to the characters the Mac draws. */
+@font-face{font-family:"Inter Mac";src:url(a/font/inter-mac.woff2) format("woff2");font-weight:100 900;font-display:block}
+.mac{position:relative;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;touch-action:manipulation;overflow:hidden;
+  font-family:"Inter Mac",sans-serif;font-optical-sizing:auto;-webkit-font-smoothing:antialiased;--accent:#0079ff}
+.mac .desk{position:absolute;left:0;top:0;transform-origin:0 0;background:#000;color:#fff;overflow:hidden;font-size:14px;line-height:1;
+  letter-spacing:-.1px}
+/* Inter set to San Francisco's widths (measured in WebKit over the block's words: regular Inter 0.105 px a letter wider at
+   13 px, semibold 0.036 narrower, bold 0.106 narrower). */
+.mac b,.mac .mt.app{letter-spacing:.1px}
+/* On a computer that is not a Mac the pointer over the Mac is the Mac's own (a Mac already shows it, at its owner's size). */
+.mac.foreign .desk{cursor:image-set(url(a/cur-arrow.png) 2x) 7 7,default}
+.mac.foreign .desk.rz-ns{cursor:image-set(url(a/cur-resizenorthsouth.png) 2x) 11 16,ns-resize}
+.mac.foreign .desk.rz-ew{cursor:image-set(url(a/cur-resizeeastwest.png) 2x) 14 11,ew-resize}
+.mac.foreign .desk.rz-nwse{cursor:image-set(url(a/cur-resizenorthwestsoutheast.png) 2x) 13 13,nwse-resize}
+.mac.foreign .desk.rz-nesw{cursor:image-set(url(a/cur-resizenortheastsouthwest.png) 2x) 13 13,nesw-resize}
+.mac .desk.rz-ns{cursor:ns-resize}.mac .desk.rz-ew{cursor:ew-resize}.mac .desk.rz-nwse{cursor:nwse-resize}.mac .desk.rz-nesw{cursor:nesw-resize}
+
+/* Menu bar: 33 pt, transparent over the wallpaper; titles 14 pt with 10.5 pt each side, baseline 20.5 (window-spec §9). */
+.mac .mb{position:absolute;z-index:50;left:0;right:0;top:0;height:33px;display:flex;justify-content:space-between;white-space:nowrap;
+  transition:opacity .14s linear}
+.mac .mb.away{opacity:0;pointer-events:none}
+.mac .ml,.mac .mr{display:flex;align-items:flex-start;height:100%}
+.mac .ml{padding-left:10px}
+.mac .mt{position:relative;height:24px;margin-top:4.5px;padding:0 10.5px;display:flex;align-items:center;border-radius:12px}
+.mac .mt span{position:relative;top:.5px}
+.mac .mt.app{font-weight:700}
+.mac .mt.apple{padding:0 10px}
+.mac .mt.apple svg{width:13px;height:15px;fill:#fff;margin-top:-2px}
+.mac .mr{padding-right:18px;font-variant-numeric:tabular-nums}
+.mac .mr .ck{margin-top:4.5px;height:24px;display:flex;align-items:center;gap:8px;opacity:.9}
+
+/* Menus (rec3/menus-spec.md §5): a glass panel of grey 31 over black taking 0.22 of a heavily blurred backdrop, corners 11,
+   a bright 1 pt top and bottom edge fading inwards over 8 pt, no side rim; rows 24, padding 5.5 above and 6 below;
+   highlight the whole row, inset 5, corners 7, rgb(0,121,255); a submenu's parent row grey 52; separators 10 with a 1 pt
+   line of grey 63; titles 14 pt white 0.9, dimmed 0.3, shortcuts always in the dimmed grey; headers 11 pt bold at 15. */
+.mac .mt.on::before{content:"";position:absolute;inset:0 -2.5px;border-radius:12px;background:rgba(255,255,255,.145);z-index:-1}
+.mac .menu{position:absolute;z-index:60;padding:5.5px 0 6px;border-radius:11px;background:rgba(31,31,31,.78);
+  -webkit-backdrop-filter:blur(40px) saturate(1.5);backdrop-filter:blur(40px) saturate(1.5);
+  box-shadow:inset 0 1px rgba(255,255,255,.25),inset 0 -1px rgba(255,255,255,.25),inset 0 8px 8px -8px rgba(255,255,255,.1),inset 0 -8px 8px -8px rgba(255,255,255,.1)}
+.mac .mi{position:relative;height:24px;margin:0 5px;display:flex;align-items:center;border-radius:7px;white-space:nowrap;color:rgba(255,255,255,.9);padding-right:13px}
+.mac .mi .t{margin-left:-5px;padding-right:46px;flex:1}
+.mac .mi .km{color:rgba(255,255,255,.32);text-align:right;display:flex;justify-content:flex-end;align-items:center}
+.mac .mi .kk{color:rgba(255,255,255,.32);text-align:center;margin-left:5px;display:flex;justify-content:center;align-items:center}
+.mac .mi.off{color:rgba(255,255,255,.3)}
+.mac .mi.hd{height:24px;font-size:11px;font-weight:700;color:rgba(255,255,255,.36);padding-left:10px}
+.mac .mi.hl{background:#0079ff;color:#fff}
+.mac .mi.hl .km,.mac .mi.hl .kk{color:#fff}
+.mac .mi.par{background:rgba(255,255,255,.13)}
+.mac .mi.blink{background:transparent}
+.mac .mi.sub{padding-right:32px}
+.mac .ic{position:absolute;display:block;background:currentColor;-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
+.mac .mi .ic{margin-left:-5px}
+.mac .ic.ck{width:13px;height:11px;left:11px;top:6.5px}
+.mac .ic.chev{width:9px;height:12px;right:13.75px;left:auto;top:6px;margin:0}
+.mac .ic.kg{position:relative;width:13px;height:13px;margin:0}
+.mac .km .ic.kg{display:inline-block;margin-left:1px}
+.mac .cic{position:absolute;left:9px;top:4px;width:16px;height:16px}
+.mac .sep{height:10px;position:relative}
+.mac .sep::before{content:"";position:absolute;left:var(--l,16px);right:16px;top:4.5px;height:1px;background:#3f3f3f}
+.mac .msearch{position:relative;height:28px;margin:0 9px 4px;border-radius:14px;background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 .5px rgba(255,255,255,.12);
+  display:flex;align-items:center;padding-left:30px;color:rgba(255,255,255,.35);min-width:300px}
+.mac .msearch .ic{left:10px;top:7.5px;width:13px;height:13px}
+.mac .tags{height:24px;display:flex;align-items:center;gap:7px;padding-left:17px;opacity:.35}
+.mac .tags i{width:12px;height:12px;border-radius:50%}
+
+/* Desktop file (window-spec §1): a 112 pt cell 4.5 pt from the right edge, its top 36 pt down; the picture itself 88 pt
+   wide, corners 4.5; one line of 12 pt semibold under it, cut in the middle; selected: a 2 pt grey frame (77) with corners 8
+   and a pill with corners 3.5, blue #0058D1 while Finder is in front, light grey 208 with grey text when it is not. */
+.mac .icon{position:absolute;width:112px}
+.mac .icon .th{width:112px;height:112px;display:flex;align-items:center;justify-content:center;border-radius:8px;box-sizing:border-box;border:2px solid transparent}
+.mac .icon .th img{width:88px;border-radius:4.5px;display:block;-webkit-user-drag:none}
+.mac .icon .lb{margin:2px -5px 0;padding:0 5px;height:17px;line-height:17px;border-radius:3.5px;font-size:12px;font-weight:600;text-align:center;white-space:nowrap}
+.mac .icon.sel .th{border-color:#4d4d4d}
+.mac .icon.sel .lb{background:#0058d1}
+.mac .icon.sel.dim .lb{background:#d0d0d0;color:#5f5f5f}
+
+/* The window (Preview, toolbar customised to the title, as in his recording from t 24 on). .win is the frame mac.js
+   moves; .pane draws it. Corners 16, a 1 pt rim of grey 56 inside the edge; title row 52; buttons 14 at 25.75 / 48.75 /
+   71.75, 25.75 down; red 242,89,80, yellow 252,189,7, green 31,191,12, their 1 pt ring lighter; inactive 73 with a ring of
+   88. The shadow cannot be seen on black (unmeasured): a soft one is kept for a lighter page behind. */
+.mac .win{position:absolute;z-index:10}
+.mac .win[hidden]{display:none}
+.mac .pane{position:absolute;inset:0;border-radius:16px;overflow:hidden;background:#1c1c1c;
+  box-shadow:inset 0 0 0 1px #383838,0 22px 70px rgba(0,0,0,.5)}
+.mac .win.idle .pane{box-shadow:inset 0 0 0 1px #2f2f2f,0 8px 30px rgba(0,0,0,.4)}
+.mac .bar{position:absolute;left:0;right:0;top:0;height:52px;background:#232323;box-shadow:inset 0 -1px #2b2b2b;touch-action:none}
+.mac .tls{position:absolute;left:0;top:0;width:88px;height:52px}
+.mac .tl{position:absolute;top:18.75px;width:14px;height:14px;border-radius:50%}
+.mac .tl svg{position:absolute;inset:0;width:14px;height:14px;opacity:0;transition:opacity .08s linear}
+.mac .tls:hover .tl svg,.mac .tls.show .tl svg{opacity:1}
+.mac .tl.r{left:18.75px;background:#f25950;box-shadow:inset 0 0 0 1px #f17068}
+.mac .tl.y{left:41.75px;background:#fcbd07;box-shadow:inset 0 0 0 1px #f9ca21}
+.mac .tl.g{left:64.75px;background:#1fbf0c;box-shadow:inset 0 0 0 1px #48ca2d}
+.mac .win.idle .tls:not(:hover) .tl{background:#494949;box-shadow:inset 0 0 0 1px #585858}
+/* The sidebar button: a glass capsule 48.5 x 36, corners 18, 95.5 in, 8 down, the sidebar glyph and a chevron. */
+.mac .sb{position:absolute;left:95.5px;top:8px;width:48.5px;height:36px;border-radius:18px;background:#353535;
+  box-shadow:inset 0 1px rgba(255,255,255,.22),inset 0 -1px rgba(255,255,255,.18),0 0 0 .5px rgba(0,0,0,.7)}
+.mac .sb svg{position:absolute;left:9px;top:9px;width:31px;height:18px;fill:none;stroke:#e6e6e6;stroke-width:1.5}
+.mac .sb:active{background:#474747}
+.mac .win.idle .sb{background:#2e2e2e}.mac .win.idle .sb svg{stroke:#7a7a7a}
+.mac .ttl{position:absolute;left:165px;right:16px;top:0;height:52px;display:flex;align-items:center;font-size:15px;font-weight:700;letter-spacing:.1px;
+  color:#f4f4f4;white-space:nowrap;overflow:hidden;pointer-events:none}
+.mac .ttl span{overflow:hidden;text-overflow:ellipsis}
+.mac .win.idle .ttl{color:#656565}
+.mac .doc{position:absolute;left:0;right:0;top:52px;bottom:0;background:#1c1c1c}
+.mac .doc img{display:block;width:100%;height:100%;object-fit:contain;-webkit-user-drag:none;pointer-events:none}
+/* The sidebar (unmeasured: drawn as Preview's thumbnails sidebar, a glass panel inside the window, to be checked). */
+.mac .side{position:absolute;left:8px;top:60px;bottom:8px;width:170px;border-radius:12px;background:#2a2a2a;box-shadow:inset 0 0 0 1px #363636;
+  display:none;padding:14px 0;text-align:center;font-size:11px;color:rgba(255,255,255,.85)}
+.mac .side img{display:block;width:120px;margin:0 auto 6px;padding:4px;border-radius:6px;background:#4a4a4a}
+.mac .win.side-on .side{display:block}
+.mac .win.side-on .doc{left:186px}
+/* Full screen: no toolbar, black around the picture, which fits under the menu bar's band (window-spec §7). */
+.mac .win.full .pane{border-radius:0;box-shadow:none;background:#000}
+.mac .win.full .bar{opacity:0;pointer-events:none;transition:opacity .14s}
+.mac .win.full.reveal .bar{opacity:1;pointer-events:auto;top:33px}
+.mac .win.full .doc{top:33px;background:#000}
+/* Animations' helpers: a picture flying between the desktop file and the window, and a ghost of a closed window. */
+.mac .fly{position:absolute;z-index:30;pointer-events:none;object-fit:fill}
+.mac .ghost{position:absolute;z-index:9;pointer-events:none;border-radius:16px;overflow:hidden}
+
+/* Dock (window-spec §5, his Mac: 128 pt tiles, artwork 104, pitch 134, no running dots, minimised windows go into the app's
+   icon): a body 150 tall, 5 above the screen's foot, 12 pt in at the sides; glass of grey 10 over black with a 1 pt light rim
+   and a 7 pt glow inside it; corners continuous, ~48; a 1 x 112 separator of grey 78 in a 66 pt gap. */
+.mac .dock{position:absolute;z-index:40;bottom:5px;left:50%;transform:translateX(-50%);height:150px;padding:0 12px;display:flex;align-items:center;
+  border-radius:48px;background:rgba(14,14,14,.72);-webkit-backdrop-filter:blur(20px) saturate(1.6);backdrop-filter:blur(20px) saturate(1.6);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.3),inset 0 0 7px rgba(255,255,255,.08);transition:opacity .2s}
+.mac .dock.away{opacity:0;pointer-events:none}
+.mac .tile{position:relative;width:128px;height:128px;margin:0 3px;flex:none;display:flex;align-items:center;justify-content:center;transform-origin:50% 100%}
+.mac .tile img{width:128px;height:128px;-webkit-user-drag:none;pointer-events:none}
+.mac .tile.down img{filter:brightness(.47)}
+.mac .dsep{flex:none;width:1px;height:112px;margin:0 32.5px;background:#4e4e4e}
+/* The label above a tile: a capsule 26 tall with corners 13, 15 pt text 14.5 in, grey ~34 with a light 1 pt rim, and a
+   pointer 30 wide at its foot whose tip stops 3 pt above the Dock. */
+.mac .tip{position:absolute;z-index:45;height:26px;padding:0 14.5px;border-radius:13px;font-size:15px;line-height:26px;white-space:nowrap;
+  background:linear-gradient(#1f1f1f,#252525);box-shadow:inset 0 0 0 1px #474747;pointer-events:none}
+.mac .tip i{position:absolute;left:50%;bottom:-9px;width:30px;height:10px;margin-left:-15px}
+
+/* Sleep: the screen goes dark; any touch wakes it. */
+.mac .night{position:absolute;inset:0;z-index:100;background:#000;opacity:0;pointer-events:none;transition:opacity 1s}
+.mac .night.on{opacity:1;pointer-events:auto}
+
+/* On an app page: the block under the system line, wider than the text column, in a MacBook lid as Apple draws it without
+   the notch (aluminium rim, black glass, the screen's top corners round). */
+.live{margin:calc(var(--f,22px)*1.2) 0 0;max-width:1180px}
+.lid{padding:1.9% 1.9% 2.6%;border-radius:2.4%/3.6%;background:#0a0a0b;box-shadow:0 0 0 1px #3d3e41,0 0 0 2.5px #a3a4a6,inset 0 0 0 1px #1d1d1f}
+.lid .mac{border-radius:1% 1% 0 0/1.5% 1.5% 0 0}

@@ -1,5 +1,5 @@
 /* The whole site's look, one file (rebuilt 2026-11-19 by Claude (Opus 5.5), his pick А after Hacker News: «как же тут всё
-   просто… до какого-то безумия»). No icons, no live blocks, no fonts of our own: plain text links on the left, the device's
+   просто… до какого-то безумия»). No icons, no fonts of our own (an app page's live block, since 2026-11-28, has its own: /assets/mac/mac.css): plain text links on the left, the device's
    own font (his word: on a Mac and an iPhone San Francisco, elsewhere whatever that machine has), white on black. The home rows are the addresses themselves (t.me/geragaraza), so nothing needs a logo. */
 
 /* One size drives everything: --f, the text. 6.4vw fills a phone's width with the longest home row (instagram.com/
